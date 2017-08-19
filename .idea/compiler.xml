@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="td002" />
+        <module name="Fitness-FitUp-Content" />
+        <module name="Tamdai.DIY.CONTENT" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="td002" target="1.8" />
+      <module name="Fitness-FitUp-Content" target="1.8" />
+      <module name="Tamdai.DIY.CONTENT" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
