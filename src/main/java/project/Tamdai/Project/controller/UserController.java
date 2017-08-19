@@ -21,6 +21,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @RequestMapping("/")
+    @ResponseBody
+    String home() {
+        return "Hello World!";
+    }
+
     @RequestMapping(value = "user", method = RequestMethod.GET)
     public List<User> userList() {
         return userService.userList();
@@ -29,7 +35,7 @@ public class UserController {
     @RequestMapping(value = "user/login", method = RequestMethod.GET)
     public User userLogin(@RequestParam("username") String username,
                           @RequestParam("password") String password) {
-        return userService.userLogin(username,password);
+        return userService.userLogin(username, password);
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
