@@ -28,7 +28,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User userLogin(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username,password);
+    public User userLogin(String firstName, String password) {
+        return userRepository.findByFirstNameAndPassword(firstName,password);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findOne(id);
+    }
+
+    @Override
+    public User findByUsername(String firstName) {
+        return userRepository.findByFirstName(firstName);
     }
 }

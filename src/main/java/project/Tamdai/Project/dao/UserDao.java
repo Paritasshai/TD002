@@ -14,5 +14,10 @@ public interface UserDao {
 
     User userRegister(User user);
 
-    User userLogin(String username,String password);
+    User userLogin(String firstName,String password);
+
+    User getUserById(Long id);
+
+    User findByUsername(String firstName);
+
 }

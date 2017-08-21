@@ -8,5 +8,8 @@ import project.Tamdai.Project.entity.User;
  */
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsernameAndPassword(String username, String password);
+
+    User findByFirstNameAndPassword(String firstname, String password);
+
+    User findByFirstName(String firstName);
 }

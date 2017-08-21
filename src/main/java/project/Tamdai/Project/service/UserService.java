@@ -11,6 +11,12 @@ import java.util.List;
 public interface UserService {
 
     List<User> userList();
+
     User userRegister(User user);
-    User userLogin(String username, String password);
+
+    User findByUserName(String firstName);
+
+    User userLogin(String firstName, String password);
+
+    User getUserById(Long id);
 }

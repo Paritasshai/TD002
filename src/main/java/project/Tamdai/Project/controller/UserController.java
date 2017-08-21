@@ -27,18 +27,28 @@ public class UserController {
         return "Hello World!";
     }
 
-    @RequestMapping(value = "user", method = RequestMethod.GET)
+    @RequestMapping(value = "user/list", method = RequestMethod.GET)
     public List<User> userList() {
         return userService.userList();
     }
 
-    @RequestMapping(value = "user/login", method = RequestMethod.GET)
-    public User userLogin(@RequestParam("username") String username,
-                          @RequestParam("password") String password) {
-        return userService.userLogin(username, password);
+    @RequestMapping(value = "user/findByUserName", method = RequestMethod.GET)
+    public User findByUserName(@RequestParam("firstName") String firstName) {
+        return userService.findByUserName(firstName);
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
+    public User getUserById(@PathVariable("id") Long id) {
+        return userService.getUserById(id);
+    }
+
+    @RequestMapping(value = "user/login", method = RequestMethod.POST)
+    public User userLogin(@RequestParam("firstName") String firstName,
+                          @RequestParam("password") String password) {
+        return userService.userLogin(firstName, password);
+    }
+
+    @RequestMapping(value = "user/register", method = RequestMethod.POST)
     public User userRegister(@RequestBody User user, BindingResult bindingResult) {
         return userService.userRegister(user);
     }
