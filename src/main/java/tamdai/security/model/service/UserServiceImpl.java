@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setSubject("D.I.Y - Activate Your Account");
-        mail.setText("Please click link for activate your account." + "http://localhost:8080/activate/account");
+        mail.setText("Please click link for activating your account. Thank you." + "http://localhost:8080/activate/account");
         javaMailSender.send(mail);
         return userDao.userRegister(user);
     }
