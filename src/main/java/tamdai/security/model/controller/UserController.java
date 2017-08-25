@@ -28,7 +28,7 @@ public class UserController {
     @RequestMapping(value = "save")
     public String process() {
         userRepository.save(new UserEntity("Mark", "Camel", "5555", "Mark@gmail.com"));
-        return "Have Done!";
+        return "Add User Have Done!";
     }
 
     @RequestMapping(value = "user/register", method = RequestMethod.POST)
