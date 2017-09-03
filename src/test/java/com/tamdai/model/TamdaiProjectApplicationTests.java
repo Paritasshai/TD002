@@ -1,4 +1,4 @@
-package tamdai.security.model;
+package com.tamdai.model;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

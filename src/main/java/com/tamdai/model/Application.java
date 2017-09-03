@@ -1,4 +1,4 @@
-package tamdai.security.model;
+package com.tamdai.model;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

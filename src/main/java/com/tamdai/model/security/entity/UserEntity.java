@@ -1,31 +1,27 @@
-package tamdai.security.model.entity;
+package com.tamdai.model.security.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "customer")
-public class UserEntity implements Serializable {
+public class UserEntity {
 
-    private static final long serialVersionUID = -3009157732242241606L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name = "userID")
-    private String userID;
-
-    @Column(name = "firstname")
-    private String firstName;
-
-    @Column(name = "lastname")
-    private String lastName;
 
     @Column(unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "firstname")
+    private String firstName;
+
+    @Column(name = "lastname")
+    private String lastName;
 
     @Column(name = "lastLoginDate")
     private String lastLoginDate;
@@ -42,6 +38,9 @@ public class UserEntity implements Serializable {
     @Column(name = "createTime")
     private String createTime;
 
+    @Column(name = "createUserID")
+    private String createUserID;
+
     @Column(name = "updateDate")
     private String updateDate;
 
@@ -51,9 +50,11 @@ public class UserEntity implements Serializable {
     @Column(name = "updateUserId")
     private String updateUserId;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "balance")
+    private BigDecimal balance;
 
     public long getId() {
         return id;
@@ -61,14 +62,6 @@ public class UserEntity implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
     }
 
     public String getFirstName() {
@@ -143,6 +136,14 @@ public class UserEntity implements Serializable {
         this.createTime = createTime;
     }
 
+    public String getCreateUserID() {
+        return createUserID;
+    }
+
+    public void setCreateUserID(String createUserID) {
+        this.createUserID = createUserID;
+    }
+
     public String getUpdateDate() {
         return updateDate;
     }
@@ -167,6 +168,22 @@ public class UserEntity implements Serializable {
         this.updateUserId = updateUserId;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
     public UserEntity() {
     }
 
@@ -177,8 +194,7 @@ public class UserEntity implements Serializable {
         this.password = password;
     }
 
-    public UserEntity(String userID, String firstName, String lastName, String email, String password, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String updateDate, String updateTime, String updateUserId) {
-        this.userID = userID;
+    public UserEntity(String firstName, String lastName, String email, String password, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, BigDecimal balance) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -188,16 +204,18 @@ public class UserEntity implements Serializable {
         this.confirmDate = confirmDate;
         this.createDate = createDate;
         this.createTime = createTime;
+        this.createUserID = createUserID;
         this.updateDate = updateDate;
         this.updateTime = updateTime;
         this.updateUserId = updateUserId;
+        this.status = status;
+        this.balance = balance;
     }
 
     @Override
     public String toString() {
         return "UserEntity{" +
                 "id=" + id +
-                ", userID='" + userID + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
@@ -207,9 +225,12 @@ public class UserEntity implements Serializable {
                 ", confirmDate='" + confirmDate + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", createTime='" + createTime + '\'' +
+                ", createUserID='" + createUserID + '\'' +
                 ", updateDate='" + updateDate + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 ", updateUserId='" + updateUserId + '\'' +
+                ", status='" + status + '\'' +
+                ", balance='" + balance + '\'' +
                 '}';
     }
 }
