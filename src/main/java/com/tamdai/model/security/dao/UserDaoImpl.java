@@ -38,4 +38,9 @@ public class UserDaoImpl implements UserDao {
         return userRepository.save(status);
     }
 
+    @Override
+    public UserEntity getUserByFirstName(String firstName) {
+        return userRepository.findUserByFirstName(firstName);
+    }
+
 }

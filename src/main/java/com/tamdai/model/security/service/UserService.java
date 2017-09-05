@@ -25,4 +25,6 @@ public interface UserService {
     UserEntity updateStatus(UserEntity status);
 
     UserEntity confirmDate(UserEntity user);
+
+    UserEntity getUserByFirstName(String firstName);
 }

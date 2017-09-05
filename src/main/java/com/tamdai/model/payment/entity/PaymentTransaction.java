@@ -1,7 +1,12 @@
 package com.tamdai.model.payment.entity;
 
+import com.tamdai.model.security.entity.UserEntity;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "paymentTransaction")
@@ -45,6 +50,10 @@ public class PaymentTransaction {
 
     @Column(name = "updateUserId")
     private Long updateUserId;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<UserEntity> users = new HashSet<>();
 
     public long getId() {
         return id;
@@ -150,10 +159,18 @@ public class PaymentTransaction {
         this.updateUserId = updateUserId;
     }
 
+    public Set<UserEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserEntity> users) {
+        this.users = users;
+    }
+
     public PaymentTransaction() {
     }
 
-    public PaymentTransaction(Long accountId, String transType, String transRef, Integer transFlq, BigDecimal transAmount, String transRemark, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId) {
+    public PaymentTransaction(Long accountId, String transType, String transRef, Integer transFlq, BigDecimal transAmount, String transRemark, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, Set<UserEntity> users) {
         this.accountId = accountId;
         this.transType = transType;
         this.transRef = transRef;
@@ -166,6 +183,7 @@ public class PaymentTransaction {
         this.updateDate = updateDate;
         this.updateTime = updateTime;
         this.updateUserId = updateUserId;
+        this.users = users;
     }
 
     @Override
@@ -184,6 +202,7 @@ public class PaymentTransaction {
                 ", updateDate='" + updateDate + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 ", updateUserId=" + updateUserId +
+                ", users=" + users +
                 '}';
     }
 }

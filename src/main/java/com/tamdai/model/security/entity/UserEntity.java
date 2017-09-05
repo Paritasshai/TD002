@@ -54,7 +54,7 @@ public class UserEntity {
     private String status;
 
     @Column(name = "balance")
-    private BigDecimal balance;
+    private String balance;
 
     public long getId() {
         return id;
@@ -62,22 +62,6 @@ public class UserEntity {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -94,6 +78,22 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getLastLoginDate() {
@@ -176,11 +176,11 @@ public class UserEntity {
         this.status = status;
     }
 
-    public BigDecimal getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 
@@ -194,11 +194,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public UserEntity(String firstName, String lastName, String email, String password, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, BigDecimal balance) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance) {
         this.email = email;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.lastLoginDate = lastLoginDate;
         this.signUpDate = signUpDate;
         this.confirmDate = confirmDate;
@@ -216,10 +216,10 @@ public class UserEntity {
     public String toString() {
         return "UserEntity{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", lastLoginDate='" + lastLoginDate + '\'' +
                 ", signUpDate='" + signUpDate + '\'' +
                 ", confirmDate='" + confirmDate + '\'' +

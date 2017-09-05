@@ -25,11 +25,11 @@ public class UserServiceImpl implements UserService {
         user.setCreateUserID(id);
 
         //setStatus
-        String role = new String("new");
+        String role = new String("active");
         user.setStatus(role);
 
         //setBalance
-        BigDecimal balance = new BigDecimal("1000");
+        String balance = new String("1000");
         user.setBalance(balance);
 
         //setCreateSignUpDate
@@ -76,6 +76,11 @@ public class UserServiceImpl implements UserService {
 
         userDao.userRegister(user);
         return user;
+    }
+
+    @Override
+    public UserEntity getUserByFirstName(String firstName) {
+        return userDao.getUserByFirstName(firstName);
     }
 
 

@@ -1,7 +1,12 @@
 package com.tamdai.model.payment.entity;
 
+import com.tamdai.model.security.entity.UserEntity;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "bankStatement")
@@ -12,6 +17,9 @@ public class BankStatement {
 
     @Column(name = "bankId")
     private Long bankId;
+
+    @Column(name = "bankName")
+    private String bankName;
 
     @Column(name = "statementDate")
     private String statementDate;
@@ -44,7 +52,14 @@ public class BankStatement {
     private Long updateUserId;
 
     @Column(name = "statusBank")
-    private Long statusBank;
+    private String statusBank;
+
+    @Column(name = "paymentId")
+    private String paymentId;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<UserEntity> users = new HashSet<>();
 
     public long getId() {
         return id;
@@ -142,19 +157,44 @@ public class BankStatement {
         this.updateUserId = updateUserId;
     }
 
-    public Long getStatusBank() {
+    public String getStatusBank() {
         return statusBank;
     }
 
-    public void setStatusBank(Long statusBank) {
+    public void setStatusBank(String statusBank) {
         this.statusBank = statusBank;
+    }
+
+    public Set<UserEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserEntity> users) {
+        this.users = users;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 
     public BankStatement() {
     }
 
-    public BankStatement(Long bankId, String statementDate, String statementTime, BigDecimal statementAmount, Long accountId, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, Long statusBank) {
+    public BankStatement(Long bankId, String bankName, String statementDate, String statementTime, BigDecimal statementAmount, Long accountId, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, String statusBank, String paymentId, Set<UserEntity> users) {
         this.bankId = bankId;
+        this.bankName = bankName;
         this.statementDate = statementDate;
         this.statementTime = statementTime;
         this.statementAmount = statementAmount;
@@ -166,6 +206,8 @@ public class BankStatement {
         this.updateTime = updateTime;
         this.updateUserId = updateUserId;
         this.statusBank = statusBank;
+        this.paymentId = paymentId;
+        this.users = users;
     }
 
     @Override
@@ -173,6 +215,7 @@ public class BankStatement {
         return "BankStatement{" +
                 "id=" + id +
                 ", bankId=" + bankId +
+                ", bankName='" + bankName + '\'' +
                 ", statementDate='" + statementDate + '\'' +
                 ", statementTime='" + statementTime + '\'' +
                 ", statementAmount=" + statementAmount +
@@ -184,6 +227,8 @@ public class BankStatement {
                 ", updateTime='" + updateTime + '\'' +
                 ", updateUserId=" + updateUserId +
                 ", statusBank=" + statusBank +
+                ", paymentId=" + paymentId +
+                ", users=" + users +
                 '}';
     }
 }

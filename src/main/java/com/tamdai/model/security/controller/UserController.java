@@ -46,7 +46,7 @@ public class UserController {
 //    }
 
 //    @RequestMapping(value = "userSignUp")
-//    public BankStatement userSignUp(@RequestBody BankStatement user, BindingResult bindingResult) {
+//    public BankStatementService userSignUp(@RequestBody BankStatementService user, BindingResult bindingResult) {
 //        return userService.userRegister(user);
 //    }
 

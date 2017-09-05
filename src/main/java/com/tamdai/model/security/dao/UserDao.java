@@ -16,4 +16,5 @@ public interface UserDao {
 
     UserEntity updateStatus(UserEntity status);
 
+    UserEntity getUserByFirstName(String firstName);
 }
