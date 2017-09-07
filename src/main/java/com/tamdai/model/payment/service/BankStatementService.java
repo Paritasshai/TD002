@@ -14,4 +14,5 @@ public interface BankStatementService {
     BankStatement getBankStatementById(Long id);
 
     BankStatement bankStatementUpdate(BankStatement bankStatement, UserEntity user, String balance, BankStatement bank);
+
 }
