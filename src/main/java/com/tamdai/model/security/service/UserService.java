@@ -27,4 +27,5 @@ public interface UserService {
     UserEntity confirmDate(UserEntity user);
 
     UserEntity getUserByFirstName(String firstName);
+
 }

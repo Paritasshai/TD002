@@ -1,6 +1,8 @@
 package com.tamdai.model.security.service;
 
+import com.tamdai.model.payment.entity.PaymentTransaction;
 import com.tamdai.model.security.dao.UserDao;
+import com.tamdai.model.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tamdai.model.security.entity.UserEntity;
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public UserEntity userRegister(UserEntity user) {
@@ -82,7 +87,6 @@ public class UserServiceImpl implements UserService {
     public UserEntity getUserByFirstName(String firstName) {
         return userDao.getUserByFirstName(firstName);
     }
-
 
     @Override
     public UserEntity Login(String email, String password) {

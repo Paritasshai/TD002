@@ -28,7 +28,7 @@ public class PaymentTransaction {
     private Integer transFlq;
 
     @Column(name = "transAmount")
-    private BigDecimal transAmount;
+    private String transAmount;
 
     @Column(name = "transRemark")
     private String transRemark;
@@ -95,11 +95,11 @@ public class PaymentTransaction {
         this.transFlq = transFlq;
     }
 
-    public BigDecimal getTransAmount() {
+    public String getTransAmount() {
         return transAmount;
     }
 
-    public void setTransAmount(BigDecimal transAmount) {
+    public void setTransAmount(String transAmount) {
         this.transAmount = transAmount;
     }
 
@@ -170,7 +170,27 @@ public class PaymentTransaction {
     public PaymentTransaction() {
     }
 
-    public PaymentTransaction(Long accountId, String transType, String transRef, Integer transFlq, BigDecimal transAmount, String transRemark, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, Set<UserEntity> users) {
+    @Override
+    public String toString() {
+        return "PaymentTransaction{" +
+                "id=" + id +
+                ", accountId=" + accountId +
+                ", transType='" + transType + '\'' +
+                ", transRef='" + transRef + '\'' +
+                ", transFlq=" + transFlq +
+                ", transAmount='" + transAmount + '\'' +
+                ", transRemark='" + transRemark + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", createUserId=" + createUserId +
+                ", updateDate='" + updateDate + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", updateUserId=" + updateUserId +
+                ", users=" + users +
+                '}';
+    }
+
+    public PaymentTransaction(Long accountId, String transType, String transRef, Integer transFlq, String transAmount, String transRemark, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, Set<UserEntity> users) {
         this.accountId = accountId;
         this.transType = transType;
         this.transRef = transRef;
@@ -184,25 +204,5 @@ public class PaymentTransaction {
         this.updateTime = updateTime;
         this.updateUserId = updateUserId;
         this.users = users;
-    }
-
-    @Override
-    public String toString() {
-        return "PaymentTransaction{" +
-                "id=" + id +
-                ", accountId=" + accountId +
-                ", transType='" + transType + '\'' +
-                ", transRef='" + transRef + '\'' +
-                ", transFlq=" + transFlq +
-                ", transAmount=" + transAmount +
-                ", transRemark='" + transRemark + '\'' +
-                ", createDate='" + createDate + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", createUserId=" + createUserId +
-                ", updateDate='" + updateDate + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                ", updateUserId=" + updateUserId +
-                ", users=" + users +
-                '}';
     }
 }

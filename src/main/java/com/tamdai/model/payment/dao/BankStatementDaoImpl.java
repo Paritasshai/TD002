@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -26,6 +28,14 @@ public class BankStatementDaoImpl implements BankStatementDao {
         String status = new String("new");
         bankStatement.setStatusBank(status);
 
+        //CreateDate
+        String createDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        bankStatement.setCreateDate(createDate);
+
+        //CreateTime
+        String createTime = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+        bankStatement.setCreateTime(createTime);
+
         bankStatement.getUsers().add(user);
         bankStatementRepository.save(bankStatement);
         return bankStatement;
@@ -37,7 +47,7 @@ public class BankStatementDaoImpl implements BankStatementDao {
     }
 
 //    @Override
-//    public BankStatement bankStatementUpdate(BankStatement bankStatement, UserEntity user, String balance) {
+//    public BankStatement bankStatementUpdate(BankStatement bankStatement, VideoEntity user, String balance) {
 //        bankStatement.getUsers().add(user);
 //        bankStatementRepository.save(bankStatement);
 //        userRepository.save(user);
@@ -56,10 +66,13 @@ public class BankStatementDaoImpl implements BankStatementDao {
         String status = new String("confirm");
         bank.setStatusBank(status);
 
+        //updateBank
         bank.getUsers().add(user);
         bankStatementRepository.save(bank);
+
         user.setBalance(balance);
         userRepository.save(user);
+
         return bank;
     }
 }
