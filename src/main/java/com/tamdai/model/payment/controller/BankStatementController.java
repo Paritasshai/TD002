@@ -54,6 +54,7 @@ public class BankStatementController {
                                              @RequestParam("Email") String email,
                                              @RequestParam("UserId") Long userId,
                                              @RequestParam("transRef") String transRef,
+                                             @RequestParam("transAmount") String transAmount,
                                              @RequestParam("Balance") String balance, BindingResult bindingResult) {
         UserEntity user = userService.getUserByEmail(email);
         BankStatement bank = bankStatementService.getBankStatementById(id);
@@ -69,8 +70,11 @@ public class BankStatementController {
             String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
             paymentTransaction.setCreateTime(timeStamp);
 
-            String transAmount = new String(balance);
-            paymentTransaction.setTransAmount(transAmount);
+            String transA = new String(transAmount);
+            paymentTransaction.setTransAmount(transA);
+
+            String transRe = new String(balance);
+            paymentTransaction.setTransRemark(transRe);
 
             paymentTransactionService.createPaymentTransaction(user, paymentTransaction, transRef);
 
