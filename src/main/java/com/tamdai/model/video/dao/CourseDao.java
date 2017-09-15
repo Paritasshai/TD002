@@ -1,5 +1,6 @@
 package com.tamdai.model.video.dao;
 
+import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.video.entity.Course;
 import com.tamdai.model.video.entity.VideoClip;
 
@@ -9,7 +10,7 @@ import com.tamdai.model.video.entity.VideoClip;
 
 public interface CourseDao {
 
-    Course addVideo(Course course);
+    Course addVideo(UserEntity user, Course course);
 
     Course getCourseId(Long id);
 

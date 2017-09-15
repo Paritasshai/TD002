@@ -71,6 +71,15 @@ public class UserController {
         return "\n" + html + "\n" + text1 + html1;
     }
 
+    @RequestMapping(value = "update/userStatus/{id}", method = RequestMethod.PUT)
+    public UserEntity updateUserStatus(@PathVariable("id") Long id,
+                                       @RequestParam("statusName") String statusName) {
+
+        UserEntity user = userService.getUserId(id);
+        user.setStatus(statusName);
+        return userService.updateUserStatus(user);
+    }
+
 //    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
 //    public BankStatement getUserId(@PathVariable("id") Long id) {
 //        return userService.getUserId(id);

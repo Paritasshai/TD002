@@ -89,6 +89,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity updateUserStatus(UserEntity user) {
+        return userDao.updateUserStatus(user);
+    }
+
+    @Override
     public UserEntity Login(String email, String password) {
         UserEntity user = userDao.getUserByEmail(email);
         if (user != null) {

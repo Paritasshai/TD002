@@ -52,11 +52,11 @@ public class VideoClipController {
 //                    video.setContentType(multipartFile.getContentType());
 //                    video.setCreated(Calendar.getInstance().getTime());
 
-                    Course video = new Course();
-                    video.setName(multipartFile.getOriginalFilename());
-                    video.setDescription(multipartFile.getContentType());
-                    video.setPath(multipartFile.getOriginalFilename());
-                    courseService.addVideo(video);
+                    //Course video = new Course();
+                    //video.setName(multipartFile.getOriginalFilename());
+                    //video.setDescription(multipartFile.getContentType());
+                    //video.setPath(multipartFile.getOriginalFilename());
+                    //courseService.addVideo(video);
 
 //                    ServletContext context = request.getServletContext();
 //                    String path = context.getRealPath("Save file in folder");
@@ -64,7 +64,7 @@ public class VideoClipController {
 
                     byte[] bytes = file.getBytes();
                     BufferedOutputStream stream =
-                            new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\video\\" + multipartFile.getOriginalFilename())));
+                            new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\TD001\\td001\\src\\assets\\images\\" + multipartFile.getOriginalFilename())));
                     stream.write(bytes);
                     stream.close();
                 }

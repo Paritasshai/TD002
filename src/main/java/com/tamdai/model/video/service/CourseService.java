@@ -1,5 +1,6 @@
 package com.tamdai.model.video.service;
 
+import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.video.entity.Course;
 import com.tamdai.model.video.entity.VideoClip;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface CourseService {
 
-    Course addVideo(Course course);
+    Course addVideo(UserEntity user, Course course);
 
     Course getCourseId(Long id);
 

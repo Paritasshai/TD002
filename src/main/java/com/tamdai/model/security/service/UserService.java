@@ -28,4 +28,5 @@ public interface UserService {
 
     UserEntity getUserByFirstName(String firstName);
 
+    UserEntity updateUserStatus(UserEntity user);
 }

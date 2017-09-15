@@ -1,5 +1,7 @@
 package com.tamdai.model.video.controller;
 
+import com.tamdai.model.security.entity.UserEntity;
+import com.tamdai.model.security.service.UserService;
 import com.tamdai.model.video.entity.Course;
 import com.tamdai.model.video.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,13 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = "add/courseDetail", method = RequestMethod.POST)
-    public Course addVideoDetail(@RequestBody Course course, BindingResult bindingResult) {
-        return courseService.addVideo(course);
+    public Course addVideoDetail(@RequestBody Course course, @RequestParam("userId") Long id, BindingResult bindingResult) {
+        UserEntity user = userService.getUserId(id);
+        return courseService.addVideo(user, course);
     }
 
     @RequestMapping(value = "course/{id}", method = RequestMethod.GET)

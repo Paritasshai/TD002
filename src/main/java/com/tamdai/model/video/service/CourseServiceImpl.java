@@ -1,5 +1,6 @@
 package com.tamdai.model.video.service;
 
+import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.video.dao.CourseDao;
 import com.tamdai.model.video.entity.Course;
@@ -22,17 +23,18 @@ public class CourseServiceImpl implements CourseService {
     CourseDao courseDao;
 
     @Autowired
-    CourseRepository courseRepository;
-
-    @Autowired
     UserRepository userRepository;
 
     @Autowired
     VideoClipRepository videoClipRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
     @Override
-    public Course addVideo(Course course) {
-        return courseDao.addVideo(course);
+    public Course addVideo(UserEntity user, Course course) {
+        courseRepository.save(course);
+        return courseDao.addVideo(user, course);
     }
 
     @Override

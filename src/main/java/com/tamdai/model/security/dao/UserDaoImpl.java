@@ -43,4 +43,9 @@ public class UserDaoImpl implements UserDao {
         return userRepository.findUserByFirstName(firstName);
     }
 
+    @Override
+    public UserEntity updateUserStatus(UserEntity user) {
+        return userRepository.save(user);
+    }
+
 }

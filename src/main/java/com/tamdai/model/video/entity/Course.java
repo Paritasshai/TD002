@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class Course implements Comparable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private String name;
     private String description;
