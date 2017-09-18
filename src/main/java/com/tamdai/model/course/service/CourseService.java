@@ -27,4 +27,8 @@ public interface CourseService {
     ImageCourse saveImage(Course course, ImageCourse imageCourse);
 
     List<ImageCourse> getImageCurseList();
+
+    Course deleteImageCourse(Course course, Long imageId);
+
+    Course deleteVideoCourse(Course course, Long videoId);
 }

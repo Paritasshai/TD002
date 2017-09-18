@@ -11,7 +11,9 @@ import com.tamdai.model.course.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Film on 24/9/2559.
@@ -75,6 +77,37 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<ImageCourse> getImageCurseList() {
         return courseDao.getImageCurseList();
+    }
+
+    @Override
+    public Course deleteImageCourse(Course course, Long imageId) {
+        Set<ImageCourse> images = course.getImageCourses();
+        for (Iterator<ImageCourse> it = images.iterator(); it.hasNext(); ) {
+            ImageCourse f = it.next();
+            if (f.getId().equals(imageId)) {
+                course.getImageCourses().remove(f);
+            }
+        }
+
+        courseDao.updateCourse(course);
+        return course;
+    }
+
+    @Override
+    public Course deleteVideoCourse(Course course, Long videoId) {
+        Set<VideoClip> videoClips = course.getVideoClips();
+        VideoClip removeVideo = null;
+        for (Iterator<VideoClip> it = videoClips.iterator(); it.hasNext(); ) {
+            VideoClip i = it.next();
+            if (i.getId().equals(videoId)) {
+                removeVideo = i;
+                break;
+            }
+        }
+
+        videoClips.remove(removeVideo);
+        courseDao.updateCourse(course);
+        return course;
     }
 
 }

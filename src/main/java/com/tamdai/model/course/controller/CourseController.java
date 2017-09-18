@@ -206,4 +206,18 @@ public class CourseController {
         IOUtils.closeQuietly(outputStream);
     }
 
+    @RequestMapping(value = "delete/Image", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Course deleteImageCourse(@RequestParam("imageId") Long imageId, @RequestParam("courseId") Long courseId) {
+        Course course = courseService.getCourseId(courseId);
+        return courseService.deleteImageCourse(course, imageId);
+    }
+
+    @RequestMapping(value = "delete/Video", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Course deleteVideoCourse(@RequestParam("videoId") Long videoId, @RequestParam("courseId") Long courseId) {
+        Course course = courseService.getCourseId(courseId);
+        return courseService.deleteVideoCourse(course, videoId);
+    }
+
 }
