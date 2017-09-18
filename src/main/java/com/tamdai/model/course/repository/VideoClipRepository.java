@@ -1,6 +1,6 @@
-package com.tamdai.model.video.repository;
+package com.tamdai.model.course.repository;
 
-import com.tamdai.model.video.entity.VideoClip;
+import com.tamdai.model.course.entity.VideoClip;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

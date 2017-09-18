@@ -1,5 +1,6 @@
 package com.tamdai.model.security.controller;
 
+import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.security.service.NotificationService;
 import com.tamdai.model.security.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     NotificationService notificationService;
@@ -93,6 +97,15 @@ public class UserController {
     @RequestMapping(value = "user/findByEmail", method = RequestMethod.GET)
     public UserEntity getUserByEmail(@RequestParam("Email") String email) {
         return userService.getUserByEmail(email);
+    }
+
+    @RequestMapping("/addUserInSystem")
+    public String process() {
+        userRepository.save(new UserEntity("filmpurelove@gmail.com", "ffffffff", "adminFilm", "Hattaya", "admin", "0"));
+        userRepository.save(new UserEntity("hattaya.wpm@gmail.com", "ffffffff", "instructorA", "TeacherA", "instructor", "0"));
+        userRepository.save(new UserEntity("blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "0"));
+        userRepository.save(new UserEntity("film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
+        return "Create Customer Done!!";
     }
 
 }

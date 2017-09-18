@@ -13,18 +13,18 @@ import javax.servlet.MultipartConfigElement;
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Bean
-    public CommonsMultipartResolver multipartResolver(){
+    public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
         commonsMultipartResolver.setDefaultEncoding("utf-8");
-        commonsMultipartResolver.setMaxUploadSize(20000000);
+        commonsMultipartResolver.setMaxUploadSize(200000000);
         return commonsMultipartResolver;
     }
 
     @Bean
     MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize("10MB");
-        factory.setMaxRequestSize("10MB");
+        factory.setMaxFileSize("20MB");
+        factory.setMaxRequestSize("20MB");
         return factory.createMultipartConfig();
     }
 }

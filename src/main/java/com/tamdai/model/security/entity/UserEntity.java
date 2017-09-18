@@ -1,6 +1,6 @@
 package com.tamdai.model.security.entity;
 
-import com.tamdai.model.video.entity.Course;
+import com.tamdai.model.course.entity.Course;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -59,10 +59,6 @@ public class UserEntity {
 
     @Column(name = "balance")
     private String balance;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Set<Course> courses = new HashSet<>();
 
     public long getId() {
         return id;
@@ -188,14 +184,6 @@ public class UserEntity {
         return balance;
     }
 
-    public Set<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
-    }
-
     public void setBalance(String balance) {
         this.balance = balance;
     }
@@ -210,7 +198,16 @@ public class UserEntity {
         this.password = password;
     }
 
-    public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance, Set<Course> courses) {
+    public UserEntity(String email, String password, String firstName, String lastName, String status, String balance) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.status = status;
+        this.balance = balance;
+    }
+
+    public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -226,7 +223,6 @@ public class UserEntity {
         this.updateUserId = updateUserId;
         this.status = status;
         this.balance = balance;
-        this.courses = courses;
     }
 
     @Override
@@ -248,8 +244,6 @@ public class UserEntity {
                 ", updateUserId='" + updateUserId + '\'' +
                 ", status='" + status + '\'' +
                 ", balance='" + balance + '\'' +
-                ", courses=" + courses +
                 '}';
     }
-
 }

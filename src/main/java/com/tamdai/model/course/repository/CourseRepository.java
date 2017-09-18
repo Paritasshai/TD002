@@ -1,6 +1,6 @@
-package com.tamdai.model.video.repository;
+package com.tamdai.model.course.repository;
 
-import com.tamdai.model.video.entity.Course;
+import com.tamdai.model.course.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    Course findByName(String name);
+
 }
