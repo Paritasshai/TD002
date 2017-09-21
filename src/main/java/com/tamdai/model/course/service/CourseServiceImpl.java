@@ -1,13 +1,11 @@
 package com.tamdai.model.course.service;
 
-import com.tamdai.model.course.entity.ImageCourse;
+import com.tamdai.model.course.entity.*;
 import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.course.dao.CourseDao;
-import com.tamdai.model.course.entity.Course;
-import com.tamdai.model.course.entity.VideoClip;
 import com.tamdai.model.course.repository.VideoClipRepository;
-import com.tamdai.model.course.repository.CourseRepository;
+import com.tamdai.model.course.repository.CourseItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +30,12 @@ public class CourseServiceImpl implements CourseService {
     VideoClipRepository videoClipRepository;
 
     @Autowired
-    CourseRepository courseRepository;
+    CourseItemRepository courseItemRepository;
 
     @Override
-    public Course addCourseDetail(UserEntity user, Course course) {
+    public Course createCourse(UserEntity user, Course course) {
         course.getUsers().add(user);
-        return courseDao.addCourseDetail(user, course);
+        return courseDao.createCourse(user, course);
     }
 
     @Override
@@ -46,8 +44,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getvideos() {
-        return courseRepository.findAll();
+    public List<CourseItem> getCourseItemList() {
+        return courseItemRepository.findAll();
     }
 
     @Override
@@ -56,9 +54,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public VideoClip saveVideo(VideoClip video, Course course) {
-        course.getVideoClips().add(video);
-        courseDao.updateCourse(course);
+    public VideoClip saveVideo(VideoClip video, CourseItem courseItem) {
+        courseItem.getVideoClips().add(video);
+        courseDao.updateCourseItem(courseItem);
+
         return courseDao.saveVideo(video);
     }
 
@@ -68,15 +67,20 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ImageCourse saveImage(Course course, ImageCourse imageCourse) {
+    public ImageCourse saveCourseImage(Course course, ImageCourse imageCourse) {
         course.getImageCourses().add(imageCourse);
         courseDao.updateCourse(course);
-        return courseDao.saveImage(imageCourse);
+        return courseDao.saveCourseImage(imageCourse);
     }
 
     @Override
-    public List<ImageCourse> getImageCurseList() {
+    public List<ImageCourse> getImageCourseList() {
         return courseDao.getImageCurseList();
+    }
+
+    @Override
+    public CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId) {
+        return null;
     }
 
     @Override
@@ -93,21 +97,88 @@ public class CourseServiceImpl implements CourseService {
         return course;
     }
 
-    @Override
-    public Course deleteVideoCourse(Course course, Long videoId) {
-        Set<VideoClip> videoClips = course.getVideoClips();
-        VideoClip removeVideo = null;
-        for (Iterator<VideoClip> it = videoClips.iterator(); it.hasNext(); ) {
-            VideoClip i = it.next();
-            if (i.getId().equals(videoId)) {
-                removeVideo = i;
-                break;
-            }
-        }
+//    @Override
+//    public CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId) {
+//        Set<VideoClip> videoClips = courseItem.getVideoClips();
+//        VideoClip removeVideo = null;
+//        for (Iterator<VideoClip> it = videoClips.iterator(); it.hasNext(); ) {
+//            VideoClip i = it.next();
+//            if (i.getId().equals(videoId)) {
+//                removeVideo = i;
+//                break;
+//            }
+//        }
+//
+//        videoClips.remove(removeVideo);
+//        courseDao.updateCourse(courseItem);
+//        return courseItem;
+//    }
 
-        videoClips.remove(removeVideo);
-        courseDao.updateCourse(course);
-        return course;
+    @Override
+    public List<VideoClip> getVideoCourseList() {
+        return courseDao.getVideoCurseList();
+    }
+
+    @Override
+    public VideoClip getVideoClipsById(Long id) {
+        return courseDao.getVideoClipsById(id);
+    }
+
+    @Override
+    public VideoClip updateVideoClips(VideoClip videoClip) {
+        return courseDao.updateVideoClips(videoClip);
+    }
+
+    @Override
+    public List<Course> getCourseList() {
+        return courseDao.getCourseList();
+    }
+
+    @Override
+    public CourseItem createCourseVideoItem(CourseItem courseItem, Course course) {
+        //setItemType
+        String type = new String("video");
+        courseItem.setCourseType(type);
+        courseDao.createCourseVideoItem(courseItem, course);
+        return courseItem;
+    }
+
+    @Override
+    public CourseItem getCourseItemtemById(Long id) {
+        return courseDao.getCourseItemtemById(id);
+    }
+
+    @Override
+    public CourseItem createCourseImageItem(CourseItem courseItem, Course course) {
+
+        //setItemType
+        String type = new String("image");
+        courseItem.setCourseType(type);
+
+        courseDao.createCourseImageItem(courseItem, course);
+        return courseItem;
+    }
+
+    @Override
+    public CourseItem courseItemId(Long id) {
+        return courseDao.courseItemId(id);
+    }
+
+    @Override
+    public CourseItem updateCourseItem(CourseItem courseItem) {
+        return courseDao.updateCourseItem(courseItem);
+    }
+
+    @Override
+    public ImageItem saveCourseImageItem(CourseItem courseItem, ImageItem imageItem) {
+        courseItem.getImageItems().add(imageItem);
+        courseDao.updateCourseItem(courseItem);
+        return courseDao.saveImage(imageItem);
+    }
+
+    @Override
+    public List<ImageItem> getImageItemCourseList() {
+        return courseDao.getImageItemCourseList();
     }
 
 }

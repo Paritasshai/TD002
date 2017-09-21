@@ -1,13 +1,9 @@
 package com.tamdai.model.course.dao;
 
-import com.tamdai.model.course.entity.ImageCourse;
-import com.tamdai.model.course.repository.ImageCourseRepository;
+import com.tamdai.model.course.entity.*;
+import com.tamdai.model.course.repository.*;
 import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
-import com.tamdai.model.course.entity.Course;
-import com.tamdai.model.course.entity.VideoClip;
-import com.tamdai.model.course.repository.CourseRepository;
-import com.tamdai.model.course.repository.VideoClipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +17,7 @@ import java.util.List;
 public class CourseDaoImpl implements CourseDao {
 
     @Autowired
-    CourseRepository courseRepository;
+    CourseItemRepository courseItemRepository;
 
     @Autowired
     VideoClipRepository videoClipRepository;
@@ -32,8 +28,14 @@ public class CourseDaoImpl implements CourseDao {
     @Autowired
     ImageCourseRepository imageCourseRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
+    @Autowired
+    ImageItemRepository imageItemRepository;
+
     @Override
-    public Course addCourseDetail(UserEntity user, Course course) {
+    public Course createCourse(UserEntity user, Course course) {
         return courseRepository.save(course);
     }
 
@@ -48,6 +50,11 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public CourseItem updateCourseItem(CourseItem courseItem) {
+        return courseItemRepository.save(courseItem);
+    }
+
+    @Override
     public VideoClip saveVideo(VideoClip video) {
         return videoClipRepository.save(video);
     }
@@ -58,13 +65,68 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public ImageCourse saveImage(ImageCourse imageCourse) {
+    public ImageCourse saveCourseImage(ImageCourse imageCourse) {
         return imageCourseRepository.save(imageCourse);
     }
 
     @Override
     public List<ImageCourse> getImageCurseList() {
         return imageCourseRepository.findAll();
+    }
+
+    @Override
+    public List<VideoClip> getVideoCurseList() {
+        return videoClipRepository.findAll();
+    }
+
+    @Override
+    public VideoClip getVideoClipsById(Long id) {
+        return videoClipRepository.findOne(id);
+    }
+
+    @Override
+    public VideoClip updateVideoClips(VideoClip videoClip) {
+        return videoClipRepository.save(videoClip);
+    }
+
+    @Override
+    public List<Course> getCourseList() {
+        return courseRepository.findAll();
+    }
+
+    @Override
+    public CourseItem createCourseVideoItem(CourseItem courseItem, Course course) {
+        course.getCourseItems().add(courseItem);
+        courseRepository.save(course);
+        return courseItemRepository.save(courseItem);
+    }
+
+    @Override
+    public CourseItem getCourseItemtemById(Long id) {
+        return courseItemRepository.findOne(id);
+    }
+
+    @Override
+    public CourseItem createCourseImageItem(CourseItem courseItem, Course course) {
+        course.getCourseItems().add(courseItem);
+        courseRepository.save(course);
+
+        return courseItemRepository.save(courseItem);
+    }
+
+    @Override
+    public CourseItem courseItemId(Long id) {
+        return courseItemRepository.findOne(id);
+    }
+
+    @Override
+    public ImageItem saveImage(ImageItem imageItem) {
+        return imageItemRepository.save(imageItem);
+    }
+
+    @Override
+    public List<ImageItem> getImageItemCourseList() {
+        return imageItemRepository.findAll();
     }
 
 }

@@ -101,14 +101,12 @@ public class UserController {
 
     @RequestMapping("/addUserInSystem")
     public String process() {
-        userRepository.save(new UserEntity("filmpurelove@gmail.com", "ffffffff", "adminFilm", "Hattaya", "admin", "0"));
-        userRepository.save(new UserEntity("hattaya.wpm@gmail.com", "ffffffff", "instructorA", "TeacherA", "instructor", "0"));
-        userRepository.save(new UserEntity("blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "0"));
-        userRepository.save(new UserEntity("film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
+        userRepository.save(new UserEntity(1L, "filmpurelove@gmail.com", "ffffffff", "adminFilm", "Hattaya", "admin", "0"));
+        userRepository.save(new UserEntity(2L, "hattaya.wpm@gmail.com", "ffffffff", "instructorA", "TeacherA", "instructor", "0"));
+        userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "0"));
+        userRepository.save(new UserEntity(4L, "film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
         return "Create Customer Done!!";
     }
-
-
 
 }
 

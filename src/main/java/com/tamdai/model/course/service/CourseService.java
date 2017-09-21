@@ -1,9 +1,7 @@
 package com.tamdai.model.course.service;
 
-import com.tamdai.model.course.entity.ImageCourse;
+import com.tamdai.model.course.entity.*;
 import com.tamdai.model.security.entity.UserEntity;
-import com.tamdai.model.course.entity.Course;
-import com.tamdai.model.course.entity.VideoClip;
 
 import java.util.List;
 
@@ -12,23 +10,45 @@ import java.util.List;
  */
 public interface CourseService {
 
-    Course addCourseDetail(UserEntity user, Course course);
+    Course createCourse(UserEntity user, Course course);
 
     Course getCourseId(Long id);
 
-    List<Course> getvideos();
+    List<CourseItem> getCourseItemList();
 
     Course updateCourse(Course course);
 
-    VideoClip saveVideo(VideoClip video, Course course);
+    VideoClip saveVideo(VideoClip video, CourseItem courseItem);
 
     List<VideoClip> getVideoList();
 
-    ImageCourse saveImage(Course course, ImageCourse imageCourse);
+    ImageCourse saveCourseImage(Course course, ImageCourse imageCourse);
 
-    List<ImageCourse> getImageCurseList();
+    List<ImageCourse> getImageCourseList();
 
     Course deleteImageCourse(Course course, Long imageId);
 
-    Course deleteVideoCourse(Course course, Long videoId);
+    CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId);
+
+    List<VideoClip> getVideoCourseList();
+
+    VideoClip getVideoClipsById(Long id);
+
+    VideoClip updateVideoClips(VideoClip videoClip);
+
+    List<Course> getCourseList();
+
+    CourseItem createCourseVideoItem(CourseItem courseItem, Course course);
+
+    CourseItem getCourseItemtemById(Long id);
+
+    CourseItem createCourseImageItem(CourseItem courseItem, Course course);
+
+    CourseItem courseItemId(Long id);
+
+    CourseItem updateCourseItem(CourseItem courseItem);
+
+    ImageItem saveCourseImageItem(CourseItem courseItem, ImageItem imageItem);
+
+    List<ImageItem> getImageItemCourseList();
 }

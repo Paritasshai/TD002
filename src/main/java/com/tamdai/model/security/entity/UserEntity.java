@@ -1,11 +1,6 @@
 package com.tamdai.model.security.entity;
 
-import com.tamdai.model.course.entity.Course;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -198,7 +193,9 @@ public class UserEntity {
         this.password = password;
     }
 
-    public UserEntity(String email, String password, String firstName, String lastName, String status, String balance) {
+
+    public UserEntity(Long id, String email, String password, String firstName, String lastName, String status, String balance) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;

@@ -15,28 +15,18 @@ public class Course implements Comparable {
     private Long id;
     private String name;
     private String description;
-    private String price;
-    private String path;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    Set<VideoClip> videoClips = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Set<ImageCourse> imageCourses = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<UserEntity> users = new HashSet<>();
 
-    public Set<VideoClip> getVideoClips() {
-        return videoClips;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<CourseItem> courseItems = new HashSet<>();
 
-    public void setVideoClips(Set<VideoClip> videoClips) {
-        this.videoClips = videoClips;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<ImageCourse> imageCourses = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -62,28 +52,20 @@ public class Course implements Comparable {
         this.description = description;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     public Set<UserEntity> getUsers() {
         return users;
     }
 
     public void setUsers(Set<UserEntity> users) {
         this.users = users;
+    }
+
+    public Set<CourseItem> getCourseItems() {
+        return courseItems;
+    }
+
+    public void setCourseItems(Set<CourseItem> courseItems) {
+        this.courseItems = courseItems;
     }
 
     public Set<ImageCourse> getImageCourses() {
@@ -97,37 +79,24 @@ public class Course implements Comparable {
     public Course() {
     }
 
-    public Course(String name, String description, String price, String path, Set<VideoClip> videoClips, Set<UserEntity> users) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.path = path;
-        this.videoClips = videoClips;
-        this.users = users;
-    }
-
-    public Course(String name, String description, String price, String path, Set<VideoClip> videoClips, Set<ImageCourse> imageCourses, Set<UserEntity> users) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.path = path;
-        this.videoClips = videoClips;
-        this.imageCourses = imageCourses;
-        this.users = users;
-    }
-
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", price='" + price + '\'' +
-                ", path='" + path + '\'' +
-                ", videoClips=" + videoClips +
-                ", imageCourses=" + imageCourses +
                 ", users=" + users +
+                ", courseItems=" + courseItems +
+                ", imageCourses=" + imageCourses +
                 '}';
+    }
+
+    public Course(String name, String description, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.name = name;
+        this.description = description;
+        this.users = users;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
     }
 
     @Override

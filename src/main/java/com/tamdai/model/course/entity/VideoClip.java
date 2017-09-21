@@ -10,13 +10,14 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class VideoClip {
+public class VideoClip implements Comparable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String fileName;
+    private String lessonName;
     private String contentType;
     private String path;
     private String createDate;
@@ -25,11 +26,20 @@ public class VideoClip {
 
     }
 
-    public VideoClip(String fileName, String contentType, String path, String createDate) {
+    public VideoClip(String fileName, String lessonName, String contentType, String path, String createDate) {
         this.fileName = fileName;
+        this.lessonName = lessonName;
         this.contentType = contentType;
         this.path = path;
         this.createDate = createDate;
+    }
+
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
     }
 
     public String getPath() {
@@ -77,10 +87,15 @@ public class VideoClip {
         return "VideoClip{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
+                ", lessonName='" + lessonName + '\'' +
                 ", contentType='" + contentType + '\'' +
                 ", path='" + path + '\'' +
                 ", createDate='" + createDate + '\'' +
                 '}';
     }
 
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }

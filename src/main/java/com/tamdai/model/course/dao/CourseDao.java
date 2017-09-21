@@ -1,9 +1,7 @@
 package com.tamdai.model.course.dao;
 
-import com.tamdai.model.course.entity.ImageCourse;
+import com.tamdai.model.course.entity.*;
 import com.tamdai.model.security.entity.UserEntity;
-import com.tamdai.model.course.entity.Course;
-import com.tamdai.model.course.entity.VideoClip;
 
 import java.util.List;
 
@@ -13,17 +11,39 @@ import java.util.List;
 
 public interface CourseDao {
 
-    Course addCourseDetail(UserEntity user, Course course);
+    Course createCourse(UserEntity user, Course course);
 
     Course getCourseId(Long id);
 
     Course updateCourse(Course course);
 
+    CourseItem updateCourseItem(CourseItem courseItem);
+
     VideoClip saveVideo(VideoClip video);
 
     List<VideoClip> getVideoList();
 
-    ImageCourse saveImage(ImageCourse imageCourse);
+    ImageCourse saveCourseImage(ImageCourse imageCourse);
 
     List<ImageCourse> getImageCurseList();
+
+    List<VideoClip> getVideoCurseList();
+
+    VideoClip getVideoClipsById(Long id);
+
+    VideoClip updateVideoClips(VideoClip videoClip);
+
+    List<Course> getCourseList();
+
+    CourseItem createCourseVideoItem(CourseItem courseItem, Course course);
+
+    CourseItem getCourseItemtemById(Long id);
+
+    CourseItem createCourseImageItem(CourseItem courseItem, Course course);
+
+    CourseItem courseItemId(Long id);
+
+    ImageItem saveImage(ImageItem imageItem);
+
+    List<ImageItem> getImageItemCourseList();
 }
