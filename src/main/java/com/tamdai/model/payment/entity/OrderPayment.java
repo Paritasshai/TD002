@@ -51,6 +51,9 @@ public class OrderPayment {
     @Column(name = "updateUserId")
     private Long updateUserId;
 
+    @Column(name = "statusOrder")
+    private String statusOrder;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<UserEntity> users = new HashSet<>();
@@ -167,6 +170,14 @@ public class OrderPayment {
         this.users = users;
     }
 
+    public String getStatusOrder() {
+        return statusOrder;
+    }
+
+    public void setStatusOrder(String statusOrder) {
+        this.statusOrder = statusOrder;
+    }
+
     public OrderPayment() {
     }
 
@@ -186,6 +197,23 @@ public class OrderPayment {
         this.users = users;
     }
 
+    public OrderPayment(Long accountId, String transType, String transRef, Integer transFlq, BigDecimal transAmount, String transRemark, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, String statusOrder, Set<UserEntity> users) {
+        this.accountId = accountId;
+        this.transType = transType;
+        this.transRef = transRef;
+        this.transFlq = transFlq;
+        this.transAmount = transAmount;
+        this.transRemark = transRemark;
+        this.createDate = createDate;
+        this.createTime = createTime;
+        this.createUserId = createUserId;
+        this.updateDate = updateDate;
+        this.updateTime = updateTime;
+        this.updateUserId = updateUserId;
+        this.statusOrder = statusOrder;
+        this.users = users;
+    }
+
     @Override
     public String toString() {
         return "OrderPayment{" +
@@ -202,6 +230,7 @@ public class OrderPayment {
                 ", updateDate='" + updateDate + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 ", updateUserId=" + updateUserId +
+                ", statusOrder='" + statusOrder + '\'' +
                 ", users=" + users +
                 '}';
     }

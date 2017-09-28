@@ -1,6 +1,7 @@
 package com.tamdai.model.course.service;
 
 import com.tamdai.model.course.entity.*;
+import com.tamdai.model.course.repository.CourseRepository;
 import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.course.dao.CourseDao;
@@ -32,10 +33,12 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseItemRepository courseItemRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
     @Override
-    public Course createCourse(UserEntity user, Course course) {
-        course.getUsers().add(user);
-        return courseDao.createCourse(user, course);
+    public Course createCourse(Long userId, Course course) {
+        return courseDao.createCourse(userId, course);
     }
 
     @Override
@@ -57,7 +60,6 @@ public class CourseServiceImpl implements CourseService {
     public VideoClip saveVideo(VideoClip video, CourseItem courseItem) {
         courseItem.getVideoClips().add(video);
         courseDao.updateCourseItem(courseItem);
-
         return courseDao.saveVideo(video);
     }
 
@@ -139,13 +141,15 @@ public class CourseServiceImpl implements CourseService {
         //setItemType
         String type = new String("video");
         courseItem.setCourseType(type);
+        courseItem.setName("Lesson Name");
+        courseItem.setDescription("Lesson Description");
         courseDao.createCourseVideoItem(courseItem, course);
         return courseItem;
     }
 
     @Override
-    public CourseItem getCourseItemtemById(Long id) {
-        return courseDao.getCourseItemtemById(id);
+    public CourseItem getCourseItemById(Long id) {
+        return courseDao.getCourseItemById(id);
     }
 
     @Override
@@ -153,6 +157,8 @@ public class CourseServiceImpl implements CourseService {
 
         //setItemType
         String type = new String("image");
+        courseItem.setName("Lesson Name");
+        courseItem.setDescription("Lesson Description");
         courseItem.setCourseType(type);
 
         courseDao.createCourseImageItem(courseItem, course);
@@ -179,6 +185,12 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<ImageItem> getImageItemCourseList() {
         return courseDao.getImageItemCourseList();
+    }
+
+    @Override
+    public Course deleteCourse(Long id) {
+        Course course = getCourseId(id);
+        return courseDao.deleteCourse(course);
     }
 
 }

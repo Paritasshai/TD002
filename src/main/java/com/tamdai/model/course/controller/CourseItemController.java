@@ -77,9 +77,9 @@ public class CourseItemController {
         return courseService.getCourseItemList();
     }
 
-    @RequestMapping(value = "getCourseItemtemById/{id}", method = RequestMethod.GET)
-    public CourseItem getCourseItemtemById(@PathVariable("id") Long id) {
-        return courseService.getCourseItemtemById(id);
+    @RequestMapping(value = "getCourseItemById/{id}", method = RequestMethod.GET)
+    public CourseItem getCourseItemById(@PathVariable("id") Long id) {
+        return courseService.getCourseItemById(id);
     }
 
     @RequestMapping(value = "courseItem/{id}", method = RequestMethod.GET)
@@ -104,13 +104,12 @@ public class CourseItemController {
                     MultipartFile multipartFile = mRequest.getFile(itr.next());
 
                     String destination = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\video\\" + multipartFile.getOriginalFilename();
-                    //courseService.setPath(destination);
-                    //courseService.updateCourse(courseItem);
 
                     VideoClip video = new VideoClip();
                     video.setFileName(multipartFile.getOriginalFilename());
                     video.setLessonName(multipartFile.getOriginalFilename());
                     video.setContentType(multipartFile.getContentType());
+
                     //setDate
                     String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
                     video.setCreateDate(date);
@@ -140,8 +139,6 @@ public class CourseItemController {
     @RequestMapping(value = "playVideo/{id}", method = RequestMethod.GET)
     @ResponseBody
     public void home(@PathVariable("id") Long id, Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /// logger.info("Welcome home! The client locale is {}.", locale);
-
         VideoClip videoClip = videoClipRepository.findOne(id);
 
         String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\video\\" + videoClip.getFileName();
@@ -189,7 +186,7 @@ public class CourseItemController {
     public CourseItem addImageItem(HttpServletRequest request,
                                    @RequestParam("file") MultipartFile file, @RequestParam("id") Long id) throws IOException {
         MultipartHttpServletRequest mRequest;
-        CourseItem courseItem = courseService.getCourseItemtemById(id);
+        CourseItem courseItem = courseService.getCourseItemById(id);
 
         try {
             mRequest = (MultipartHttpServletRequest) request;

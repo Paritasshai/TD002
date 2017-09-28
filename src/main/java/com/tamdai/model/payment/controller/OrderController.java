@@ -25,7 +25,6 @@ public class OrderController {
     public OrderPayment OrderPaymentCreate(@RequestBody OrderPayment orderPayment,
                                            @RequestParam("userId") Long id, BindingResult bindingResult) {
         UserEntity user = userService.getUserId(id);
-
         return orderPaymentService.OrderPaymentCreate(orderPayment, user);
     }
 

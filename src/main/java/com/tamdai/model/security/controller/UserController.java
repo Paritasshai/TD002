@@ -1,5 +1,10 @@
 package com.tamdai.model.security.controller;
 
+import com.tamdai.model.course.entity.Course;
+import com.tamdai.model.course.entity.CourseItem;
+import com.tamdai.model.course.repository.CourseItemRepository;
+import com.tamdai.model.course.repository.CourseRepository;
+import com.tamdai.model.course.service.CourseService;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.security.service.NotificationService;
 import com.tamdai.model.security.service.UserService;
@@ -10,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin
 @RestController
@@ -25,6 +32,15 @@ public class UserController {
 
     @Autowired
     NotificationService notificationService;
+
+    @Autowired
+    CourseService courseService;
+
+    @Autowired
+    CourseRepository courseRepository;
+
+    @Autowired
+    CourseItemRepository courseItemRepository;
 
     @RequestMapping(value = "user/login")
     public ResponseEntity<UserEntity> Login(@RequestParam("Email") String email, @RequestParam("Password") String password) {
@@ -99,14 +115,32 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-    @RequestMapping("/addUserInSystem")
+    @RequestMapping("/addDataInSystem")
     public String process() {
+
         userRepository.save(new UserEntity(1L, "filmpurelove@gmail.com", "ffffffff", "adminFilm", "Hattaya", "admin", "0"));
         userRepository.save(new UserEntity(2L, "hattaya.wpm@gmail.com", "ffffffff", "instructorA", "TeacherA", "instructor", "0"));
         userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "0"));
         userRepository.save(new UserEntity(4L, "film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
-        return "Create Customer Done!!";
+
+        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1."));
+        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2."));
+        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3."));
+        courseRepository.save(new Course(4L, 2L, "Course 4", "Technology for life 4."));
+        courseRepository.save(new Course(5L, 2L, "Course 5", "Technology for life 5."));
+        courseRepository.save(new Course(6L, 2L, "Course 6", "Technology for life 6."));
+        courseRepository.save(new Course(7L, 2L, "Course 7", "Technology for life 7."));
+        courseRepository.save(new Course(8L, 2L, "Course 8", "Technology for life 8."));
+        courseRepository.save(new Course(9L, 2L, "Course 9", "Technology for life 9."));
+        return "Create Done!!";
     }
+
+//    @RequestMapping(value = "savePurchaseCart/{id}/no", method = RequestMethod.PUT)
+//    public UserEntity userSavePurchaseCart(@PathVariable("id") Long id,
+//                                           @RequestParam("userId") Long userId) {
+//        UserEntity user = userService.getUserId(userId);
+//        return userService.userSavePurchaseCart(user, id);
+//    }
 
 }
 

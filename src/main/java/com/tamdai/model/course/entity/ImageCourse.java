@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 
 @Entity
-public class ImageCourse implements Comparable {
+public class ImageCourse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,8 +78,4 @@ public class ImageCourse implements Comparable {
         return result;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }

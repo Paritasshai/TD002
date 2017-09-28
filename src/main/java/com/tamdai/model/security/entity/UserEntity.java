@@ -1,6 +1,12 @@
 package com.tamdai.model.security.entity;
 
+import com.tamdai.model.course.entity.Course;
+import com.tamdai.model.purchaseCart.entity.PurchaseCart;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -54,6 +60,14 @@ public class UserEntity {
 
     @Column(name = "balance")
     private String balance;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<PurchaseCart> purchaseCarts = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<Course> courses = new HashSet<>();
 
     public long getId() {
         return id;
@@ -183,6 +197,22 @@ public class UserEntity {
         this.balance = balance;
     }
 
+    public Set<PurchaseCart> getPurchaseCarts() {
+        return purchaseCarts;
+    }
+
+    public void setPurchaseCarts(Set<PurchaseCart> purchaseCarts) {
+        this.purchaseCarts = purchaseCarts;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
     public UserEntity() {
     }
 
@@ -192,7 +222,6 @@ public class UserEntity {
         this.email = email;
         this.password = password;
     }
-
 
     public UserEntity(Long id, String email, String password, String firstName, String lastName, String status, String balance) {
         this.id = id;
@@ -222,6 +251,45 @@ public class UserEntity {
         this.balance = balance;
     }
 
+    public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance, Set<PurchaseCart> purchaseCarts) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.lastLoginDate = lastLoginDate;
+        this.signUpDate = signUpDate;
+        this.confirmDate = confirmDate;
+        this.createDate = createDate;
+        this.createTime = createTime;
+        this.createUserID = createUserID;
+        this.updateDate = updateDate;
+        this.updateTime = updateTime;
+        this.updateUserId = updateUserId;
+        this.status = status;
+        this.balance = balance;
+        this.purchaseCarts = purchaseCarts;
+    }
+
+    public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance, Set<PurchaseCart> purchaseCarts, Set<Course> courses) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.lastLoginDate = lastLoginDate;
+        this.signUpDate = signUpDate;
+        this.confirmDate = confirmDate;
+        this.createDate = createDate;
+        this.createTime = createTime;
+        this.createUserID = createUserID;
+        this.updateDate = updateDate;
+        this.updateTime = updateTime;
+        this.updateUserId = updateUserId;
+        this.status = status;
+        this.balance = balance;
+        this.purchaseCarts = purchaseCarts;
+        this.courses = courses;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -241,6 +309,8 @@ public class UserEntity {
                 ", updateUserId='" + updateUserId + '\'' +
                 ", status='" + status + '\'' +
                 ", balance='" + balance + '\'' +
+                ", purchaseCarts=" + purchaseCarts +
+                ", courses=" + courses +
                 '}';
     }
 }

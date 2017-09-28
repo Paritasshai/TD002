@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ImageItem implements Comparable{
+public class ImageItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -66,8 +66,4 @@ public class ImageItem implements Comparable{
                 '}';
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }

@@ -26,4 +26,11 @@ public class PaymentTransactionDaoImpl implements PaymentTransactionDao {
         paymentTransactionRepository.save(paymentTransaction);
         return paymentTransaction;
     }
+
+    @Override
+    public PaymentTransaction createPaymentTransactionPurchase(UserEntity userEntity, PaymentTransaction paymentTransaction) {
+        paymentTransaction.getUsers().add(userEntity);
+        paymentTransactionRepository.save(paymentTransaction);
+        return paymentTransaction;
+    }
 }

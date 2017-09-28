@@ -54,6 +54,9 @@ public class BankStatement {
     @Column(name = "statusBank")
     private String statusBank;
 
+    @Column(name = "bankOrderId")
+    private Long bankOrderId;
+
     @Column(name = "paymentId")
     private String paymentId;
 
@@ -189,10 +192,18 @@ public class BankStatement {
         this.paymentId = paymentId;
     }
 
+    public Long getBankOrderId() {
+        return bankOrderId;
+    }
+
+    public void setBankOrderId(Long bankOrderId) {
+        this.bankOrderId = bankOrderId;
+    }
+
     public BankStatement() {
     }
 
-    public BankStatement(Long bankId, String bankName, String statementDate, String statementTime, BigDecimal statementAmount, Long accountId, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, String statusBank, String paymentId, Set<UserEntity> users) {
+    public BankStatement(Long bankId, String bankName, String statementDate, String statementTime, BigDecimal statementAmount, Long accountId, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, String statusBank, Long bankOrderId, String paymentId, Set<UserEntity> users) {
         this.bankId = bankId;
         this.bankName = bankName;
         this.statementDate = statementDate;
@@ -206,6 +217,7 @@ public class BankStatement {
         this.updateTime = updateTime;
         this.updateUserId = updateUserId;
         this.statusBank = statusBank;
+        this.bankOrderId = bankOrderId;
         this.paymentId = paymentId;
         this.users = users;
     }
@@ -226,8 +238,9 @@ public class BankStatement {
                 ", updateDate='" + updateDate + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 ", updateUserId=" + updateUserId +
-                ", statusBank=" + statusBank +
-                ", paymentId=" + paymentId +
+                ", statusBank='" + statusBank + '\'' +
+                ", bankOrderId=" + bankOrderId +
+                ", paymentId='" + paymentId + '\'' +
                 ", users=" + users +
                 '}';
     }

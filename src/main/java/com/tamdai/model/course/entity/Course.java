@@ -1,6 +1,5 @@
 package com.tamdai.model.course.entity;
 
-import com.tamdai.model.security.entity.UserEntity;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -8,17 +7,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Course implements Comparable {
+public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 
     private Long id;
+    private Long userId;
     private String name;
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Set<UserEntity> users = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+//    private Set<UserEntity> users = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -27,6 +27,14 @@ public class Course implements Comparable {
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<ImageCourse> imageCourses = new HashSet<>();
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Long getId() {
         return id;
@@ -52,14 +60,6 @@ public class Course implements Comparable {
         this.description = description;
     }
 
-    public Set<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<UserEntity> users) {
-        this.users = users;
-    }
-
     public Set<CourseItem> getCourseItems() {
         return courseItems;
     }
@@ -76,31 +76,41 @@ public class Course implements Comparable {
         this.imageCourses = imageCourses;
     }
 
+//    public Set<UserEntity> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Set<UserEntity> users) {
+//        this.users = users;
+//    }
+
     public Course() {
+    }
+
+    public Course(Long id, Long userId, String name, String description) {
+        this.userId = userId;
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Course(Long userId, String name, String description, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
     }
 
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
+                ", userId=" + userId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", users=" + users +
                 ", courseItems=" + courseItems +
                 ", imageCourses=" + imageCourses +
                 '}';
-    }
-
-    public Course(String name, String description, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
-        this.name = name;
-        this.description = description;
-        this.users = users;
-        this.courseItems = courseItems;
-        this.imageCourses = imageCourses;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
     }
 }

@@ -3,6 +3,7 @@ package com.tamdai.model.course.controller;
 import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.course.entity.CourseItem;
 import com.tamdai.model.course.entity.ImageCourse;
+import com.tamdai.model.course.repository.CourseRepository;
 import com.tamdai.model.course.repository.ImageCourseRepository;
 import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.service.UserService;
@@ -45,10 +46,12 @@ public class CourseController {
     @Autowired
     ImageCourseRepository imageCourseRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
     @RequestMapping(value = "create/course", method = RequestMethod.POST)
-    public Course createCourse(@RequestBody Course course, @RequestParam("userId") Long id, BindingResult bindingResult) {
-        UserEntity user = userService.getUserId(id);
-        return courseService.createCourse(user, course);
+    public Course createCourse(@RequestBody Course course, @RequestParam("userId") Long userId, BindingResult bindingResult) {
+        return courseService.createCourse(userId, course);
     }
 
     @RequestMapping(value = "course/{id}", method = RequestMethod.GET)
@@ -128,11 +131,24 @@ public class CourseController {
         IOUtils.closeQuietly(outputStream);
     }
 
+    @RequestMapping(value = "deleteCourse/{id}", method = RequestMethod.DELETE)
+    public Course deleteCourse(@PathVariable("id") Long id) {
+        return courseService.deleteCourse(id);
+    }
+
     @RequestMapping(value = "delete/Image", method = RequestMethod.DELETE)
     @ResponseBody
     public Course deleteImageCourse(@RequestParam("imageId") Long imageId, @RequestParam("courseId") Long courseId) {
         Course course = courseService.getCourseId(courseId);
         return courseService.deleteImageCourse(course, imageId);
     }
+
+//    @RequestMapping("/addCourseInSystem")
+//    public String process() {
+//        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1."));
+//        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2."));
+//        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3."));
+//        return "Create Course Done!!";
+//    }
 
 }

@@ -10,10 +10,10 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class VideoClip implements Comparable{
+public class VideoClip {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String fileName;
@@ -94,8 +94,4 @@ public class VideoClip implements Comparable{
                 '}';
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }

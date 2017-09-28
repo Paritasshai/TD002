@@ -1,8 +1,11 @@
 package com.tamdai.model.payment.controller;
 
 import com.tamdai.model.payment.entity.BankStatement;
+import com.tamdai.model.payment.entity.OrderPayment;
 import com.tamdai.model.payment.entity.PaymentTransaction;
+import com.tamdai.model.payment.repository.OrderPaymentRepository;
 import com.tamdai.model.payment.service.BankStatementService;
+import com.tamdai.model.payment.service.OrderPaymentService;
 import com.tamdai.model.payment.service.PaymentTransactionService;
 import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.service.UserService;
@@ -30,6 +33,12 @@ public class BankStatementController {
     @Autowired
     PaymentTransactionService paymentTransactionService;
 
+    @Autowired
+    OrderPaymentService paymentService;
+
+    @Autowired
+    OrderPaymentRepository orderPaymentRepository;
+
     @RequestMapping(value = "create/bankStatement", method = RequestMethod.POST)
     public BankStatement bankStatementCreate(@RequestBody BankStatement bankStatement,
                                              @RequestParam("userId") Long id, BindingResult bindingResult) {
@@ -53,10 +62,12 @@ public class BankStatementController {
                                              @RequestBody BankStatement bankStatement,
                                              @RequestParam("Email") String email,
                                              @RequestParam("UserId") Long userId,
+                                             @RequestParam("orderId") Long orderId,
                                              @RequestParam("transRef") String transRef,
                                              @RequestParam("transAmount") String transAmount,
                                              @RequestParam("Balance") String balance, BindingResult bindingResult) {
         UserEntity user = userService.getUserByEmail(email);
+        OrderPayment orderPayment = paymentService.getOrderById(orderId);
         BankStatement bank = bankStatementService.getBankStatementById(id);
 
         try {
@@ -75,6 +86,10 @@ public class BankStatementController {
 
             String transRe = new String(balance);
             paymentTransaction.setTransRemark(transRe);
+
+            String statusOrder = new String("confirm");
+            orderPayment.setStatusOrder(statusOrder);
+            orderPaymentRepository.save(orderPayment);
 
             paymentTransactionService.createPaymentTransaction(user, paymentTransaction, transRef);
 

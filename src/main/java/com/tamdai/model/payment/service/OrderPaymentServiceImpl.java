@@ -28,6 +28,10 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         String createTime = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
         payment.setCreateTime(createTime);
 
+        //CreateStatus
+        String status = new String("wait");
+        payment.setStatusOrder(status);
+
         //PaymentId
         String accountId = UUID.randomUUID().toString();
         payment.setTransRef(accountId);

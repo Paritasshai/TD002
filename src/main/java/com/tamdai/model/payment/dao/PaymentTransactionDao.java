@@ -10,4 +10,6 @@ public interface PaymentTransactionDao {
     List<PaymentTransaction> getPaymentTransaction();
 
     PaymentTransaction createPaymentTransaction(UserEntity user, PaymentTransaction paymentTransaction, String transRef);
+
+    PaymentTransaction createPaymentTransactionPurchase(UserEntity userEntity, PaymentTransaction paymentTransaction);
 }

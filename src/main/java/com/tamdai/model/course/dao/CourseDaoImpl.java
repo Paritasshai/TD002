@@ -6,6 +6,7 @@ import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class CourseDaoImpl implements CourseDao {
     ImageItemRepository imageItemRepository;
 
     @Override
-    public Course createCourse(UserEntity user, Course course) {
+    public Course createCourse(Long userId, Course course) {
+        course.setUserId(userId);
         return courseRepository.save(course);
     }
 
@@ -102,7 +104,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public CourseItem getCourseItemtemById(Long id) {
+    public CourseItem getCourseItemById(Long id) {
         return courseItemRepository.findOne(id);
     }
 
@@ -110,7 +112,6 @@ public class CourseDaoImpl implements CourseDao {
     public CourseItem createCourseImageItem(CourseItem courseItem, Course course) {
         course.getCourseItems().add(courseItem);
         courseRepository.save(course);
-
         return courseItemRepository.save(courseItem);
     }
 
@@ -127,6 +128,13 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public List<ImageItem> getImageItemCourseList() {
         return imageItemRepository.findAll();
+    }
+
+    @Override
+    public Course deleteCourse(Course course) {
+        courseRepository.delete(course);
+        course.setId(null);
+        return course;
     }
 
 }

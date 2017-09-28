@@ -1,5 +1,6 @@
 package com.tamdai.model.security.dao;
 
+import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.security.entity.UserEntity;
 
 import java.util.List;
@@ -19,4 +20,5 @@ public interface UserDao {
     UserEntity getUserByFirstName(String firstName);
 
     UserEntity updateUserStatus(UserEntity user);
+
 }

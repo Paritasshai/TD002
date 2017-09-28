@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class CourseItem implements Comparable {
+public class CourseItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 
     private Long id;
     private String courseType;
@@ -102,6 +102,14 @@ public class CourseItem implements Comparable {
     public CourseItem() {
     }
 
+    public CourseItem(Long id, String courseType, String name, String description, String canPreview) {
+        this.id = id;
+        this.courseType = courseType;
+        this.name = name;
+        this.description = description;
+        this.canPreview = canPreview;
+    }
+
     public CourseItem(String courseType, String name, String description, String level, String path, String canPreview, Set<VideoClip> videoClips, Set<ImageItem> imageItems) {
         this.courseType = courseType;
         this.name = name;
@@ -128,8 +136,4 @@ public class CourseItem implements Comparable {
                 '}';
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }

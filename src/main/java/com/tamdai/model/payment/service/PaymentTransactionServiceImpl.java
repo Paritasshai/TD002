@@ -42,4 +42,21 @@ public class PaymentTransactionServiceImpl implements PaymentTransactionService 
 
         return paymentTransactionDao.createPaymentTransaction(user, paymentTransaction, transRef);
     }
+
+    @Override
+    public PaymentTransaction createPaymentTransactionPurchase(UserEntity userEntity, PaymentTransaction paymentTransaction) {
+
+        //CreateDate
+        String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        paymentTransaction.setUpdateDate(signUpDate);
+
+        //CreateTime
+        String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+        paymentTransaction.setUpdateTime(timeStamp);
+
+        //setFlq
+        Long flq = new Long(-1);
+        paymentTransaction.setTransFlq(Math.toIntExact(flq));
+        return paymentTransactionDao.createPaymentTransactionPurchase(userEntity, paymentTransaction);
+    }
 }

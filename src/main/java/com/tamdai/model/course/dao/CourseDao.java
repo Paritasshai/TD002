@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CourseDao {
 
-    Course createCourse(UserEntity user, Course course);
+    Course createCourse(Long userId, Course course);
 
     Course getCourseId(Long id);
 
@@ -37,7 +37,7 @@ public interface CourseDao {
 
     CourseItem createCourseVideoItem(CourseItem courseItem, Course course);
 
-    CourseItem getCourseItemtemById(Long id);
+    CourseItem getCourseItemById(Long id);
 
     CourseItem createCourseImageItem(CourseItem courseItem, Course course);
 
@@ -46,4 +46,6 @@ public interface CourseDao {
     ImageItem saveImage(ImageItem imageItem);
 
     List<ImageItem> getImageItemCourseList();
+
+    Course deleteCourse(Course course);
 }
