@@ -1,7 +1,6 @@
 package com.tamdai.model.course.entity;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 /**
  * Created by Film on 18/9/2560.

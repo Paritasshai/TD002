@@ -1,13 +1,10 @@
 package com.tamdai.model.course.controller;
 
 import com.tamdai.model.course.entity.Course;
-import com.tamdai.model.course.entity.CourseItem;
 import com.tamdai.model.course.entity.ImageCourse;
 import com.tamdai.model.course.repository.CourseRepository;
 import com.tamdai.model.course.repository.ImageCourseRepository;
-import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.service.UserService;
-import com.tamdai.model.course.entity.VideoClip;
 import com.tamdai.model.course.repository.VideoClipRepository;
 import com.tamdai.model.course.service.CourseService;
 import org.apache.commons.io.IOUtils;
@@ -22,7 +19,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -67,10 +63,14 @@ public class CourseController {
     @RequestMapping(value = "update/course/{id}", method = RequestMethod.PUT)
     public Course updateCourse(@PathVariable("id") Long id,
                                @RequestParam("name") String name,
-                               @RequestParam("description") String description) {
+                               @RequestParam("description") String description,
+                               @RequestParam("linkCourse") String linkCourse,
+                               @RequestParam("publicCourse") String publicCourse) {
         Course course = courseService.getCourseId(id);
         course.setName(name);
         course.setDescription(description);
+        course.setPublicCourse(publicCourse);
+        course.setLinkCourse(linkCourse);
         return courseService.updateCourse(course);
     }
 

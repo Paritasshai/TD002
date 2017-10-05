@@ -120,18 +120,10 @@ public class UserController {
 
         userRepository.save(new UserEntity(1L, "filmpurelove@gmail.com", "ffffffff", "adminFilm", "Hattaya", "admin", "0"));
         userRepository.save(new UserEntity(2L, "hattaya.wpm@gmail.com", "ffffffff", "instructorA", "TeacherA", "instructor", "0"));
-        userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "0"));
+        userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "500"));
         userRepository.save(new UserEntity(4L, "film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
 
         courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1."));
-        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2."));
-        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3."));
-        courseRepository.save(new Course(4L, 2L, "Course 4", "Technology for life 4."));
-        courseRepository.save(new Course(5L, 2L, "Course 5", "Technology for life 5."));
-        courseRepository.save(new Course(6L, 2L, "Course 6", "Technology for life 6."));
-        courseRepository.save(new Course(7L, 2L, "Course 7", "Technology for life 7."));
-        courseRepository.save(new Course(8L, 2L, "Course 8", "Technology for life 8."));
-        courseRepository.save(new Course(9L, 2L, "Course 9", "Technology for life 9."));
         return "Create Done!!";
     }
 

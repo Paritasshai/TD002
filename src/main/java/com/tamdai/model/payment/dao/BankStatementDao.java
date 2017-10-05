@@ -3,7 +3,6 @@ package com.tamdai.model.payment.dao;
 import com.tamdai.model.payment.entity.BankStatement;
 import com.tamdai.model.security.entity.UserEntity;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface BankStatementDao {

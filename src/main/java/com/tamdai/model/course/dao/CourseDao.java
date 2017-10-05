@@ -1,7 +1,6 @@
 package com.tamdai.model.course.dao;
 
 import com.tamdai.model.course.entity.*;
-import com.tamdai.model.security.entity.UserEntity;
 
 import java.util.List;
 

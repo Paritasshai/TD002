@@ -10,11 +10,13 @@ import java.util.Set;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
+    @Column(unique = true)
     private Long id;
     private Long userId;
     private String name;
     private String description;
+    private String publicCourse;
+    private String linkCourse;
 
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -76,7 +78,23 @@ public class Course {
         this.imageCourses = imageCourses;
     }
 
-//    public Set<UserEntity> getUsers() {
+    public String getPublicCourse() {
+        return publicCourse;
+    }
+
+    public void setPublicCourse(String publicCourse) {
+        this.publicCourse = publicCourse;
+    }
+
+    public String getLinkCourse() {
+        return linkCourse;
+    }
+
+    public void setLinkCourse(String linkCourse) {
+        this.linkCourse = linkCourse;
+    }
+
+    //    public Set<UserEntity> getUsers() {
 //        return users;
 //    }
 //
@@ -102,6 +120,25 @@ public class Course {
         this.imageCourses = imageCourses;
     }
 
+    public Course(Long userId, String name, String description, String publicCourse, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.publicCourse = publicCourse;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
+    }
+
+    public Course(Long userId, String name, String description, String publicCourse, String linkCourse, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -109,6 +146,8 @@ public class Course {
                 ", userId=" + userId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", publicCourse='" + publicCourse + '\'' +
+                ", linkCourse='" + linkCourse + '\'' +
                 ", courseItems=" + courseItems +
                 ", imageCourses=" + imageCourses +
                 '}';

@@ -2,11 +2,9 @@ package com.tamdai.model.course.dao;
 
 import com.tamdai.model.course.entity.*;
 import com.tamdai.model.course.repository.*;
-import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

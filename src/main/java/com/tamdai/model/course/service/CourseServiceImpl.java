@@ -2,7 +2,6 @@ package com.tamdai.model.course.service;
 
 import com.tamdai.model.course.entity.*;
 import com.tamdai.model.course.repository.CourseRepository;
-import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.course.dao.CourseDao;
 import com.tamdai.model.course.repository.VideoClipRepository;
