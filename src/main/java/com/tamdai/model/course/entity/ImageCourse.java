@@ -1,13 +1,15 @@
 package com.tamdai.model.course.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Film on 18/9/2560.
  */
 
 @Entity
-public class ImageCourse {
+public class ImageCourse implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -55,6 +55,11 @@ public class CourseController {
         return courseService.getCourseId(id);
     }
 
+    @RequestMapping(value = "courseItemByPublic", method = RequestMethod.GET)
+    public List<Course> courseItemByPublic(@RequestParam("textPublic") String textPublic) {
+        return courseService.courseItemByPublic(textPublic);
+    }
+
     @RequestMapping(value = "getCourseList", method = RequestMethod.GET)
     public List<Course> getCourseList() {
         return courseService.getCourseList();

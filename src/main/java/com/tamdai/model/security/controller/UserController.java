@@ -123,7 +123,10 @@ public class UserController {
         userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "500"));
         userRepository.save(new UserEntity(4L, "film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
 
-        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1."));
+        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1.", "true","null"));
+        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2.", "true","null"));
+        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3.", "true","null"));
+        courseRepository.save(new Course(4L, 2L, "Course 4", "Technology for life 4.", "true","null"));
         return "Create Done!!";
     }
 

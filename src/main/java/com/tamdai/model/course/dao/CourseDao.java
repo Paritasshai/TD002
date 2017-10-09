@@ -47,4 +47,6 @@ public interface CourseDao {
     List<ImageItem> getImageItemCourseList();
 
     Course deleteCourse(Course course);
+
+    List<Course> courseItemByPublic(String textPublic);
 }

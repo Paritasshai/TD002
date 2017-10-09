@@ -135,4 +135,9 @@ public class CourseDaoImpl implements CourseDao {
         return course;
     }
 
+    @Override
+    public List<Course> courseItemByPublic(String textPublic) {
+        return courseRepository.findByPublicCourseContaining(textPublic);
+    }
+
 }

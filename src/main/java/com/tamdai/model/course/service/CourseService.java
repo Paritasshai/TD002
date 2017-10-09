@@ -53,4 +53,6 @@ public interface CourseService {
     List<ImageItem> getImageItemCourseList();
 
     Course deleteCourse(Long id);
+
+    List<Course> courseItemByPublic(String textPublic);
 }

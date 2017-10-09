@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         user.setCreateUserID(id);
 
         //setStatus
-        String role = new String("active");
+        String role = new String("new");
         user.setStatus(role);
 
         //setBalance

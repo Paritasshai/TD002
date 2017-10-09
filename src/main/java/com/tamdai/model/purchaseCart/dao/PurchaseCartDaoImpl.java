@@ -25,8 +25,10 @@ public class PurchaseCartDaoImpl implements PurchaseCartDao {
 
     @Override
     public PurchaseCart saveCart(UserEntity userEntity, Course course, PurchaseCart purchaseCart) {
-//        purchaseCart.getCourses().add(course);
-//        purchaseCartRepository.save(purchaseCart);
+        //purchaseCart.getCourses().add(course);
+        //purchaseCartRepository.save(purchaseCart);
+        //purchaseCart.getUsers().add(userEntity);
+
         userEntity.getCourses().add(course);
         userRepository.save(userEntity);
         return purchaseCart;

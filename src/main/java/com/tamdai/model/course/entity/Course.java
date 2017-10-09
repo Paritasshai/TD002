@@ -1,13 +1,16 @@
 package com.tamdai.model.course.entity;
 
+import com.tamdai.model.security.entity.UserEntity;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Course {
+public class Course implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
@@ -18,9 +21,9 @@ public class Course {
     private String publicCourse;
     private String linkCourse;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-//    private Set<UserEntity> users = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<UserEntity> users = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -94,6 +97,18 @@ public class Course {
         this.linkCourse = linkCourse;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Set<UserEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserEntity> users) {
+        this.users = users;
+    }
+
     //    public Set<UserEntity> getUsers() {
 //        return users;
 //    }
@@ -106,10 +121,19 @@ public class Course {
     }
 
     public Course(Long id, Long userId, String name, String description) {
-        this.userId = userId;
+        this.id = id;
         this.userId = userId;
         this.name = name;
         this.description = description;
+    }
+
+    public Course(Long id, Long userId, String name, String description, String publicCourse, String linkCourse) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
     }
 
     public Course(Long userId, String name, String description, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
@@ -139,6 +163,17 @@ public class Course {
         this.imageCourses = imageCourses;
     }
 
+    public Course(Long userId, String name, String description, String publicCourse, String linkCourse, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+        this.users = users;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -148,6 +183,7 @@ public class Course {
                 ", description='" + description + '\'' +
                 ", publicCourse='" + publicCourse + '\'' +
                 ", linkCourse='" + linkCourse + '\'' +
+                ", users=" + users +
                 ", courseItems=" + courseItems +
                 ", imageCourses=" + imageCourses +
                 '}';

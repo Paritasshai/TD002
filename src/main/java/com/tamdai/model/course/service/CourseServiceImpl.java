@@ -192,4 +192,9 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.deleteCourse(course);
     }
 
+    @Override
+    public List<Course> courseItemByPublic(String textPublic) {
+        return courseDao.courseItemByPublic(textPublic);
+    }
+
 }
