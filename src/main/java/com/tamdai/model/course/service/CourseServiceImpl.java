@@ -98,6 +98,20 @@ public class CourseServiceImpl implements CourseService {
         return course;
     }
 
+    @Override
+    public Course deleteItem(Course course, Long courseItem) {
+        Set<CourseItem> courseItems = course.getCourseItems();
+        for (Iterator<CourseItem> it = courseItems.iterator(); it.hasNext(); ) {
+            CourseItem f = it.next();
+            if (f.getId().equals(courseItem)) {
+                course.getCourseItems().remove(f);
+            }
+        }
+
+        courseDao.updateCourse(course);
+        return course;
+    }
+
 //    @Override
 //    public CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId) {
 //        Set<VideoClip> videoClips = courseItem.getVideoClips();
@@ -142,13 +156,10 @@ public class CourseServiceImpl implements CourseService {
         courseItem.setCourseType(type);
         courseItem.setName("Lesson Name");
         courseItem.setDescription("Lesson Description");
+        courseItem.setCanPreview("false");
+
         courseDao.createCourseVideoItem(courseItem, course);
         return courseItem;
-    }
-
-    @Override
-    public CourseItem getCourseItemById(Long id) {
-        return courseDao.getCourseItemById(id);
     }
 
     @Override
@@ -159,9 +170,15 @@ public class CourseServiceImpl implements CourseService {
         courseItem.setName("Lesson Name");
         courseItem.setDescription("Lesson Description");
         courseItem.setCourseType(type);
+        courseItem.setCanPreview("false");
 
         courseDao.createCourseImageItem(courseItem, course);
         return courseItem;
+    }
+
+    @Override
+    public CourseItem getCourseItemById(Long id) {
+        return courseDao.getCourseItemById(id);
     }
 
     @Override

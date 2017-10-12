@@ -55,4 +55,6 @@ public interface CourseService {
     Course deleteCourse(Long id);
 
     List<Course> courseItemByPublic(String textPublic);
+
+    Course deleteItem(Course course, Long courseItem);
 }

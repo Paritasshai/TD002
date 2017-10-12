@@ -241,4 +241,11 @@ public class CourseItemController {
         return courseService.getImageItemCourseList();
     }
 
+    @RequestMapping(value = "deleteItem", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Course deleteItem(@RequestParam("courseItem") Long courseItem, @RequestParam("courseId") Long courseId) {
+        Course course = courseService.getCourseId(courseId);
+        return courseService.deleteItem(course, courseItem);
+    }
+
 }

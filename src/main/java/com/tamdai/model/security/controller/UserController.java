@@ -51,13 +51,27 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
-//    http://localhost:8080/login?FirstName=film&Password=4432
 
+    @RequestMapping(value = "user/facebook")
+    public String helloFacebook() {
+        return "ddddddddddddddd";
+    }
+
+    //    http://localhost:8080/login?FirstName=film&Password=4432
     @RequestMapping(value = "user/register", method = RequestMethod.POST)
     public UserEntity userRegister(@RequestBody UserEntity user, BindingResult bindingResult) {
         userService.userRegister(user);
         notificationService.sendNotification(user);
         return user;
+    }
+
+    @RequestMapping(value = "user/registerWithFacebook", method = RequestMethod.POST)
+    public UserEntity userRegisterWithFacebook(@RequestBody UserEntity user,
+                                               @PathVariable("firstName") String firstName,
+                                               @PathVariable("lastName") String lastName,
+                                               @PathVariable("email") String email,
+                                               BindingResult bindingResult) {
+        return userService.userRegisterWithFacebook(user, firstName, lastName, email);
     }
 
 //    @RequestMapping(value = "user/forgotPassword", method = RequestMethod.POST)
@@ -123,10 +137,10 @@ public class UserController {
         userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "500"));
         userRepository.save(new UserEntity(4L, "film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
 
-        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1.", "true","null"));
-        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2.", "true","null"));
-        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3.", "true","null"));
-        courseRepository.save(new Course(4L, 2L, "Course 4", "Technology for life 4.", "true","null"));
+        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1.", "true", "null"));
+        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2.", "true", "null"));
+        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3.", "true", "null"));
+        courseRepository.save(new Course(4L, 2L, "Course 4", "Technology for life 4.", "true", "null"));
         return "Create Done!!";
     }
 

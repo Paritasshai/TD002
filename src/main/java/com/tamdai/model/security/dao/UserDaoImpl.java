@@ -48,5 +48,14 @@ public class UserDaoImpl implements UserDao {
         return userRepository.save(user);
     }
 
+    @Override
+    public UserEntity userRegisterWithFacebook(UserEntity user, String firstName, String lastName, String email) {
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setLastName(email);
+        userRepository.save(user);
+        return user;
+    }
+
 }
 

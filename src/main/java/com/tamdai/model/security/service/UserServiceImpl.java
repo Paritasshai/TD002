@@ -92,6 +92,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity userRegisterWithFacebook(UserEntity user, String firstName, String lastName, String email) {
+        return userDao.userRegisterWithFacebook(user, firstName, lastName, email);
+    }
+
+    @Override
     public UserEntity Login(String email, String password) {
         UserEntity user = userDao.getUserByEmail(email);
         if (user != null) {

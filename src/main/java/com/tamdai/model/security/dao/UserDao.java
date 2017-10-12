@@ -1,6 +1,5 @@
 package com.tamdai.model.security.dao;
 
-import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.security.entity.UserEntity;
 
 import java.util.List;
@@ -21,4 +20,5 @@ public interface UserDao {
 
     UserEntity updateUserStatus(UserEntity user);
 
+    UserEntity userRegisterWithFacebook(UserEntity user, String firstName, String lastName, String email);
 }
