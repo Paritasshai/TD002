@@ -51,6 +51,9 @@ public class PaymentTransaction {
     @Column(name = "updateUserId")
     private Long updateUserId;
 
+    @Column(name = "systemRemark")
+    private String systemRemark;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<UserEntity> users = new HashSet<>();
@@ -167,6 +170,14 @@ public class PaymentTransaction {
         this.users = users;
     }
 
+    public String getSystemRemark() {
+        return systemRemark;
+    }
+
+    public void setSystemRemark(String systemRemark) {
+        this.systemRemark = systemRemark;
+    }
+
     public PaymentTransaction() {
     }
 
@@ -186,6 +197,7 @@ public class PaymentTransaction {
                 ", updateDate='" + updateDate + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 ", updateUserId=" + updateUserId +
+                ", systemRemark=" + systemRemark +
                 ", users=" + users +
                 '}';
     }
@@ -203,6 +215,23 @@ public class PaymentTransaction {
         this.updateDate = updateDate;
         this.updateTime = updateTime;
         this.updateUserId = updateUserId;
+        this.users = users;
+    }
+
+    public PaymentTransaction(Long accountId, String transType, String transRef, Integer transFlq, String transAmount, String transRemark, String createDate, String createTime, Long createUserId, String updateDate, String updateTime, Long updateUserId, String systemRemark, Set<UserEntity> users) {
+        this.accountId = accountId;
+        this.transType = transType;
+        this.transRef = transRef;
+        this.transFlq = transFlq;
+        this.transAmount = transAmount;
+        this.transRemark = transRemark;
+        this.createDate = createDate;
+        this.createTime = createTime;
+        this.createUserId = createUserId;
+        this.updateDate = updateDate;
+        this.updateTime = updateTime;
+        this.updateUserId = updateUserId;
+        this.systemRemark = systemRemark;
         this.users = users;
     }
 }

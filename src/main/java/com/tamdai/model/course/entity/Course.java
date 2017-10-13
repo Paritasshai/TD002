@@ -18,6 +18,7 @@ public class Course implements Serializable {
     private Long userId;
     private String name;
     private String description;
+    private String price;
     private String publicCourse;
     private String linkCourse;
 
@@ -109,6 +110,14 @@ public class Course implements Serializable {
         this.users = users;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     //    public Set<UserEntity> getUsers() {
 //        return users;
 //    }
@@ -134,6 +143,28 @@ public class Course implements Serializable {
         this.description = description;
         this.publicCourse = publicCourse;
         this.linkCourse = linkCourse;
+    }
+
+    public Course(Long id, Long userId, String name, String description, String price, String publicCourse, String linkCourse) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+    }
+
+    public Course(Long userId, String name, String description, String price, String publicCourse, String linkCourse, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+        this.users = users;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
     }
 
     public Course(Long userId, String name, String description, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {

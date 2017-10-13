@@ -46,6 +46,7 @@ public class PurchaseCartController {
     public PurchaseCart saveCart(@RequestBody PurchaseCart purchaseCart,
                                  @RequestParam("userId") Long userId,
                                  @RequestParam("courseId") Long courseId,
+                                 @RequestParam("courseName") String courseName,
                                  @RequestParam("transAmount") String transAmount,
                                  @RequestParam("Balance") String balance, BindingResult bindingResult) {
         UserEntity userEntity = userService.getUserId(userId);
@@ -71,6 +72,8 @@ public class PurchaseCartController {
 
             String transRe = new String(balance);
             paymentTransaction.setTransRemark(transRe);
+
+            paymentTransaction.setSystemRemark(courseName);
 
             paymentTransactionService.createPaymentTransactionPurchase(userEntity, paymentTransaction);
 
