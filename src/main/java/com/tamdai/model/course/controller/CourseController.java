@@ -69,11 +69,13 @@ public class CourseController {
     public Course updateCourse(@PathVariable("id") Long id,
                                @RequestParam("name") String name,
                                @RequestParam("description") String description,
+                               @RequestParam("price") String price,
                                @RequestParam("linkCourse") String linkCourse,
                                @RequestParam("publicCourse") String publicCourse) {
         Course course = courseService.getCourseId(id);
         course.setName(name);
         course.setDescription(description);
+        course.setPrice(price);
         course.setPublicCourse(publicCourse);
         course.setLinkCourse(linkCourse);
         return courseService.updateCourse(course);

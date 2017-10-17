@@ -22,9 +22,20 @@ public class NotificationServiceImpl implements NotificationService {
         //sendEmail
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
-        mail.setSubject("D.I.Y - Activate Your Account");
+        mail.setSubject("MakeHappen - Activate Your Account");
         mail.setText("http://localhost:8080/activate/account" + "/" + user.getId() + "?statusName=active");
         javaMailSender.send(mail);
+
+    }
+
+    public void sendNotificationForgot(UserEntity user) throws MailException {
+
+        //sendEmail
+        SimpleMailMessage mailForgotPass = new SimpleMailMessage();
+        mailForgotPass.setTo(user.getEmail());
+        mailForgotPass.setSubject("MakeHappen - Create New Password");
+        mailForgotPass.setText("Your password is: "+ user.getPassword());
+        javaMailSender.send(mailForgotPass);
 
     }
 }
