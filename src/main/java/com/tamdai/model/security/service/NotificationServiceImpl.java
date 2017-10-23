@@ -34,7 +34,7 @@ public class NotificationServiceImpl implements NotificationService {
         SimpleMailMessage mailForgotPass = new SimpleMailMessage();
         mailForgotPass.setTo(user.getEmail());
         mailForgotPass.setSubject("MakeHappen - Create New Password");
-        mailForgotPass.setText("Your password is: "+ user.getPassword());
+        mailForgotPass.setText("Your password is: " + user.getPassword());
         javaMailSender.send(mailForgotPass);
 
     }

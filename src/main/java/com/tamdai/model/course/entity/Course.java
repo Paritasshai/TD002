@@ -21,6 +21,10 @@ public class Course implements Serializable {
     private String price;
     private String publicCourse;
     private String linkCourse;
+    private String courseType;
+    private String catagory;
+    public int showLock;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -118,6 +122,30 @@ public class Course implements Serializable {
         this.price = price;
     }
 
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
+    }
+
+    public String getCatagory() {
+        return catagory;
+    }
+
+    public void setCatagory(String catagory) {
+        this.catagory = catagory;
+    }
+
+    public Integer getShowLock() {
+        return showLock;
+    }
+
+    public void setShowLock(Integer showLock) {
+        this.showLock = showLock;
+    }
+
     //    public Set<UserEntity> getUsers() {
 //        return users;
 //    }
@@ -153,6 +181,18 @@ public class Course implements Serializable {
         this.price = price;
         this.publicCourse = publicCourse;
         this.linkCourse = linkCourse;
+    }
+
+    public Course(Long id, Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+        this.courseType = courseType;
+        this.catagory = catagory;
     }
 
     public Course(Long userId, String name, String description, String price, String publicCourse, String linkCourse, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
@@ -205,6 +245,48 @@ public class Course implements Serializable {
         this.imageCourses = imageCourses;
     }
 
+    public Course(Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+        this.courseType = courseType;
+        this.users = users;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
+    }
+
+    public Course(Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+        this.courseType = courseType;
+        this.catagory = catagory;
+        this.users = users;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
+    }
+
+    public Course(Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory, Integer showLock, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+        this.courseType = courseType;
+        this.catagory = catagory;
+        this.showLock = showLock;
+        this.users = users;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -212,8 +294,12 @@ public class Course implements Serializable {
                 ", userId=" + userId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
                 ", publicCourse='" + publicCourse + '\'' +
                 ", linkCourse='" + linkCourse + '\'' +
+                ", courseType='" + courseType + '\'' +
+                ", catagory='" + catagory + '\'' +
+                ", showLock='" + showLock + '\'' +
                 ", users=" + users +
                 ", courseItems=" + courseItems +
                 ", imageCourses=" + imageCourses +

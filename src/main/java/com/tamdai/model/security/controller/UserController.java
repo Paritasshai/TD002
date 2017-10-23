@@ -145,10 +145,11 @@ public class UserController {
         userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "500"));
         userRepository.save(new UserEntity(4L, "film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
 
-        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1.", "200", "true", "null"));
-        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2.", "100", "true", "null"));
-        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3.", "150", "true", "null"));
-        courseRepository.save(new Course(4L, 2L, "Course 4", "Technology for life 4.", "250", "true", "null"));
+        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1.", "200", "true", "http://192.168.1.9/makehappen/", "new", "Lego"));
+        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2.", "100", "true", "null", "hot", "Household"));
+        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3.", "150", "true", "http://192.168.1.9/makehappen/", "recommend", "Toy"));
+        courseRepository.save(new Course(4L, 2L, "Course 4", "Technology for life 4.", "250", "true", "null", "recommend", "Garden"));
+        courseRepository.save(new Course(5L, 2L, "Course 5", "Technology for life 5.", "300", "true", "null", "new", "IoT"));
         return "Create Done!!";
     }
 
@@ -164,6 +165,20 @@ public class UserController {
         UserEntity user = userService.getUserByEmail(email);
         notificationService.sendNotificationForgot(user);
         return user;
+    }
+
+    @RequestMapping(value = "user/getTeacherHistory", method = RequestMethod.GET)
+    public UserEntity getTeacherHistory(@RequestParam("Email") String email) {
+        return userService.getUserByEmail(email);
+    }
+
+    @RequestMapping(value = "courseUserDelete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public UserEntity deleteCourse(@RequestParam("courseId") Long courseId,
+                                   @RequestParam("userId") Long userId) {
+
+        UserEntity users = userService.getUserId(userId);
+        return userService.deleteUserCourse(users, courseId);
     }
 }
 

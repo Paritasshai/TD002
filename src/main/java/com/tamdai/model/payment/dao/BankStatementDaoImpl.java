@@ -24,8 +24,7 @@ public class BankStatementDaoImpl implements BankStatementDao {
     public BankStatement bankStatementCreate(BankStatement bankStatement, UserEntity user) {
 
         //statusBank
-        String status = new String("new");
-        bankStatement.setStatusBank(status);
+        bankStatement.setStatusBank("wait");
 
         //CreateDate
         String createDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());

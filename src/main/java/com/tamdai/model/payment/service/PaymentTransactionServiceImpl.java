@@ -40,6 +40,8 @@ public class PaymentTransactionServiceImpl implements PaymentTransactionService 
         String tRef = new String(transRef);
         paymentTransaction.setTransRef(tRef);
 
+        paymentTransaction.setSystemRemark("Cash deposit");
+
         return paymentTransactionDao.createPaymentTransaction(user, paymentTransaction, transRef);
     }
 
@@ -53,6 +55,10 @@ public class PaymentTransactionServiceImpl implements PaymentTransactionService 
         //CreateTime
         String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
         paymentTransaction.setUpdateTime(timeStamp);
+
+//        paymentTransaction.setTransRef("Course Name");
+
+        paymentTransaction.setSystemRemark("Purchase Course");
 
         //setFlq
         Long flq = new Long(-1);

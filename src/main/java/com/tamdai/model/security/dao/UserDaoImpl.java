@@ -57,5 +57,10 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    @Override
+    public UserEntity updateUser(UserEntity users) {
+        return userRepository.save(users);
+    }
+
 }
 

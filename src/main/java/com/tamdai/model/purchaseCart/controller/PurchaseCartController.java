@@ -73,7 +73,7 @@ public class PurchaseCartController {
             String transRe = new String(balance);
             paymentTransaction.setTransRemark(transRe);
 
-            paymentTransaction.setSystemRemark(courseName);
+            paymentTransaction.setTransRef(String.valueOf(courseId));
 
             paymentTransactionService.createPaymentTransactionPurchase(userEntity, paymentTransaction);
 

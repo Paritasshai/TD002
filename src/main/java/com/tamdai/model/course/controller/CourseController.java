@@ -4,6 +4,7 @@ import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.course.entity.ImageCourse;
 import com.tamdai.model.course.repository.CourseRepository;
 import com.tamdai.model.course.repository.ImageCourseRepository;
+import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.service.UserService;
 import com.tamdai.model.course.repository.VideoClipRepository;
 import com.tamdai.model.course.service.CourseService;
@@ -55,9 +56,44 @@ public class CourseController {
         return courseService.getCourseId(id);
     }
 
+    @RequestMapping(value = "coursePurchased", method = RequestMethod.GET)
+    public Course getCourseId(@RequestParam("courseId") Long courseId,
+                              @RequestParam("userId") Long userId) {
+
+        Course course = courseService.getCourseId(courseId);
+        course.showLock = 1;
+        if (userId != null) {
+            Course userCourse = courseService.getCourseByUser(courseId, userId);
+            System.out.println("===================================== Print =====================================");
+            System.out.println("User ID: " +userId);
+            System.out.println("ShowLock: "+ course.showLock);
+            System.out.println("User Course: "+ userCourse);
+            course.showLock = (userCourse == null ? 1 : 0);
+        }
+        return course;
+    }
+
     @RequestMapping(value = "courseItemByPublic", method = RequestMethod.GET)
     public List<Course> courseItemByPublic(@RequestParam("textPublic") String textPublic) {
         return courseService.courseItemByPublic(textPublic);
+    }
+
+    @RequestMapping(value = "getCoursenewType", method = RequestMethod.GET)
+    public List<Course> getCoursenewType(@RequestParam("textPublic") String textPublic,
+                                         @RequestParam("newType") String newType) {
+        return courseService.getCoursenewType(textPublic, newType);
+    }
+
+    @RequestMapping(value = "getCourserecommendType", method = RequestMethod.GET)
+    public List<Course> getCourserecommendType(@RequestParam("textPublic") String textPublic,
+                                               @RequestParam("recommendType") String recommendType) {
+        return courseService.getCourserecommendType(textPublic, recommendType);
+    }
+
+    @RequestMapping(value = "getCourseHotType", method = RequestMethod.GET)
+    public List<Course> getCourseHotType(@RequestParam("textPublic") String textPublic,
+                                         @RequestParam("hotType") String hotType) {
+        return courseService.getCourseHotType(textPublic, hotType);
     }
 
     @RequestMapping(value = "getCourseList", method = RequestMethod.GET)
@@ -149,6 +185,7 @@ public class CourseController {
         Course course = courseService.getCourseId(courseId);
         return courseService.deleteImageCourse(course, imageId);
     }
+
 
 //    @RequestMapping("/addCourseInSystem")
 //    public String process() {

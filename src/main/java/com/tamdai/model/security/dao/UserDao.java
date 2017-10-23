@@ -21,4 +21,6 @@ public interface UserDao {
     UserEntity updateUserStatus(UserEntity user);
 
     UserEntity userRegisterWithFacebook(UserEntity user, String firstName, String lastName, String email);
+
+    UserEntity updateUser(UserEntity users);
 }

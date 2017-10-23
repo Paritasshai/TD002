@@ -1,5 +1,6 @@
 package com.tamdai.model.security.service;
 
+import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.security.dao.UserDao;
 import com.tamdai.model.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,7 @@ import org.springframework.stereotype.Service;
 import com.tamdai.model.security.entity.UserEntity;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -115,6 +114,19 @@ public class UserServiceImpl implements UserService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public UserEntity deleteUserCourse(UserEntity users, Long courseId) {
+        Set<Course> courses = users.getCourses();
+        for (Iterator<Course> it = courses.iterator(); it.hasNext(); ) {
+            Course f = it.next();
+            if (f.getId().equals(courseId)) {
+                users.getCourses().remove(f);
+            }
+        }
+        userDao.updateUser(users);
+        return users;
     }
 
 }

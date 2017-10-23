@@ -49,4 +49,12 @@ public interface CourseDao {
     Course deleteCourse(Course course);
 
     List<Course> courseItemByPublic(String textPublic);
+
+    List<Course> getCoursenewType(String textPublic, String newType);
+
+    List<Course> getCourserecommendType(String textPublic, String recommendType);
+
+    List<Course> getCourseHotType(String textPublic, String hotType);
+
+    Course getCourseByUser(Long courseId);
 }

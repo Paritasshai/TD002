@@ -2,10 +2,12 @@ package com.tamdai.model.course.service;
 
 import com.tamdai.model.course.entity.*;
 import com.tamdai.model.course.repository.CourseRepository;
+import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.course.dao.CourseDao;
 import com.tamdai.model.course.repository.VideoClipRepository;
 import com.tamdai.model.course.repository.CourseItemRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,20 +84,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId) {
         return null;
-    }
-
-    @Override
-    public Course deleteImageCourse(Course course, Long imageId) {
-        Set<ImageCourse> images = course.getImageCourses();
-        for (Iterator<ImageCourse> it = images.iterator(); it.hasNext(); ) {
-            ImageCourse f = it.next();
-            if (f.getId().equals(imageId)) {
-                course.getImageCourses().remove(f);
-            }
-        }
-
-        courseDao.updateCourse(course);
-        return course;
     }
 
     @Override
@@ -212,6 +200,50 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> courseItemByPublic(String textPublic) {
         return courseDao.courseItemByPublic(textPublic);
+    }
+
+    @Override
+    public List<Course> getCoursenewType(String textPublic, String newType) {
+        return courseDao.getCoursenewType(textPublic, newType);
+    }
+
+    @Override
+    public List<Course> getCourserecommendType(String textPublic, String recommendType) {
+        return courseDao.getCourserecommendType(textPublic, recommendType);
+    }
+
+    @Override
+    public List<Course> getCourseHotType(String textPublic, String hotType) {
+        return courseDao.getCourseHotType(textPublic, hotType);
+    }
+
+    @Override
+    public Course getCourseByUser(Long courseId, Long userId) {
+        UserEntity users = userRepository.getOne(userId);
+        boolean isFind = false;
+        for(Course course : users.getCourses()) {
+            if (course.getId().equals(courseId)) {
+                isFind = true;
+                break;
+            }
+        }
+
+        if (!isFind) return null;
+        return courseDao.getCourseId(courseId);
+    }
+
+    @Override
+    public Course deleteImageCourse(Course course, Long imageId) {
+        Set<ImageCourse> images = course.getImageCourses();
+        for (Iterator<ImageCourse> it = images.iterator(); it.hasNext(); ) {
+            ImageCourse f = it.next();
+            if (f.getId().equals(imageId)) {
+                course.getImageCourses().remove(f);
+            }
+        }
+
+        courseDao.updateCourse(course);
+        return course;
     }
 
 }

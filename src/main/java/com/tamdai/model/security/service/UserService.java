@@ -31,4 +31,6 @@ public interface UserService {
     UserEntity updateUserStatus(UserEntity user);
 
     UserEntity userRegisterWithFacebook(UserEntity user, String firstName, String lastName, String email);
+
+    UserEntity deleteUserCourse(UserEntity users, Long courseId);
 }

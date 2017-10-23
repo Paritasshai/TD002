@@ -140,4 +140,24 @@ public class CourseDaoImpl implements CourseDao {
         return courseRepository.findByPublicCourseContaining(textPublic);
     }
 
+    @Override
+    public List<Course> getCoursenewType(String textPublic, String newType) {
+        return courseRepository.findByPublicCourseAndCourseTypeContaining(textPublic, newType);
+    }
+
+    @Override
+    public List<Course> getCourserecommendType(String textPublic, String recommendType) {
+        return courseRepository.findByPublicCourseAndCourseTypeContaining(textPublic, recommendType);
+    }
+
+    @Override
+    public List<Course> getCourseHotType(String textPublic, String hotType) {
+        return courseRepository.findByPublicCourseAndCourseTypeContaining(textPublic, hotType);
+    }
+
+    @Override
+    public Course getCourseByUser(Long courseId) {
+        return courseRepository.findOne(courseId);
+    }
+
 }

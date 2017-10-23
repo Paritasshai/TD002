@@ -26,8 +26,6 @@ public interface CourseService {
 
     List<ImageCourse> getImageCourseList();
 
-    Course deleteImageCourse(Course course, Long imageId);
-
     CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId);
 
     List<VideoClip> getVideoCourseList();
@@ -57,4 +55,14 @@ public interface CourseService {
     List<Course> courseItemByPublic(String textPublic);
 
     Course deleteItem(Course course, Long courseItem);
+
+    List<Course> getCoursenewType(String textPublic, String newType);
+
+    List<Course> getCourserecommendType(String textPublic, String recommendType);
+
+    List<Course> getCourseHotType(String textPublic, String hotType);
+
+    Course getCourseByUser(Long courseId, Long userId);
+
+    Course deleteImageCourse(Course course, Long imageId);
 }
