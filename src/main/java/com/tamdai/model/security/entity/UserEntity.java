@@ -70,6 +70,18 @@ public class UserEntity {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Course> courses = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    Set<UserImage> userImages = new HashSet<>();
+
+    public Set<UserImage> getUserImages() {
+        return userImages;
+    }
+
+    public void setUserImages(Set<UserImage> userImages) {
+        this.userImages = userImages;
+    }
+
     public long getId() {
         return id;
     }
@@ -217,6 +229,27 @@ public class UserEntity {
     public UserEntity() {
     }
 
+    public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance, Set<PurchaseCart> purchaseCarts, Set<Course> courses, Set<UserImage> userImages) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.lastLoginDate = lastLoginDate;
+        this.signUpDate = signUpDate;
+        this.confirmDate = confirmDate;
+        this.createDate = createDate;
+        this.createTime = createTime;
+        this.createUserID = createUserID;
+        this.updateDate = updateDate;
+        this.updateTime = updateTime;
+        this.updateUserId = updateUserId;
+        this.status = status;
+        this.balance = balance;
+        this.purchaseCarts = purchaseCarts;
+        this.courses = courses;
+        this.userImages = userImages;
+    }
+
     public UserEntity(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -312,6 +345,62 @@ public class UserEntity {
                 ", balance='" + balance + '\'' +
                 ", purchaseCarts=" + purchaseCarts +
                 ", courses=" + courses +
+                ", userImages=" + userImages +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserEntity that = (UserEntity) o;
+
+        if (id != that.id) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (lastLoginDate != null ? !lastLoginDate.equals(that.lastLoginDate) : that.lastLoginDate != null)
+            return false;
+        if (signUpDate != null ? !signUpDate.equals(that.signUpDate) : that.signUpDate != null) return false;
+        if (confirmDate != null ? !confirmDate.equals(that.confirmDate) : that.confirmDate != null) return false;
+        if (createDate != null ? !createDate.equals(that.createDate) : that.createDate != null) return false;
+        if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
+        if (createUserID != null ? !createUserID.equals(that.createUserID) : that.createUserID != null) return false;
+        if (updateDate != null ? !updateDate.equals(that.updateDate) : that.updateDate != null) return false;
+        if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
+        if (updateUserId != null ? !updateUserId.equals(that.updateUserId) : that.updateUserId != null) return false;
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
+        if (balance != null ? !balance.equals(that.balance) : that.balance != null) return false;
+        if (purchaseCarts != null ? !purchaseCarts.equals(that.purchaseCarts) : that.purchaseCarts != null)
+            return false;
+        if (courses != null ? !courses.equals(that.courses) : that.courses != null) return false;
+        return userImages != null ? userImages.equals(that.userImages) : that.userImages == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (lastLoginDate != null ? lastLoginDate.hashCode() : 0);
+        result = 31 * result + (signUpDate != null ? signUpDate.hashCode() : 0);
+        result = 31 * result + (confirmDate != null ? confirmDate.hashCode() : 0);
+        result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (createUserID != null ? createUserID.hashCode() : 0);
+        result = 31 * result + (updateDate != null ? updateDate.hashCode() : 0);
+        result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
+        result = 31 * result + (updateUserId != null ? updateUserId.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
+        result = 31 * result + (purchaseCarts != null ? purchaseCarts.hashCode() : 0);
+        result = 31 * result + (courses != null ? courses.hashCode() : 0);
+        result = 31 * result + (userImages != null ? userImages.hashCode() : 0);
+        return result;
+    }
+
 }

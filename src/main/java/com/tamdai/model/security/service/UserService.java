@@ -1,6 +1,7 @@
 package com.tamdai.model.security.service;
 
 import com.tamdai.model.security.entity.UserEntity;
+import com.tamdai.model.security.entity.UserImage;
 
 import java.util.List;
 
@@ -33,4 +34,8 @@ public interface UserService {
     UserEntity userRegisterWithFacebook(UserEntity user, String firstName, String lastName, String email);
 
     UserEntity deleteUserCourse(UserEntity users, Long courseId);
+
+    UserEntity addUserImage(UserEntity userEntity, UserImage image);
+
+    UserEntity deleteImageUser(UserEntity userEntity, Long imageId);
 }

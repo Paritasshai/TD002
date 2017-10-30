@@ -22,10 +22,24 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<start-class>demo.ApplicationWAR</start-class>
+		<start-class>demo.Application</start-class>
 	</properties>
 
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/io.github.jhipster/jhipster-dependencies -->
+		<dependency>
+			<groupId>io.github.jhipster</groupId>
+			<artifactId>jhipster-dependencies</artifactId>
+			<version>0.0.5</version>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.social</groupId>
@@ -120,10 +134,37 @@
 			<version>4.3.10.RELEASE</version>
 		</dependency>
 
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<useFile>true</useFile>
+					<includes>
+						<include>**/*Tests.java</include>
+						<include>**/*Test.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/Abstract*.java</exclude>
+					</excludes>
+					<junitArtifactName>junit:junit</junitArtifactName>
+					<parallel>methods</parallel>
+					<threadCount>10</threadCount>
+				</configuration>
+				<!--<configuration>-->
+					<!--<testFailureIgnore>true</testFailureIgnore>-->
+				<!--</configuration>-->
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

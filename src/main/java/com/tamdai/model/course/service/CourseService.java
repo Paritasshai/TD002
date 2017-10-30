@@ -22,7 +22,7 @@ public interface CourseService {
 
     List<VideoClip> getVideoList();
 
-    ImageCourse saveCourseImage(Course course, ImageCourse imageCourse);
+//    ImageCourse saveCourseImage(Course course, ImageCourse imageCourse);
 
     List<ImageCourse> getImageCourseList();
 
@@ -64,5 +64,9 @@ public interface CourseService {
 
     Course getCourseByUser(Long courseId, Long userId);
 
-    Course deleteImageCourse(Course course, Long imageId);
+//    Course deleteImageCourse(Course course, Long imageId);
+
+    Course addImageCourse(Course course, CourseImage courseImage);
+
+    Course deleteImage(Course course, Long imageId);
 }

@@ -20,6 +20,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return commonsMultipartResolver;
     }
 
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+
     @Bean
     MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();

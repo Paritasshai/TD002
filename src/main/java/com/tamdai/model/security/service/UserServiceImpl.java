@@ -2,10 +2,12 @@ package com.tamdai.model.security.service;
 
 import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.security.dao.UserDao;
+import com.tamdai.model.security.entity.UserImage;
 import com.tamdai.model.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tamdai.model.security.entity.UserEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -127,6 +129,29 @@ public class UserServiceImpl implements UserService {
         }
         userDao.updateUser(users);
         return users;
+    }
+
+    @Override
+    @Transactional
+    public UserEntity addUserImage(UserEntity userEntity, UserImage image) {
+        image = ImageUtil.resizeImage(image, 200);
+        userEntity.getUserImages().add(image);
+        userDao.updateStatus(userEntity);
+        return userEntity;
+    }
+
+    @Override
+    public UserEntity deleteImageUser(UserEntity userEntity, Long imageId) {
+        Set<UserImage> images = userEntity.getUserImages();
+        for (Iterator<UserImage> it = images.iterator(); it.hasNext(); ) {
+            UserImage f = it.next();
+            if (f.getId().equals(imageId)) {
+                userEntity.getUserImages().remove(f);
+            }
+        }
+
+        userDao.updateUser(userEntity);
+        return userEntity;
     }
 
 }

@@ -7,9 +7,9 @@ import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.course.dao.CourseDao;
 import com.tamdai.model.course.repository.VideoClipRepository;
 import com.tamdai.model.course.repository.CourseItemRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.List;
@@ -69,12 +69,12 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getVideoList();
     }
 
-    @Override
-    public ImageCourse saveCourseImage(Course course, ImageCourse imageCourse) {
-        course.getImageCourses().add(imageCourse);
-        courseDao.updateCourse(course);
-        return courseDao.saveCourseImage(imageCourse);
-    }
+//    @Override
+//    public ImageCourse saveCourseImage(Course course, ImageCourse imageCourse) {
+//        course.getImageCourses().add(imageCourse);
+//        courseDao.updateCourse(course);
+//        return courseDao.saveCourseImage(imageCourse);
+//    }
 
     @Override
     public List<ImageCourse> getImageCourseList() {
@@ -221,7 +221,7 @@ public class CourseServiceImpl implements CourseService {
     public Course getCourseByUser(Long courseId, Long userId) {
         UserEntity users = userRepository.getOne(userId);
         boolean isFind = false;
-        for(Course course : users.getCourses()) {
+        for (Course course : users.getCourses()) {
             if (course.getId().equals(courseId)) {
                 isFind = true;
                 break;
@@ -232,18 +232,42 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getCourseId(courseId);
     }
 
+//    @Override
+//    public Course deleteImageCourse(Course course, Long imageId) {
+//        Set<ImageCourse> images = course.getImageCourses();
+//        for (Iterator<ImageCourse> it = images.iterator(); it.hasNext(); ) {
+//            ImageCourse f = it.next();
+//            if (f.getId().equals(imageId)) {
+//                course.getImageCourses().remove(f);
+//            }
+//        }
+//
+//        courseDao.updateCourse(course);
+//        return course;
+//    }
+
     @Override
-    public Course deleteImageCourse(Course course, Long imageId) {
-        Set<ImageCourse> images = course.getImageCourses();
-        for (Iterator<ImageCourse> it = images.iterator(); it.hasNext(); ) {
-            ImageCourse f = it.next();
+    @Transactional
+    public Course addImageCourse(Course course, CourseImage courseImage) {
+        courseImage = CourseImageUtil.resizeImage(courseImage, 300);
+        course.getCourseImages().add(courseImage);
+        courseDao.updateCourse(course);
+        return course;
+    }
+
+    @Override
+    public Course deleteImage(Course course, Long imageId) {
+        Set<CourseImage> courseImages = course.getCourseImages();
+        for (Iterator<CourseImage> it = courseImages.iterator(); it.hasNext(); ) {
+            CourseImage f = it.next();
             if (f.getId().equals(imageId)) {
-                course.getImageCourses().remove(f);
+                course.getCourseImages().remove(f);
             }
         }
 
         courseDao.updateCourse(course);
         return course;
     }
+
 
 }

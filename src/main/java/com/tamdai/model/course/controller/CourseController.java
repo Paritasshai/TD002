@@ -122,36 +122,36 @@ public class CourseController {
         return courseService.getImageCourseList();
     }
 
-    @RequestMapping(value = "add/ImageCourse", method = RequestMethod.POST)
-    @ResponseBody
-    public Course addImageCourse(HttpServletRequest request,
-                                 @RequestParam("file") MultipartFile file, @RequestParam("id") Long id) throws IOException {
-        MultipartHttpServletRequest mRequest;
-        Course course = courseService.getCourseId(id);
-
-        try {
-            mRequest = (MultipartHttpServletRequest) request;
-            Iterator<String> itr = mRequest.getFileNames();
-            while (itr.hasNext()) {
-                MultipartFile multipartFile = mRequest.getFile(itr.next());
-
-                ImageCourse imageCourse = new ImageCourse();
-                imageCourse.setImageName(multipartFile.getOriginalFilename());
-                imageCourse.setImageContentType(multipartFile.getContentType());
-                courseService.saveCourseImage(course, imageCourse);
-
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\image\\" + multipartFile.getOriginalFilename())));
-                stream.write(bytes);
-                stream.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return course;
-    }
+//    @RequestMapping(value = "add/ImageCourse", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Course addImageCourse(HttpServletRequest request,
+//                                 @RequestParam("file") MultipartFile file, @RequestParam("id") Long id) throws IOException {
+//        MultipartHttpServletRequest mRequest;
+//        Course course = courseService.getCourseId(id);
+//
+//        try {
+//            mRequest = (MultipartHttpServletRequest) request;
+//            Iterator<String> itr = mRequest.getFileNames();
+//            while (itr.hasNext()) {
+//                MultipartFile multipartFile = mRequest.getFile(itr.next());
+//
+//                ImageCourse imageCourse = new ImageCourse();
+//                imageCourse.setImageName(multipartFile.getOriginalFilename());
+//                imageCourse.setImageContentType(multipartFile.getContentType());
+//                courseService.saveCourseImage(course, imageCourse);
+//
+//                byte[] bytes = file.getBytes();
+//                BufferedOutputStream stream =
+//                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\image\\" + multipartFile.getOriginalFilename())));
+//                stream.write(bytes);
+//                stream.close();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return course;
+//    }
 
     @RequestMapping(value = "displayImage/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -179,12 +179,12 @@ public class CourseController {
         return courseService.deleteCourse(id);
     }
 
-    @RequestMapping(value = "delete/Image", method = RequestMethod.DELETE)
-    @ResponseBody
-    public Course deleteImageCourse(@RequestParam("imageId") Long imageId, @RequestParam("courseId") Long courseId) {
-        Course course = courseService.getCourseId(courseId);
-        return courseService.deleteImageCourse(course, imageId);
-    }
+//    @RequestMapping(value = "delete/Image", method = RequestMethod.DELETE)
+//    @ResponseBody
+//    public Course deleteImageCourse(@RequestParam("imageId") Long imageId, @RequestParam("courseId") Long courseId) {
+//        Course course = courseService.getCourseId(courseId);
+//        return courseService.deleteImageCourse(course, imageId);
+//    }
 
 
 //    @RequestMapping("/addCourseInSystem")
