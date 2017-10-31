@@ -24,8 +24,8 @@ public class CourseDaoImpl implements CourseDao {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    ImageCourseRepository imageCourseRepository;
+//    @Autowired
+//    ImageCourseRepository imageCourseRepository;
 
     @Autowired
     CourseRepository courseRepository;
@@ -64,15 +64,15 @@ public class CourseDaoImpl implements CourseDao {
         return videoClipRepository.findAll();
     }
 
-    @Override
-    public ImageCourse saveCourseImage(ImageCourse imageCourse) {
-        return imageCourseRepository.save(imageCourse);
-    }
-
-    @Override
-    public List<ImageCourse> getImageCurseList() {
-        return imageCourseRepository.findAll();
-    }
+//    @Override
+//    public ImageCourse saveCourseImage(ImageCourse imageCourse) {
+//        return imageCourseRepository.save(imageCourse);
+//    }
+//
+//    @Override
+//    public List<ImageCourse> getImageCurseList() {
+//        return imageCourseRepository.findAll();
+//    }
 
     @Override
     public List<VideoClip> getVideoCurseList() {
@@ -160,4 +160,28 @@ public class CourseDaoImpl implements CourseDao {
         return courseRepository.findOne(courseId);
     }
 
+    @Override
+    public List<Course> getCourseLego(String textPublic, String legoText) {
+        return courseRepository.findByPublicCourseAndCatagoryContaining(textPublic, legoText);
+    }
+
+    @Override
+    public List<Course> getCourseHousehold(String textPublic, String householdText) {
+        return courseRepository.findByPublicCourseAndCatagoryContaining(textPublic, householdText);
+    }
+
+    @Override
+    public List<Course> getCourseToy(String textPublic, String toyText) {
+        return courseRepository.findByPublicCourseAndCatagoryContaining(textPublic, toyText);
+    }
+
+    @Override
+    public List<Course> getCourseGarden(String textPublic, String gardenText) {
+        return courseRepository.findByPublicCourseAndCatagoryContaining(textPublic, gardenText);
+    }
+
+    @Override
+    public List<Course> getCourseIoT(String textPublic, String ioTText) {
+        return courseRepository.findByPublicCourseAndCatagoryContaining(textPublic, ioTText);
+    }
 }

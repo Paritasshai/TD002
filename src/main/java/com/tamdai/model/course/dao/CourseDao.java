@@ -22,9 +22,9 @@ public interface CourseDao {
 
     List<VideoClip> getVideoList();
 
-    ImageCourse saveCourseImage(ImageCourse imageCourse);
+//    ImageCourse saveCourseImage(ImageCourse imageCourse);
 
-    List<ImageCourse> getImageCurseList();
+//    List<ImageCourse> getImageCurseList();
 
     List<VideoClip> getVideoCurseList();
 
@@ -57,4 +57,14 @@ public interface CourseDao {
     List<Course> getCourseHotType(String textPublic, String hotType);
 
     Course getCourseByUser(Long courseId);
+
+    List<Course> getCourseLego(String textPublic, String legoText);
+
+    List<Course> getCourseHousehold(String textPublic, String householdText);
+
+    List<Course> getCourseToy(String textPublic, String toyText);
+
+    List<Course> getCourseGarden(String textPublic, String gardenText);
+
+    List<Course> getCourseIoT(String textPublic, String ioTText);
 }

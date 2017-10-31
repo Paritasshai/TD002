@@ -24,7 +24,7 @@ public interface CourseService {
 
 //    ImageCourse saveCourseImage(Course course, ImageCourse imageCourse);
 
-    List<ImageCourse> getImageCourseList();
+//    List<ImageCourse> getImageCourseList();
 
     CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId);
 
@@ -69,4 +69,14 @@ public interface CourseService {
     Course addImageCourse(Course course, CourseImage courseImage);
 
     Course deleteImage(Course course, Long imageId);
+
+    List<Course> getCourseLego(String textPublic, String legoText);
+
+    List<Course> getCourseHousehold(String textPublic, String householdText);
+
+    List<Course> getCourseToy(String textPublic, String toyText);
+
+    List<Course> getCourseGarden(String textPublic, String gardenText);
+
+    List<Course> getCourseIoT(String textPublic, String ioTText);
 }

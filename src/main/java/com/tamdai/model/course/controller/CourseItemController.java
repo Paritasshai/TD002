@@ -1,7 +1,7 @@
 package com.tamdai.model.course.controller;
 
 import com.tamdai.model.course.entity.*;
-import com.tamdai.model.course.repository.ImageCourseRepository;
+//import com.tamdai.model.course.repository.ImageCourseRepository;
 import com.tamdai.model.course.repository.ImageItemRepository;
 import com.tamdai.model.course.repository.VideoClipRepository;
 import com.tamdai.model.course.service.CourseService;
@@ -42,8 +42,8 @@ public class CourseItemController {
     @Autowired
     VideoClipRepository videoClipRepository;
 
-    @Autowired
-    ImageCourseRepository imageCourseRepository;
+//    @Autowired
+//    ImageCourseRepository imageCourseRepository;
 
     @Autowired
     ImageItemRepository imageItemRepository;

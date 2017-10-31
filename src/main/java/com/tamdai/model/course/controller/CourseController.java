@@ -1,10 +1,10 @@
 package com.tamdai.model.course.controller;
 
 import com.tamdai.model.course.entity.Course;
-import com.tamdai.model.course.entity.ImageCourse;
+//import com.tamdai.model.course.entity.ImageCourse;
 import com.tamdai.model.course.repository.CourseRepository;
-import com.tamdai.model.course.repository.ImageCourseRepository;
-import com.tamdai.model.security.entity.UserEntity;
+//import com.tamdai.model.course.repository.ImageCourseRepository;
+//import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.service.UserService;
 import com.tamdai.model.course.repository.VideoClipRepository;
 import com.tamdai.model.course.service.CourseService;
@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+//import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +40,8 @@ public class CourseController {
     @Autowired
     VideoClipRepository videoClipRepository;
 
-    @Autowired
-    ImageCourseRepository imageCourseRepository;
+//    @Autowired
+//    ImageCourseRepository imageCourseRepository;
 
     @Autowired
     CourseRepository courseRepository;
@@ -96,6 +96,36 @@ public class CourseController {
         return courseService.getCourseHotType(textPublic, hotType);
     }
 
+    @RequestMapping(value = "getCourseLego", method = RequestMethod.GET)
+    public List<Course> getCourseLego(@RequestParam("textPublic") String textPublic,
+                                         @RequestParam("LegoText") String LegoText) {
+        return courseService.getCourseLego(textPublic, LegoText);
+    }
+
+    @RequestMapping(value = "getCourseHousehold", method = RequestMethod.GET)
+    public List<Course> getCourseHousehold(@RequestParam("textPublic") String textPublic,
+                                         @RequestParam("HouseholdText") String HouseholdText) {
+        return courseService.getCourseHousehold(textPublic, HouseholdText);
+    }
+
+    @RequestMapping(value = "getCourseToy", method = RequestMethod.GET)
+    public List<Course> getCourseToy(@RequestParam("textPublic") String textPublic,
+                                         @RequestParam("ToyText") String ToyText) {
+        return courseService.getCourseToy(textPublic, ToyText);
+    }
+
+    @RequestMapping(value = "getCourseGarden", method = RequestMethod.GET)
+    public List<Course> getCourseGarden(@RequestParam("textPublic") String textPublic,
+                                         @RequestParam("GardenText") String GardenText) {
+        return courseService.getCourseGarden(textPublic, GardenText);
+    }
+
+    @RequestMapping(value = "getCourseIoT", method = RequestMethod.GET)
+    public List<Course> getCourseIoT(@RequestParam("textPublic") String textPublic,
+                                         @RequestParam("IoTText") String IoTText) {
+        return courseService.getCourseIoT(textPublic, IoTText);
+    }
+
     @RequestMapping(value = "getCourseList", method = RequestMethod.GET)
     public List<Course> getCourseList() {
         return courseService.getCourseList();
@@ -117,10 +147,10 @@ public class CourseController {
         return courseService.updateCourse(course);
     }
 
-    @RequestMapping(value = "get/imageCourseList", method = RequestMethod.GET)
-    public List<ImageCourse> getImageCourseList(HttpServletRequest request) throws IOException {
-        return courseService.getImageCourseList();
-    }
+//    @RequestMapping(value = "get/imageCourseList", method = RequestMethod.GET)
+//    public List<ImageCourse> getImageCourseList(HttpServletRequest request) throws IOException {
+//        return courseService.getImageCourseList();
+//    }
 
 //    @RequestMapping(value = "add/ImageCourse", method = RequestMethod.POST)
 //    @ResponseBody
@@ -153,26 +183,26 @@ public class CourseController {
 //        return course;
 //    }
 
-    @RequestMapping(value = "displayImage/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public void image(@PathVariable("id") Long id, Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        ImageCourse imageCourse = imageCourseRepository.findOne(id);
-
-        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\image\\" + imageCourse.getImageName();
-
-        int fileSize = (int) new File(filePath).length();
-        response.setContentLength(fileSize);
-        response.setContentType("image");
-
-        FileInputStream inputStream = new FileInputStream(filePath);
-        ServletOutputStream outputStream = response.getOutputStream();
-        int value = IOUtils.copy(inputStream, outputStream);
-        System.out.println("File Size :: " + fileSize);
-        System.out.println("Copied Bytes :: " + value);
-        IOUtils.closeQuietly(inputStream);
-        IOUtils.closeQuietly(outputStream);
-    }
+//    @RequestMapping(value = "displayImage/{id}", method = RequestMethod.GET)
+//    @ResponseBody
+//    public void image(@PathVariable("id") Long id, Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+//
+//        ImageCourse imageCourse = imageCourseRepository.findOne(id);
+//
+//        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\image\\" + imageCourse.getImageName();
+//
+//        int fileSize = (int) new File(filePath).length();
+//        response.setContentLength(fileSize);
+//        response.setContentType("image");
+//
+//        FileInputStream inputStream = new FileInputStream(filePath);
+//        ServletOutputStream outputStream = response.getOutputStream();
+//        int value = IOUtils.copy(inputStream, outputStream);
+//        System.out.println("File Size :: " + fileSize);
+//        System.out.println("Copied Bytes :: " + value);
+//        IOUtils.closeQuietly(inputStream);
+//        IOUtils.closeQuietly(outputStream);
+//    }
 
     @RequestMapping(value = "deleteCourse/{id}", method = RequestMethod.DELETE)
     public Course deleteCourse(@PathVariable("id") Long id) {

@@ -76,10 +76,10 @@ public class CourseServiceImpl implements CourseService {
 //        return courseDao.saveCourseImage(imageCourse);
 //    }
 
-    @Override
-    public List<ImageCourse> getImageCourseList() {
-        return courseDao.getImageCurseList();
-    }
+//    @Override
+//    public List<ImageCourse> getImageCourseList() {
+//        return courseDao.getImageCurseList();
+//    }
 
     @Override
     public CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId) {
@@ -269,5 +269,28 @@ public class CourseServiceImpl implements CourseService {
         return course;
     }
 
+    @Override
+    public List<Course> getCourseLego(String textPublic, String legoText) {
+        return courseDao.getCourseLego(textPublic, legoText);
+    }
 
+    @Override
+    public List<Course> getCourseHousehold(String textPublic, String householdText) {
+        return courseDao.getCourseHousehold(textPublic, householdText);
+    }
+
+    @Override
+    public List<Course> getCourseToy(String textPublic, String toyText) {
+        return courseDao.getCourseToy(textPublic, toyText);
+    }
+
+    @Override
+    public List<Course> getCourseGarden(String textPublic, String gardenText) {
+        return courseDao.getCourseGarden(textPublic, gardenText);
+    }
+
+    @Override
+    public List<Course> getCourseIoT(String textPublic, String ioTText) {
+        return courseDao.getCourseIoT(textPublic, ioTText);
+    }
 }

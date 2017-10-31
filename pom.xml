@@ -27,13 +27,10 @@
 
 	<dependencies>
 
-		<!-- https://mvnrepository.com/artifact/io.github.jhipster/jhipster-dependencies -->
-		<dependency>
-			<groupId>io.github.jhipster</groupId>
-			<artifactId>jhipster-dependencies</artifactId>
-			<version>0.0.5</version>
-			<type>pom</type>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-security</artifactId>-->
+		<!--</dependency>-->
 
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
