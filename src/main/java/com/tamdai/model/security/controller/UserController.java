@@ -1,9 +1,7 @@
 package com.tamdai.model.security.controller;
 
-import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.course.repository.CourseItemRepository;
 import com.tamdai.model.course.repository.CourseRepository;
-import com.tamdai.model.course.service.CourseImageUtil;
 import com.tamdai.model.course.service.CourseService;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.security.service.NotificationService;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 @CrossOrigin
@@ -43,8 +43,12 @@ public class UserController {
     @Autowired
     CourseItemRepository courseItemRepository;
 
-    @Autowired
     private static HttpServletRequest request;
+
+    @Autowired
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     @RequestMapping(value = "user/login")
     public ResponseEntity<UserEntity> Login(@RequestParam("Email") String email, @RequestParam("Password") String password) {
@@ -183,18 +187,35 @@ public class UserController {
     }
 
     @RequestMapping(value = "getClientIp", method = RequestMethod.GET)
-    private static String getClientIp() {
+    public static String getClientIp() {
 
-        String remoteAddr = "";
+        InetAddress ip = null;
+        try {
 
-        if (request != null) {
-            remoteAddr = request.getHeader("X-FORWARDED-FOR");
-            if (remoteAddr == null || "".equals(remoteAddr)) {
-                remoteAddr = request.getRemoteAddr();
-            }
+            ip = InetAddress.getLocalHost();
+            System.out.println("Current IP address : " + ip.getHostAddress());
+
+        } catch (UnknownHostException e) {
+
+            e.printStackTrace();
+
         }
-
-        return "Your IP: " + remoteAddr;
+        return "Your IP: " + (ip != null ? ip.getHostAddress() : null);
     }
+
+//    private static String getClientIp(HttpServletRequest request) {
+//
+//        String remoteAddr = "";
+//
+//        if (request != null) {
+//            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+//            if (remoteAddr == null || "".equals(remoteAddr)) {
+//                remoteAddr = request.getRemoteAddr();
+//            }
+//        }
+//
+//        return "Your IP: " + remoteAddr;
+//    }
+
 }
 
