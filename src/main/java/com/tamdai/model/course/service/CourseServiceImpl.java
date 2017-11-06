@@ -293,4 +293,9 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getCourseIoT(String textPublic, String ioTText) {
         return courseDao.getCourseIoT(textPublic, ioTText);
     }
+
+    @Override
+    public List<Course> getSearchByName(String textPublic, String querySearch) {
+        return courseDao.getSearchByName(textPublic, querySearch);
+    }
 }

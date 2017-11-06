@@ -52,11 +52,13 @@ public class CourseItemController {
     public CourseItem updateCourseItem(@PathVariable("id") Long id,
                                        @RequestParam("name") String name,
                                        @RequestParam("description") String description,
+                                       @RequestParam("videoPath") String videoPath,
                                        @RequestParam("canPreview") String canPreview) {
         CourseItem courseItem = courseService.courseItemId(id);
         courseItem.setName(name);
         courseItem.setDescription(description);
         courseItem.setCanPreview(canPreview);
+        courseItem.setVideoPath(videoPath);
         return courseService.updateCourseItem(courseItem);
     }
 

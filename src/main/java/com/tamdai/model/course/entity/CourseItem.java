@@ -20,6 +20,7 @@ public class CourseItem implements Serializable {
     private String level;
     private String path;
     private String canPreview;
+    private String videoPath;
 
     @OneToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -28,6 +29,18 @@ public class CourseItem implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<ImageItem> imageItems = new HashSet<>();
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getVideoPath() {
+        return videoPath;
+    }
+
+    public void setVideoPath(String videoPath) {
+        this.videoPath = videoPath;
+    }
 
     public Long getId() {
         return id;
@@ -104,6 +117,18 @@ public class CourseItem implements Serializable {
     public CourseItem() {
     }
 
+    public CourseItem(String courseType, String name, String description, String level, String path, String canPreview, String videoPath, Set<VideoClip> videoClips, Set<ImageItem> imageItems) {
+        this.courseType = courseType;
+        this.name = name;
+        this.description = description;
+        this.level = level;
+        this.path = path;
+        this.canPreview = canPreview;
+        this.videoPath = videoPath;
+        this.videoClips = videoClips;
+        this.imageItems = imageItems;
+    }
+
     public CourseItem(Long id, String courseType, String name, String description, String canPreview) {
         this.id = id;
         this.courseType = courseType;
@@ -133,9 +158,9 @@ public class CourseItem implements Serializable {
                 ", level='" + level + '\'' +
                 ", path='" + path + '\'' +
                 ", canPreview='" + canPreview + '\'' +
+                ", videoPath='" + videoPath + '\'' +
                 ", videoClips=" + videoClips +
                 ", imageItems=" + imageItems +
                 '}';
     }
-
 }

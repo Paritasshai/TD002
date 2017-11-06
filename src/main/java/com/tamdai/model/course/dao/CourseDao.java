@@ -67,4 +67,6 @@ public interface CourseDao {
     List<Course> getCourseGarden(String textPublic, String gardenText);
 
     List<Course> getCourseIoT(String textPublic, String ioTText);
+
+    List<Course> getSearchByName(String textPublic, String querySearch);
 }

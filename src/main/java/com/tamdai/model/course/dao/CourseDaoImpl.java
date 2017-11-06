@@ -184,4 +184,9 @@ public class CourseDaoImpl implements CourseDao {
     public List<Course> getCourseIoT(String textPublic, String ioTText) {
         return courseRepository.findByPublicCourseAndCatagoryContaining(textPublic, ioTText);
     }
+
+    @Override
+    public List<Course> getSearchByName(String textPublic, String querySearch) {
+        return courseRepository.findByPublicCourseAndNameContainingIgnoreCase(textPublic, querySearch);
+    }
 }

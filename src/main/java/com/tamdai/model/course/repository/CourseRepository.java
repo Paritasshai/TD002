@@ -9,6 +9,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByPublicCourseContaining(String textPublic);
     List<Course> findByPublicCourseAndCourseTypeContaining(String textPublic, String newType);
     List<Course> findByPublicCourseAndCatagoryContaining(String textPublic, String legoText);
+    List<Course> findByPublicCourseAndNameContainingIgnoreCase(String textPublic, String querySearch);
 
 //    List<Course> findByPublicCourseAndCourseTypeContaining(String textPublic, String newType);
 //    List<Course> findByPublicCourseAndCourseTypeContaining(String textPublic, String recommendType);

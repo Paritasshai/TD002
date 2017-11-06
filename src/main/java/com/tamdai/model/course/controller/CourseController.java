@@ -114,6 +114,12 @@ public class CourseController {
         return courseService.getCourseToy(textPublic, ToyText);
     }
 
+    @RequestMapping(value = "getSearchByName", method = RequestMethod.GET)
+    public List<Course> getSearchByName(@RequestParam("textPublic") String textPublic,
+                                         @RequestParam("querySearch") String querySearch) {
+        return courseService.getSearchByName(textPublic, querySearch);
+    }
+
     @RequestMapping(value = "getCourseGarden", method = RequestMethod.GET)
     public List<Course> getCourseGarden(@RequestParam("textPublic") String textPublic,
                                          @RequestParam("GardenText") String GardenText) {
