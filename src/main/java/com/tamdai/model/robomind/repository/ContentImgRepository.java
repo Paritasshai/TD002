@@ -1,4 +1,7 @@
 package com.tamdai.model.robomind.repository;
 
-public interface ContentImgRepository {
+import com.tamdai.model.robomind.entity.ContentImg;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ContentImgRepository extends JpaRepository<ContentImg, Long> {
 }

@@ -21,6 +21,10 @@ public class CourseItem implements Serializable {
     private String path;
     private String canPreview;
     private String videoPath;
+    private String videoTime;
+
+    @Column(name = "courseText", length = 2000)
+    private String courseText;
 
     @OneToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -29,6 +33,10 @@ public class CourseItem implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<ImageItem> imageItems = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<courseText> courseTexts = new HashSet<>();
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -114,6 +122,30 @@ public class CourseItem implements Serializable {
         this.videoClips = videoClips;
     }
 
+    public Set<courseText> getCourseTexts() {
+        return courseTexts;
+    }
+
+    public void setCourseTexts(Set<courseText> courseTexts) {
+        this.courseTexts = courseTexts;
+    }
+
+    public String getCourseText() {
+        return courseText;
+    }
+
+    public void setCourseText(String courseText) {
+        this.courseText = courseText;
+    }
+
+    public String getVideoTime() {
+        return videoTime;
+    }
+
+    public void setVideoTime(String videoTime) {
+        this.videoTime = videoTime;
+    }
+
     public CourseItem() {
     }
 
@@ -148,6 +180,48 @@ public class CourseItem implements Serializable {
         this.imageItems = imageItems;
     }
 
+    public CourseItem(String courseType, String name, String description, String level, String path, String canPreview, String videoPath, Set<VideoClip> videoClips, Set<ImageItem> imageItems, Set<courseText> courseTexts) {
+        this.courseType = courseType;
+        this.name = name;
+        this.description = description;
+        this.level = level;
+        this.path = path;
+        this.canPreview = canPreview;
+        this.videoPath = videoPath;
+        this.videoClips = videoClips;
+        this.imageItems = imageItems;
+        this.courseTexts = courseTexts;
+    }
+
+    public CourseItem(String courseType, String name, String description, String level, String path, String canPreview, String videoPath, String courseText, Set<VideoClip> videoClips, Set<ImageItem> imageItems, Set<com.tamdai.model.course.entity.courseText> courseTexts) {
+        this.courseType = courseType;
+        this.name = name;
+        this.description = description;
+        this.level = level;
+        this.path = path;
+        this.canPreview = canPreview;
+        this.videoPath = videoPath;
+        this.courseText = courseText;
+        this.videoClips = videoClips;
+        this.imageItems = imageItems;
+        this.courseTexts = courseTexts;
+    }
+
+    public CourseItem(String courseType, String name, String description, String level, String path, String canPreview, String videoPath, String videoTime, String courseText, Set<VideoClip> videoClips, Set<ImageItem> imageItems, Set<com.tamdai.model.course.entity.courseText> courseTexts) {
+        this.courseType = courseType;
+        this.name = name;
+        this.description = description;
+        this.level = level;
+        this.path = path;
+        this.canPreview = canPreview;
+        this.videoPath = videoPath;
+        this.videoTime = videoTime;
+        this.courseText = courseText;
+        this.videoClips = videoClips;
+        this.imageItems = imageItems;
+        this.courseTexts = courseTexts;
+    }
+
     @Override
     public String toString() {
         return "CourseItem{" +
@@ -159,8 +233,11 @@ public class CourseItem implements Serializable {
                 ", path='" + path + '\'' +
                 ", canPreview='" + canPreview + '\'' +
                 ", videoPath='" + videoPath + '\'' +
+                ", videoTime='" + videoTime + '\'' +
+                ", courseText='" + courseText + '\'' +
                 ", videoClips=" + videoClips +
                 ", imageItems=" + imageItems +
+                ", courseTexts=" + courseTexts +
                 '}';
     }
 }

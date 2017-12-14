@@ -52,7 +52,7 @@ public class CourseImageUtil {
             // change the image byte array to Buffer Image
             BufferedImage bufferedImage = ImageIO.read(imageStream);
             //Scale the image using the default api
-            BufferedImage scaledImage = Scalr.resize(bufferedImage,300);
+            BufferedImage scaledImage = Scalr.resize(bufferedImage,500);
 
             //Convert BufferedImage to byte
             // convert BufferedImage to byte array

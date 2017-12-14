@@ -2,6 +2,7 @@ package com.tamdai.model.security.service;
 
 import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.security.dao.UserDao;
+import com.tamdai.model.security.entity.Lists;
 import com.tamdai.model.security.entity.UserImage;
 import com.tamdai.model.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,12 @@ public class UserServiceImpl implements UserService {
         String id = UUID.randomUUID().toString();
         user.setCreateUserID(id);
 
+//        //setStatus
+//        String role = new String("new");
+//        user.setStatus(role);
+
         //setStatus
-        String role = new String("new");
+        String role = new String("active");
         user.setStatus(role);
 
         //setBalance
@@ -154,4 +159,15 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    @Override
+    public UserImage saveImageUser(UserEntity userEntity, UserImage userImage) {
+        userEntity.getUserImages().add(userImage);
+        userDao.updateUser(userEntity);
+        return userDao.saveImageUser(userImage);
+    }
+
+    @Override
+    public Lists addFavor(Lists list, UserEntity userEntity) {
+        return userDao.saveList(list, userEntity);
+    }
 }

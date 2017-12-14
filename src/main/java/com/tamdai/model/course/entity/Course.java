@@ -18,7 +18,10 @@ public class Course implements Serializable {
     private Long id;
     private Long userId;
     private String name;
+
+    @Column(name = "description", length = 2000)
     private String description;
+
     private String price;
     private String publicCourse;
     private String linkCourse;
@@ -38,9 +41,9 @@ public class Course implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<CourseItem> courseItems = new HashSet<>();
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-//    private Set<ImageCourse> imageCourses = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<ImageCourse> imageCourses = new HashSet<>();
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -150,6 +153,14 @@ public class Course implements Serializable {
         this.courseItems = courseItems;
     }
 
+    public Set<ImageCourse> getImageCourses() {
+        return imageCourses;
+    }
+
+    public void setImageCourses(Set<ImageCourse> imageCourses) {
+        this.imageCourses = imageCourses;
+    }
+
     public Course() {
     }
 
@@ -193,6 +204,42 @@ public class Course implements Serializable {
         this.courseItems = courseItems;
     }
 
+    public Course(Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory, int showLock, Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.publicCourse = publicCourse;
+        this.linkCourse = linkCourse;
+        this.courseType = courseType;
+        this.catagory = catagory;
+        this.showLock = showLock;
+        this.courseImages = courseImages;
+        this.users = users;
+        this.courseItems = courseItems;
+        this.imageCourses = imageCourses;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                ", publicCourse='" + publicCourse + '\'' +
+                ", linkCourse='" + linkCourse + '\'' +
+                ", courseType='" + courseType + '\'' +
+                ", catagory='" + catagory + '\'' +
+                ", showLock=" + showLock +
+                ", courseImages=" + courseImages +
+                ", users=" + users +
+                ", courseItems=" + courseItems +
+                ", imageCourses=" + imageCourses +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -214,7 +261,8 @@ public class Course implements Serializable {
         if (courseImages != null ? !courseImages.equals(course.courseImages) : course.courseImages != null)
             return false;
         if (users != null ? !users.equals(course.users) : course.users != null) return false;
-        return courseItems != null ? courseItems.equals(course.courseItems) : course.courseItems == null;
+        if (courseItems != null ? !courseItems.equals(course.courseItems) : course.courseItems != null) return false;
+        return imageCourses != null ? imageCourses.equals(course.imageCourses) : course.imageCourses == null;
     }
 
     @Override
@@ -232,25 +280,7 @@ public class Course implements Serializable {
         result = 31 * result + (courseImages != null ? courseImages.hashCode() : 0);
         result = 31 * result + (users != null ? users.hashCode() : 0);
         result = 31 * result + (courseItems != null ? courseItems.hashCode() : 0);
+        result = 31 * result + (imageCourses != null ? imageCourses.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price='" + price + '\'' +
-                ", publicCourse='" + publicCourse + '\'' +
-                ", linkCourse='" + linkCourse + '\'' +
-                ", courseType='" + courseType + '\'' +
-                ", catagory='" + catagory + '\'' +
-                ", showLock=" + showLock +
-                ", courseImages=" + courseImages +
-                ", users=" + users +
-                ", courseItems=" + courseItems +
-                '}';
     }
 }

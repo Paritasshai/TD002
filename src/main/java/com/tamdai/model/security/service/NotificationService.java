@@ -4,7 +4,7 @@ import com.tamdai.model.security.entity.UserEntity;
 
 public interface NotificationService {
 
-    void sendNotification(UserEntity user);
+//    void sendNotification(UserEntity user) throws Exception;
 
     void sendNotificationForgot(UserEntity user);
 }

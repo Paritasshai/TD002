@@ -22,9 +22,9 @@ public interface CourseService {
 
     List<VideoClip> getVideoList();
 
-//    ImageCourse saveCourseImage(Course course, ImageCourse imageCourse);
+    ImageCourse saveCourseImage(Course course, ImageCourse imageCourse);
 
-//    List<ImageCourse> getImageCourseList();
+    List<ImageCourse> getImageCourseList();
 
     CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId);
 
@@ -64,7 +64,7 @@ public interface CourseService {
 
     Course getCourseByUser(Long courseId, Long userId);
 
-//    Course deleteImageCourse(Course course, Long imageId);
+    Course deleteImageCourse(Course course, Long imageId);
 
     Course addImageCourse(Course course, CourseImage courseImage);
 
@@ -81,4 +81,7 @@ public interface CourseService {
     List<Course> getCourseIoT(String textPublic, String ioTText);
 
     List<Course> getSearchByName(String textPublic, String querySearch);
+
+    CourseItem createCourseTextItem(CourseItem courseItem, Course course);
+
 }

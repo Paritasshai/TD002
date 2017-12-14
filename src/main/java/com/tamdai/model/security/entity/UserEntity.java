@@ -62,6 +62,9 @@ public class UserEntity {
     @Column(name = "balance")
     private String balance;
 
+    @Column(name = "instructorBio")
+    private String instructorBio;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<PurchaseCart> purchaseCarts = new HashSet<>();
@@ -70,9 +73,22 @@ public class UserEntity {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Course> courses = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private
     Set<UserImage> userImages = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<Lists> lists = new HashSet<>();
+
+    public String getInstructorBio() {
+        return instructorBio;
+    }
+
+    public void setInstructorBio(String instructorBio) {
+        this.instructorBio = instructorBio;
+    }
 
     public Set<UserImage> getUserImages() {
         return userImages;
@@ -226,7 +242,37 @@ public class UserEntity {
         this.courses = courses;
     }
 
+    public Set<Lists> getLists() {
+        return lists;
+    }
+
+    public void setLists(Set<Lists> lists) {
+        this.lists = lists;
+    }
+
     public UserEntity() {
+    }
+
+    public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance, Set<PurchaseCart> purchaseCarts, Set<Course> courses, Set<UserImage> userImages, Set<Lists> lists) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.lastLoginDate = lastLoginDate;
+        this.signUpDate = signUpDate;
+        this.confirmDate = confirmDate;
+        this.createDate = createDate;
+        this.createTime = createTime;
+        this.createUserID = createUserID;
+        this.updateDate = updateDate;
+        this.updateTime = updateTime;
+        this.updateUserId = updateUserId;
+        this.status = status;
+        this.balance = balance;
+        this.purchaseCarts = purchaseCarts;
+        this.courses = courses;
+        this.userImages = userImages;
+        this.lists = lists;
     }
 
     public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance, Set<PurchaseCart> purchaseCarts, Set<Course> courses, Set<UserImage> userImages) {
@@ -324,6 +370,29 @@ public class UserEntity {
         this.courses = courses;
     }
 
+    public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance, String instructorBio, Set<PurchaseCart> purchaseCarts, Set<Course> courses, Set<UserImage> userImages, Set<Lists> lists) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.lastLoginDate = lastLoginDate;
+        this.signUpDate = signUpDate;
+        this.confirmDate = confirmDate;
+        this.createDate = createDate;
+        this.createTime = createTime;
+        this.createUserID = createUserID;
+        this.updateDate = updateDate;
+        this.updateTime = updateTime;
+        this.updateUserId = updateUserId;
+        this.status = status;
+        this.balance = balance;
+        this.instructorBio = instructorBio;
+        this.purchaseCarts = purchaseCarts;
+        this.courses = courses;
+        this.userImages = userImages;
+        this.lists = lists;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -343,9 +412,11 @@ public class UserEntity {
                 ", updateUserId='" + updateUserId + '\'' +
                 ", status='" + status + '\'' +
                 ", balance='" + balance + '\'' +
+                ", instructorBio='" + instructorBio + '\'' +
                 ", purchaseCarts=" + purchaseCarts +
                 ", courses=" + courses +
                 ", userImages=" + userImages +
+                ", lists=" + lists +
                 '}';
     }
 
@@ -373,10 +444,13 @@ public class UserEntity {
         if (updateUserId != null ? !updateUserId.equals(that.updateUserId) : that.updateUserId != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (balance != null ? !balance.equals(that.balance) : that.balance != null) return false;
+        if (instructorBio != null ? !instructorBio.equals(that.instructorBio) : that.instructorBio != null)
+            return false;
         if (purchaseCarts != null ? !purchaseCarts.equals(that.purchaseCarts) : that.purchaseCarts != null)
             return false;
         if (courses != null ? !courses.equals(that.courses) : that.courses != null) return false;
-        return userImages != null ? userImages.equals(that.userImages) : that.userImages == null;
+        if (userImages != null ? !userImages.equals(that.userImages) : that.userImages != null) return false;
+        return lists != null ? lists.equals(that.lists) : that.lists == null;
     }
 
     @Override
@@ -397,10 +471,11 @@ public class UserEntity {
         result = 31 * result + (updateUserId != null ? updateUserId.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (balance != null ? balance.hashCode() : 0);
+        result = 31 * result + (instructorBio != null ? instructorBio.hashCode() : 0);
         result = 31 * result + (purchaseCarts != null ? purchaseCarts.hashCode() : 0);
         result = 31 * result + (courses != null ? courses.hashCode() : 0);
         result = 31 * result + (userImages != null ? userImages.hashCode() : 0);
+        result = 31 * result + (lists != null ? lists.hashCode() : 0);
         return result;
     }
-
 }

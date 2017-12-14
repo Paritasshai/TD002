@@ -22,9 +22,9 @@ public interface CourseDao {
 
     List<VideoClip> getVideoList();
 
-//    ImageCourse saveCourseImage(ImageCourse imageCourse);
+    ImageCourse saveCourseImage(ImageCourse imageCourse);
 
-//    List<ImageCourse> getImageCurseList();
+    List<ImageCourse> getImageCurseList();
 
     List<VideoClip> getVideoCurseList();
 
@@ -69,4 +69,6 @@ public interface CourseDao {
     List<Course> getCourseIoT(String textPublic, String ioTText);
 
     List<Course> getSearchByName(String textPublic, String querySearch);
+
+    CourseItem createCourseTextItem(CourseItem courseItem, Course course);
 }

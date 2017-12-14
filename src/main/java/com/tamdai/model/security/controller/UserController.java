@@ -1,10 +1,16 @@
 package com.tamdai.model.security.controller;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.course.repository.CourseItemRepository;
 import com.tamdai.model.course.repository.CourseRepository;
 import com.tamdai.model.course.service.CourseService;
+import com.tamdai.model.security.dao.UserDao;
+import com.tamdai.model.security.entity.Lists;
+import com.tamdai.model.security.repository.ListsRepository;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.security.service.NotificationService;
+import com.tamdai.model.security.service.NotificationServiceImpl;
 import com.tamdai.model.security.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +49,12 @@ public class UserController {
     @Autowired
     CourseItemRepository courseItemRepository;
 
+    @Autowired
+    ListsRepository listsRepository;
+
+    @Autowired
+    UserDao userDao;
+
     private static HttpServletRequest request;
 
     @Autowired
@@ -60,27 +72,37 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "user/facebook")
-    public String helloFacebook() {
-        return "ddddddddddddddd";
+    @RequestMapping(value = "getUserId/{id}", method = RequestMethod.GET)
+    public UserEntity getUserId(@PathVariable("id") Long id) {
+        return userService.getUserId(id);
     }
 
-    //    http://localhost:8080/login?FirstName=film&Password=4432
+//    @RequestMapping(value = "user/facebook")
+//    public String helloFacebook() {
+//        return "ddddddddddddddd";
+//    }
+
+    //http://localhost:8080/login?FirstName=film&Password=4432
     @RequestMapping(value = "user/register", method = RequestMethod.POST)
     public UserEntity userRegister(@RequestBody UserEntity user, BindingResult bindingResult) {
         userService.userRegister(user);
-        notificationService.sendNotification(user);
+        //notificationService.sendNotification(user);
+        try {
+            NotificationServiceImpl.sendSimpleMessage();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
-    @RequestMapping(value = "user/registerWithFacebook", method = RequestMethod.POST)
-    public UserEntity userRegisterWithFacebook(@RequestBody UserEntity user,
-                                               @PathVariable("firstName") String firstName,
-                                               @PathVariable("lastName") String lastName,
-                                               @PathVariable("email") String email,
-                                               BindingResult bindingResult) {
-        return userService.userRegisterWithFacebook(user, firstName, lastName, email);
-    }
+//    @RequestMapping(value = "user/registerWithFacebook", method = RequestMethod.POST)
+//    public UserEntity userRegisterWithFacebook(@RequestBody UserEntity user,
+//                                               @PathVariable("firstName") String firstName,
+//                                               @PathVariable("lastName") String lastName,
+//                                               @PathVariable("email") String email,
+//                                               BindingResult bindingResult) {
+//        return userService.userRegisterWithFacebook(user, firstName, lastName, email);
+//    }
 
 //    @RequestMapping(value = "user/forgotPassword", method = RequestMethod.POST)
 //    public String forgotPassword() {
@@ -112,8 +134,7 @@ public class UserController {
 //        String html1 = "\n <a href='http://localhost:4200/loginTemplate'>Back To Website</a>";
 //        return "\n" + html + "\n" + text1 + html1;
 
-//        httpServletResponse.sendRedirect("http://localhost:4200/home");
-        httpServletResponse.sendRedirect("https://makehappen-cc730.firebaseapp.com/home");
+        httpServletResponse.sendRedirect("http://103.76.180.120/home");
         return "success";
     }
 
@@ -123,6 +144,21 @@ public class UserController {
 
         UserEntity user = userService.getUserId(id);
         user.setStatus(statusName);
+        return userService.updateUserStatus(user);
+    }
+
+//    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
+//    public BankStatement getUserId(@PathVariable("id") Long id) {
+//        return userService.getUserId(id);
+//    }
+
+
+    @RequestMapping(value = "updateInstructorBio", method = RequestMethod.PUT)
+    public UserEntity updateInstructorBio(@RequestParam("getUserId") Long getUserId,
+                                          @RequestParam("instructorBio") String instructorBio) {
+
+        UserEntity user = userService.getUserId(getUserId);
+        user.setInstructorBio(instructorBio);
         return userService.updateUserStatus(user);
     }
 
@@ -168,7 +204,7 @@ public class UserController {
     @RequestMapping(value = "user/forgotPassword", method = RequestMethod.GET)
     public UserEntity forgotPassword(@RequestParam("Email") String email) {
         UserEntity user = userService.getUserByEmail(email);
-        notificationService.sendNotificationForgot(user);
+        //notificationService.sendNotificationForgot(user);
         return user;
     }
 
@@ -216,6 +252,19 @@ public class UserController {
 //
 //        return "Your IP: " + remoteAddr;
 //    }
+
+    @RequestMapping(value = "user/addList/{id}", method = RequestMethod.POST)
+    public Lists addList(@RequestBody Lists lists,
+                         @PathVariable("id") Long id,
+                         @RequestParam("userId") Long userId, BindingResult bindingResult) {
+        UserEntity userEntity = userService.getUserId(userId);
+        Course course = courseService.getCourseId(id);
+        lists.getCourses().add(course);
+        listsRepository.save(lists);
+        userEntity.getLists().add(lists);
+        userDao.updateUser(userEntity);
+        return lists;
+    }
 
 }
 

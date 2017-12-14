@@ -53,12 +53,16 @@ public class CourseItemController {
                                        @RequestParam("name") String name,
                                        @RequestParam("description") String description,
                                        @RequestParam("videoPath") String videoPath,
+                                       @RequestParam("courseText") String courseText,
+                                       @RequestParam("videoTime") String videoTime,
                                        @RequestParam("canPreview") String canPreview) {
         CourseItem courseItem = courseService.courseItemId(id);
         courseItem.setName(name);
         courseItem.setDescription(description);
         courseItem.setCanPreview(canPreview);
         courseItem.setVideoPath(videoPath);
+        courseItem.setCourseText(courseText);
+        courseItem.setVideoTime(videoTime);
         return courseService.updateCourseItem(courseItem);
     }
 
@@ -72,6 +76,12 @@ public class CourseItemController {
     public CourseItem createCourseImageItem(@RequestBody CourseItem courseItem, @RequestParam("courseId") Long id, BindingResult bindingResult) {
         Course course = courseService.getCourseId(id);
         return courseService.createCourseImageItem(courseItem, course);
+    }
+
+    @RequestMapping(value = "create/courseTextItem", method = RequestMethod.POST)
+    public CourseItem createCourseTextItem(@RequestBody CourseItem courseItem, @RequestParam("courseId") Long id, BindingResult bindingResult) {
+        Course course = courseService.getCourseId(id);
+        return courseService.createCourseTextItem(courseItem, course);
     }
 
     @RequestMapping(value = "get/courseItems", method = RequestMethod.GET)
@@ -126,10 +136,10 @@ public class CourseItemController {
                 }
                 return "You successfully uploaded ";
             } catch (Exception e) {
-                return "You failed to upload " + " => " + e.getMessage();
+                return "Failed to upload " + " => " + e.getMessage();
             }
         } else {
-            return "You failed to upload " + " because the file was empty.";
+            return "Failed to upload " + " because the file was empty.";
         }
     }
 
@@ -196,7 +206,7 @@ public class CourseItemController {
             while (itr.hasNext()) {
                 MultipartFile multipartFile = mRequest.getFile(itr.next());
 
-                String destination = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\imageItem\\" + multipartFile.getOriginalFilename();
+                String destination = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\imageitem\\" + multipartFile.getOriginalFilename();
 
                 ImageItem imageItem = new ImageItem();
                 imageItem.setImageName(multipartFile.getOriginalFilename());
@@ -206,7 +216,7 @@ public class CourseItemController {
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\imageItem\\" + multipartFile.getOriginalFilename())));
+                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\imageitem\\" + multipartFile.getOriginalFilename())));
                 stream.write(bytes);
                 stream.close();
             }
@@ -223,7 +233,7 @@ public class CourseItemController {
 
         ImageItem imageItem = imageItemRepository.findOne(id);
 
-        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\imageItem\\" + imageItem.getImageName();
+        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\imageitem\\" + imageItem.getImageName();
 
         int fileSize = (int) new File(filePath).length();
         response.setContentLength(fileSize);

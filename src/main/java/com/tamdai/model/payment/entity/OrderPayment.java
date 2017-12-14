@@ -216,7 +216,7 @@ public class OrderPayment {
 
     @Override
     public String toString() {
-        return "OrderPayment{" +
+        return "StudentProfile{" +
                 "id=" + id +
                 ", accountId=" + accountId +
                 ", transType='" + transType + '\'' +

@@ -2,9 +2,11 @@ package com.tamdai.model.course.controller;
 
 import com.tamdai.model.course.entity.Course;
 //import com.tamdai.model.course.entity.ImageCourse;
+import com.tamdai.model.course.entity.ImageCourse;
 import com.tamdai.model.course.repository.CourseRepository;
 //import com.tamdai.model.course.repository.ImageCourseRepository;
 //import com.tamdai.model.security.entity.UserEntity;
+import com.tamdai.model.course.repository.ImageCourseRepository;
 import com.tamdai.model.security.service.UserService;
 import com.tamdai.model.course.repository.VideoClipRepository;
 import com.tamdai.model.course.service.CourseService;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 //import org.springframework.web.multipart.MultipartFile;
 //import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -40,8 +44,8 @@ public class CourseController {
     @Autowired
     VideoClipRepository videoClipRepository;
 
-//    @Autowired
-//    ImageCourseRepository imageCourseRepository;
+    @Autowired
+    ImageCourseRepository imageCourseRepository;
 
     @Autowired
     CourseRepository courseRepository;
@@ -65,9 +69,9 @@ public class CourseController {
         if (userId != null) {
             Course userCourse = courseService.getCourseByUser(courseId, userId);
             System.out.println("===================================== Print =====================================");
-            System.out.println("User ID: " +userId);
-            System.out.println("ShowLock: "+ course.showLock);
-            System.out.println("User Course: "+ userCourse);
+            System.out.println("User ID: " + userId);
+            System.out.println("ShowLock: " + course.showLock);
+            System.out.println("User Course: " + userCourse);
             course.showLock = (userCourse == null ? 1 : 0);
         }
         return course;
@@ -98,37 +102,37 @@ public class CourseController {
 
     @RequestMapping(value = "getCourseLego", method = RequestMethod.GET)
     public List<Course> getCourseLego(@RequestParam("textPublic") String textPublic,
-                                         @RequestParam("LegoText") String LegoText) {
+                                      @RequestParam("LegoText") String LegoText) {
         return courseService.getCourseLego(textPublic, LegoText);
     }
 
     @RequestMapping(value = "getCourseHousehold", method = RequestMethod.GET)
     public List<Course> getCourseHousehold(@RequestParam("textPublic") String textPublic,
-                                         @RequestParam("HouseholdText") String HouseholdText) {
+                                           @RequestParam("HouseholdText") String HouseholdText) {
         return courseService.getCourseHousehold(textPublic, HouseholdText);
     }
 
     @RequestMapping(value = "getCourseToy", method = RequestMethod.GET)
     public List<Course> getCourseToy(@RequestParam("textPublic") String textPublic,
-                                         @RequestParam("ToyText") String ToyText) {
+                                     @RequestParam("ToyText") String ToyText) {
         return courseService.getCourseToy(textPublic, ToyText);
     }
 
     @RequestMapping(value = "getSearchByName", method = RequestMethod.GET)
     public List<Course> getSearchByName(@RequestParam("textPublic") String textPublic,
-                                         @RequestParam("querySearch") String querySearch) {
+                                        @RequestParam("querySearch") String querySearch) {
         return courseService.getSearchByName(textPublic, querySearch);
     }
 
     @RequestMapping(value = "getCourseGarden", method = RequestMethod.GET)
     public List<Course> getCourseGarden(@RequestParam("textPublic") String textPublic,
-                                         @RequestParam("GardenText") String GardenText) {
+                                        @RequestParam("GardenText") String GardenText) {
         return courseService.getCourseGarden(textPublic, GardenText);
     }
 
     @RequestMapping(value = "getCourseIoT", method = RequestMethod.GET)
     public List<Course> getCourseIoT(@RequestParam("textPublic") String textPublic,
-                                         @RequestParam("IoTText") String IoTText) {
+                                     @RequestParam("IoTText") String IoTText) {
         return courseService.getCourseIoT(textPublic, IoTText);
     }
 
@@ -143,92 +147,87 @@ public class CourseController {
                                @RequestParam("description") String description,
                                @RequestParam("price") String price,
                                @RequestParam("linkCourse") String linkCourse,
-                               @RequestParam("publicCourse") String publicCourse) {
+                               @RequestParam("publicCourse") String publicCourse,
+                               @RequestParam("courseType") String courseType,
+                               @RequestParam("catagory") String catagory) {
         Course course = courseService.getCourseId(id);
         course.setName(name);
         course.setDescription(description);
         course.setPrice(price);
         course.setPublicCourse(publicCourse);
         course.setLinkCourse(linkCourse);
+        course.setCourseType(courseType);
+        course.setCatagory(catagory);
         return courseService.updateCourse(course);
     }
 
-//    @RequestMapping(value = "get/imageCourseList", method = RequestMethod.GET)
-//    public List<ImageCourse> getImageCourseList(HttpServletRequest request) throws IOException {
-//        return courseService.getImageCourseList();
-//    }
+    @RequestMapping(value = "get/imageCourseList", method = RequestMethod.GET)
+    public List<ImageCourse> getImageCourseList(HttpServletRequest request) throws IOException {
+        return courseService.getImageCourseList();
+    }
 
-//    @RequestMapping(value = "add/ImageCourse", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Course addImageCourse(HttpServletRequest request,
-//                                 @RequestParam("file") MultipartFile file, @RequestParam("id") Long id) throws IOException {
-//        MultipartHttpServletRequest mRequest;
-//        Course course = courseService.getCourseId(id);
-//
-//        try {
-//            mRequest = (MultipartHttpServletRequest) request;
-//            Iterator<String> itr = mRequest.getFileNames();
-//            while (itr.hasNext()) {
-//                MultipartFile multipartFile = mRequest.getFile(itr.next());
-//
-//                ImageCourse imageCourse = new ImageCourse();
-//                imageCourse.setImageName(multipartFile.getOriginalFilename());
-//                imageCourse.setImageContentType(multipartFile.getContentType());
-//                courseService.saveCourseImage(course, imageCourse);
-//
-//                byte[] bytes = file.getBytes();
-//                BufferedOutputStream stream =
-//                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\image\\" + multipartFile.getOriginalFilename())));
-//                stream.write(bytes);
-//                stream.close();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return course;
-//    }
+    @RequestMapping(value = "add/ImageCourse", method = RequestMethod.POST)
+    @ResponseBody
+    public Course addImageCourse(HttpServletRequest request,
+                                 @RequestParam("file") MultipartFile file, @RequestParam("id") Long id) throws IOException {
+        MultipartHttpServletRequest mRequest;
+        Course course = courseService.getCourseId(id);
 
-//    @RequestMapping(value = "displayImage/{id}", method = RequestMethod.GET)
-//    @ResponseBody
-//    public void image(@PathVariable("id") Long id, Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-//
-//        ImageCourse imageCourse = imageCourseRepository.findOne(id);
-//
-//        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\image\\" + imageCourse.getImageName();
-//
-//        int fileSize = (int) new File(filePath).length();
-//        response.setContentLength(fileSize);
-//        response.setContentType("image");
-//
-//        FileInputStream inputStream = new FileInputStream(filePath);
-//        ServletOutputStream outputStream = response.getOutputStream();
-//        int value = IOUtils.copy(inputStream, outputStream);
-//        System.out.println("File Size :: " + fileSize);
-//        System.out.println("Copied Bytes :: " + value);
-//        IOUtils.closeQuietly(inputStream);
-//        IOUtils.closeQuietly(outputStream);
-//    }
+        try {
+            mRequest = (MultipartHttpServletRequest) request;
+            Iterator<String> itr = mRequest.getFileNames();
+            while (itr.hasNext()) {
+                MultipartFile multipartFile = mRequest.getFile(itr.next());
+
+                ImageCourse imageCourse = new ImageCourse();
+                imageCourse.setImageName(multipartFile.getOriginalFilename());
+                imageCourse.setImageContentType(multipartFile.getContentType());
+                courseService.saveCourseImage(course, imageCourse);
+
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\imagecourse\\" + multipartFile.getOriginalFilename())));
+                stream.write(bytes);
+                stream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return course;
+    }
+
+    @RequestMapping(value = "displayImage/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public void image(@PathVariable("id") Long id, HttpServletResponse response) throws IOException {
+
+        ImageCourse imageCourse = imageCourseRepository.findOne(id);
+
+        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\imagecourse\\" + imageCourse.getImageName();
+
+        int fileSize = (int) new File(filePath).length();
+        response.setContentLength(fileSize);
+        response.setContentType("image");
+
+        FileInputStream inputStream = new FileInputStream(filePath);
+        ServletOutputStream outputStream = response.getOutputStream();
+        int value = IOUtils.copy(inputStream, outputStream);
+        System.out.println("File Size :: " + fileSize);
+        System.out.println("Copied Bytes :: " + value);
+        IOUtils.closeQuietly(inputStream);
+        IOUtils.closeQuietly(outputStream);
+    }
 
     @RequestMapping(value = "deleteCourse/{id}", method = RequestMethod.DELETE)
     public Course deleteCourse(@PathVariable("id") Long id) {
         return courseService.deleteCourse(id);
     }
 
-//    @RequestMapping(value = "delete/Image", method = RequestMethod.DELETE)
-//    @ResponseBody
-//    public Course deleteImageCourse(@RequestParam("imageId") Long imageId, @RequestParam("courseId") Long courseId) {
-//        Course course = courseService.getCourseId(courseId);
-//        return courseService.deleteImageCourse(course, imageId);
-//    }
-
-
-//    @RequestMapping("/addCourseInSystem")
-//    public String process() {
-//        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1."));
-//        courseRepository.save(new Course(2L, 2L, "Course 2", "Technology for life 2."));
-//        courseRepository.save(new Course(3L, 2L, "Course 3", "Technology for life 3."));
-//        return "Create Course Done!!";
-//    }
+    @RequestMapping(value = "delete/Image", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Course deleteImageCourse(@RequestParam("imageId") Long imageId, @RequestParam("courseId") Long courseId) {
+        Course course = courseService.getCourseId(courseId);
+        return courseService.deleteImageCourse(course, imageId);
+    }
 
 }

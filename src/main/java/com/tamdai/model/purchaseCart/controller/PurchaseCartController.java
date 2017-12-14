@@ -3,7 +3,6 @@ package com.tamdai.model.purchaseCart.controller;
 import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.course.service.CourseService;
 import com.tamdai.model.payment.entity.PaymentTransaction;
-import com.tamdai.model.payment.repository.PaymentTransactionRepository;
 import com.tamdai.model.payment.service.PaymentTransactionService;
 import com.tamdai.model.purchaseCart.entity.PurchaseCart;
 import com.tamdai.model.purchaseCart.service.PurchaseCartService;
@@ -47,41 +46,54 @@ public class PurchaseCartController {
                                  @RequestParam("userId") Long userId,
                                  @RequestParam("courseId") Long courseId,
                                  @RequestParam("courseName") String courseName,
-                                 @RequestParam("transAmount") String transAmount,
-                                 @RequestParam("Balance") String balance, BindingResult bindingResult) {
+                                 @RequestParam("transAmount") Long transAmount,
+                                 @RequestParam("userBalance") Long userBalance, BindingResult bindingResult) {
         UserEntity userEntity = userService.getUserId(userId);
         Course course = courseService.getCourseId(courseId);
 
-        try {
+        long a = userBalance;
+        long b = transAmount;
 
-            userEntity.setBalance(balance);
-            userRepository.save(userEntity);
 
-            PaymentTransaction paymentTransaction = new PaymentTransaction();
+        if (a >= b) {
+            long c = a - b;
+            System.out.println(c);
 
-            //CreateDate
-            String transDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-            paymentTransaction.setCreateDate(transDate);
+            try {
 
-            //CreateTime
-            String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-            paymentTransaction.setCreateTime(timeStamp);
+                String balance = new String(String.valueOf(c));
+                userEntity.setBalance(balance);
+                userRepository.save(userEntity);
 
-            String transA = new String(transAmount);
-            paymentTransaction.setTransAmount(transA);
+                PaymentTransaction paymentTransaction = new PaymentTransaction();
 
-            String transRe = new String(balance);
-            paymentTransaction.setTransRemark(transRe);
+                //CreateDate
+                String transDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                paymentTransaction.setCreateDate(transDate);
 
-            paymentTransaction.setTransRef(String.valueOf(courseId));
+                //CreateTime
+                String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+                paymentTransaction.setCreateTime(timeStamp);
 
-            paymentTransactionService.createPaymentTransactionPurchase(userEntity, paymentTransaction);
+                String transA = new String(String.valueOf(transAmount));
+                paymentTransaction.setTransAmount(transA);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+                String balanceRef = new String(String.valueOf(c));
+                paymentTransaction.setTransRemark(balanceRef);
+
+                //paymentTransaction.setTransRef(String.valueOf(courseId));
+                paymentTransaction.setTransRef(courseName);
+
+                paymentTransactionService.createPaymentTransactionPurchase(userEntity, paymentTransaction);
+                purchaseCartService.saveCart(userEntity, course, purchaseCart);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Failed");
         }
-
-        return purchaseCartService.saveCart(userEntity, course, purchaseCart);
+        return purchaseCart;
     }
 
     @RequestMapping(value = "getPurchaseCart/{id}", method = RequestMethod.GET)

@@ -69,17 +69,17 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getVideoList();
     }
 
-//    @Override
-//    public ImageCourse saveCourseImage(Course course, ImageCourse imageCourse) {
-//        course.getImageCourses().add(imageCourse);
-//        courseDao.updateCourse(course);
-//        return courseDao.saveCourseImage(imageCourse);
-//    }
+    @Override
+    public ImageCourse saveCourseImage(Course course, ImageCourse imageCourse) {
+        course.getImageCourses().add(imageCourse);
+        courseDao.updateCourse(course);
+        return courseDao.saveCourseImage(imageCourse);
+    }
 
-//    @Override
-//    public List<ImageCourse> getImageCourseList() {
-//        return courseDao.getImageCurseList();
-//    }
+    @Override
+    public List<ImageCourse> getImageCourseList() {
+        return courseDao.getImageCurseList();
+    }
 
     @Override
     public CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId) {
@@ -143,7 +143,7 @@ public class CourseServiceImpl implements CourseService {
         String type = new String("video");
         courseItem.setCourseType(type);
         courseItem.setName("Lesson Name");
-        courseItem.setDescription("Lesson Description");
+        courseItem.setDescription("Description");
         courseItem.setCanPreview("false");
 
         courseDao.createCourseVideoItem(courseItem, course);
@@ -156,7 +156,7 @@ public class CourseServiceImpl implements CourseService {
         //setItemType
         String type = new String("image");
         courseItem.setName("Lesson Name");
-        courseItem.setDescription("Lesson Description");
+        courseItem.setDescription("Description");
         courseItem.setCourseType(type);
         courseItem.setCanPreview("false");
 
@@ -232,19 +232,19 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getCourseId(courseId);
     }
 
-//    @Override
-//    public Course deleteImageCourse(Course course, Long imageId) {
-//        Set<ImageCourse> images = course.getImageCourses();
-//        for (Iterator<ImageCourse> it = images.iterator(); it.hasNext(); ) {
-//            ImageCourse f = it.next();
-//            if (f.getId().equals(imageId)) {
-//                course.getImageCourses().remove(f);
-//            }
-//        }
-//
-//        courseDao.updateCourse(course);
-//        return course;
-//    }
+    @Override
+    public Course deleteImageCourse(Course course, Long imageId) {
+        Set<ImageCourse> images = course.getImageCourses();
+        for (Iterator<ImageCourse> it = images.iterator(); it.hasNext(); ) {
+            ImageCourse f = it.next();
+            if (f.getId().equals(imageId)) {
+                course.getImageCourses().remove(f);
+            }
+        }
+
+        courseDao.updateCourse(course);
+        return course;
+    }
 
     @Override
     @Transactional
@@ -297,5 +297,18 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getSearchByName(String textPublic, String querySearch) {
         return courseDao.getSearchByName(textPublic, querySearch);
+    }
+
+    @Override
+    public CourseItem createCourseTextItem(CourseItem courseItem, Course course) {
+        //setItemType
+        String type = new String("text");
+        courseItem.setName("Lesson Name");
+        courseItem.setDescription("Description");
+        courseItem.setCourseType(type);
+        courseItem.setCanPreview("false");
+
+        courseDao.createCourseTextItem(courseItem, course);
+        return courseItem;
     }
 }

@@ -1,5 +1,7 @@
 package com.tamdai.model.security.service;
 
+import com.tamdai.model.course.entity.Course;
+import com.tamdai.model.security.entity.Lists;
 import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.entity.UserImage;
 
@@ -38,4 +40,8 @@ public interface UserService {
     UserEntity addUserImage(UserEntity userEntity, UserImage image);
 
     UserEntity deleteImageUser(UserEntity userEntity, Long imageId);
+
+    UserImage saveImageUser(UserEntity userEntity, UserImage userImage);
+
+    Lists addFavor(Lists list, UserEntity userEntity);
 }

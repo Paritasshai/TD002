@@ -1,5 +1,9 @@
 package com.tamdai.model.security.dao;
 
+import com.tamdai.model.security.entity.Lists;
+import com.tamdai.model.security.entity.UserImage;
+import com.tamdai.model.security.repository.ListsRepository;
+import com.tamdai.model.security.repository.UserImageRepository;
 import com.tamdai.model.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,6 +16,12 @@ public class UserDaoImpl implements UserDao {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserImageRepository userImageRepository;
+
+    @Autowired
+    ListsRepository listsRepository;
 
     @Override
     public UserEntity userRegister(UserEntity user) {
@@ -62,5 +72,16 @@ public class UserDaoImpl implements UserDao {
         return userRepository.save(users);
     }
 
+    @Override
+    public UserImage saveImageUser(UserImage userImage) {
+        return userImageRepository.save(userImage);
+    }
+
+    @Override
+    public Lists saveList(Lists list, UserEntity userEntity) {
+        listsRepository.save(list);
+//        userEntity.getLists().add(list);
+        return list;
+    }
 }
 

@@ -10,9 +10,7 @@ public class UserImage {
     @GeneratedValue
     private Long id;
     private String fileName;
-
     private byte[] content;
-
     private String contentType;
 
     public Long getId() {

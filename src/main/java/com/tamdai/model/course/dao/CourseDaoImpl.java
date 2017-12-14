@@ -24,8 +24,8 @@ public class CourseDaoImpl implements CourseDao {
     @Autowired
     UserRepository userRepository;
 
-//    @Autowired
-//    ImageCourseRepository imageCourseRepository;
+    @Autowired
+    ImageCourseRepository imageCourseRepository;
 
     @Autowired
     CourseRepository courseRepository;
@@ -64,15 +64,15 @@ public class CourseDaoImpl implements CourseDao {
         return videoClipRepository.findAll();
     }
 
-//    @Override
-//    public ImageCourse saveCourseImage(ImageCourse imageCourse) {
-//        return imageCourseRepository.save(imageCourse);
-//    }
-//
-//    @Override
-//    public List<ImageCourse> getImageCurseList() {
-//        return imageCourseRepository.findAll();
-//    }
+    @Override
+    public ImageCourse saveCourseImage(ImageCourse imageCourse) {
+        return imageCourseRepository.save(imageCourse);
+    }
+
+    @Override
+    public List<ImageCourse> getImageCurseList() {
+        return imageCourseRepository.findAll();
+    }
 
     @Override
     public List<VideoClip> getVideoCurseList() {
@@ -189,4 +189,13 @@ public class CourseDaoImpl implements CourseDao {
     public List<Course> getSearchByName(String textPublic, String querySearch) {
         return courseRepository.findByPublicCourseAndNameContainingIgnoreCase(textPublic, querySearch);
     }
+
+    @Override
+    public CourseItem createCourseTextItem(CourseItem courseItem, Course course) {
+        course.getCourseItems().add(courseItem);
+        courseRepository.save(course);
+        return courseItemRepository.save(courseItem);
+    }
+
+
 }
