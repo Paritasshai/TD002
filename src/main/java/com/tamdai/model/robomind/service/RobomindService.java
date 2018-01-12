@@ -33,7 +33,6 @@ public interface RobomindService {
 
     Content deleteImageContent(Content content, Long imageId);
 
-
     StudentProfile deleteProfile(Long studentId);
 
     StudentProfile getStudentBySearch(String username, String date);
@@ -41,4 +40,17 @@ public interface RobomindService {
     Content editContent(Content content);
 
     Comment createComment(Comment comment, StudentProfile studentProfile);
+
+    StudentProfile deleteContent(Long id, StudentProfile studentProfile);
+
+    Robotic createRoboticName(Robotic robotic);
+
+    List<Robotic> RoboticNameList();
+
+    Robotic getRoboticId(Long id);
+
+    Robotic roboticDelete(Robotic robotic);
+
+    List<Robotic> getSearchGroup(String name);
+
 }

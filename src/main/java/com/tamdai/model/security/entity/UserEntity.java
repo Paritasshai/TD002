@@ -56,7 +56,7 @@ public class UserEntity {
     @Column(name = "updateUserId")
     private String updateUserId;
 
-    @Column(name = "status")
+    @Column(name = "status", length = 2000)
     private String status;
 
     @Column(name = "balance")

@@ -23,6 +23,26 @@ public class RobomindServiceImp implements RobomindService {
     }
 
     @Override
+    public Robotic roboticDelete(Robotic robotic) {
+        return robomindDao.roboticDelete(robotic);
+    }
+
+    @Override
+    public Robotic getRoboticId(Long id) {
+        return robomindDao.getRoboticId(id);
+    }
+
+    @Override
+    public Robotic createRoboticName(Robotic robotic) {
+        return robomindDao.createRoboticName(robotic);
+    }
+
+    @Override
+    public List<Robotic> RoboticNameList() {
+        return robomindDao.RoboticNameList();
+    }
+
+    @Override
     public List<StudentProfile> getStudentList() {
         return robomindDao.getStudentList();
     }
@@ -68,8 +88,8 @@ public class RobomindServiceImp implements RobomindService {
         student.getContents().add(content);
 
         //setContentDate
-        String ContentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        content.setContentDate(ContentDate);
+//        String ContentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+//        content.setContentDate(ContentDate);
 
         robomindDao.addContent(content);
         return robomindDao.updateProfile(student);
@@ -125,7 +145,7 @@ public class RobomindServiceImp implements RobomindService {
 
     @Override
     public StudentProfile getStudentBySearch(String username, String date) {
-        return robomindDao.getStudentBySearch(username,date);
+        return robomindDao.getStudentBySearch(username, date);
     }
 
     @Override
@@ -135,9 +155,29 @@ public class RobomindServiceImp implements RobomindService {
 
     @Override
     public Comment createComment(Comment comment, StudentProfile studentProfile) {
-        studentProfile.getComments().add(comment);
+//
         robomindDao.updateProfile(studentProfile);
         robomindDao.createComment(comment);
         return comment;
     }
+
+    @Override
+    public StudentProfile deleteContent(Long id, StudentProfile studentProfile) {
+        Set<Content> contents = studentProfile.getContents();
+        for (Iterator<Content> it = contents.iterator(); it.hasNext(); ) {
+            Content f = it.next();
+            if (f.getId().equals(id)) {
+                studentProfile.getContents().remove(f);
+            }
+        }
+        robomindDao.updateProfile(studentProfile);
+        robomindDao.deleteContent(id);
+        return studentProfile;
+    }
+
+    @Override
+    public List<Robotic> getSearchGroup(String name) {
+        return robomindDao.getSearchGroup(name);
+    }
+
 }

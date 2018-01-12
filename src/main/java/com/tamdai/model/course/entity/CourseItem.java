@@ -14,6 +14,7 @@ public class CourseItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private Long id;
+    private String orderItem;
     private String courseType;
     private String name;
     private String description;
@@ -37,6 +38,14 @@ public class CourseItem implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<courseText> courseTexts = new HashSet<>();
+
+    public String getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(String orderItem) {
+        this.orderItem = orderItem;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -149,6 +158,22 @@ public class CourseItem implements Serializable {
     public CourseItem() {
     }
 
+    public CourseItem(String orderItem, String courseType, String name, String description, String level, String path, String canPreview, String videoPath, String videoTime, String courseText, Set<VideoClip> videoClips, Set<ImageItem> imageItems, Set<com.tamdai.model.course.entity.courseText> courseTexts) {
+        this.orderItem = orderItem;
+        this.courseType = courseType;
+        this.name = name;
+        this.description = description;
+        this.level = level;
+        this.path = path;
+        this.canPreview = canPreview;
+        this.videoPath = videoPath;
+        this.videoTime = videoTime;
+        this.courseText = courseText;
+        this.videoClips = videoClips;
+        this.imageItems = imageItems;
+        this.courseTexts = courseTexts;
+    }
+
     public CourseItem(String courseType, String name, String description, String level, String path, String canPreview, String videoPath, Set<VideoClip> videoClips, Set<ImageItem> imageItems) {
         this.courseType = courseType;
         this.name = name;
@@ -226,6 +251,7 @@ public class CourseItem implements Serializable {
     public String toString() {
         return "CourseItem{" +
                 "id=" + id +
+                ", orderItem='" + orderItem + '\'' +
                 ", courseType='" + courseType + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

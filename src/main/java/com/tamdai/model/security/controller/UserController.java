@@ -1,5 +1,6 @@
 package com.tamdai.model.security.controller;
 
+import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.tamdai.model.course.entity.Course;
 import com.tamdai.model.course.repository.CourseItemRepository;
@@ -9,7 +10,6 @@ import com.tamdai.model.security.dao.UserDao;
 import com.tamdai.model.security.entity.Lists;
 import com.tamdai.model.security.repository.ListsRepository;
 import com.tamdai.model.security.repository.UserRepository;
-import com.tamdai.model.security.service.NotificationService;
 import com.tamdai.model.security.service.NotificationServiceImpl;
 import com.tamdai.model.security.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -36,9 +36,6 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    NotificationService notificationService;
 
     @Autowired
     CourseService courseService;
@@ -77,21 +74,11 @@ public class UserController {
         return userService.getUserId(id);
     }
 
-//    @RequestMapping(value = "user/facebook")
-//    public String helloFacebook() {
-//        return "ddddddddddddddd";
-//    }
-
     //http://localhost:8080/login?FirstName=film&Password=4432
     @RequestMapping(value = "user/register", method = RequestMethod.POST)
-    public UserEntity userRegister(@RequestBody UserEntity user, BindingResult bindingResult) {
+    public UserEntity userRegister(@RequestBody UserEntity user, BindingResult bindingResult) throws Exception {
         userService.userRegister(user);
-        //notificationService.sendNotification(user);
-        try {
-            NotificationServiceImpl.sendSimpleMessage();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
+        NotificationServiceImpl.activateMessage(user);
         return user;
     }
 
@@ -127,13 +114,6 @@ public class UserController {
         status.setStatus(statusName);
         userService.updateStatus(status);
         userService.confirmDate(user);
-
-//        String text = "Activate Email Success";
-//        String html = "<h1>" + text + "</h1>";
-//        String text1 = "Please login to website";
-//        String html1 = "\n <a href='http://localhost:4200/loginTemplate'>Back To Website</a>";
-//        return "\n" + html + "\n" + text1 + html1;
-
         httpServletResponse.sendRedirect("http://103.76.180.120/home");
         return "success";
     }
@@ -147,12 +127,6 @@ public class UserController {
         return userService.updateUserStatus(user);
     }
 
-//    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
-//    public BankStatement getUserId(@PathVariable("id") Long id) {
-//        return userService.getUserId(id);
-//    }
-
-
     @RequestMapping(value = "updateInstructorBio", method = RequestMethod.PUT)
     public UserEntity updateInstructorBio(@RequestParam("getUserId") Long getUserId,
                                           @RequestParam("instructorBio") String instructorBio) {
@@ -161,11 +135,6 @@ public class UserController {
         user.setInstructorBio(instructorBio);
         return userService.updateUserStatus(user);
     }
-
-//    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
-//    public BankStatement getUserId(@PathVariable("id") Long id) {
-//        return userService.getUserId(id);
-//    }
 
     @RequestMapping(value = "user/list", method = RequestMethod.GET)
     public List<UserEntity> UserList() {
@@ -182,7 +151,7 @@ public class UserController {
 
         userRepository.save(new UserEntity(1L, "filmpurelove@gmail.com", "ffffffff", "adminFilm", "Hattaya", "admin", "0"));
         userRepository.save(new UserEntity(2L, "hattaya.wpm@gmail.com", "ffffffff", "instructorA", "TeacherA", "instructor", "0"));
-        userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "500"));
+        userRepository.save(new UserEntity(3L, "blaze.yul@gmail.com", "ffffffff", "MemberActive", "Customer", "active", "0"));
         userRepository.save(new UserEntity(4L, "film_purelove@hotmail.com", "ffffffff", "instructorB", "TeacherB", "instructor", "0"));
 
 //        courseRepository.save(new Course(1L, 2L, "Course 1", "Technology for life 1.", "200", "true", "http://192.168.1.9/makehappen/", "new", "Lego"));
@@ -202,9 +171,9 @@ public class UserController {
 //    }
 
     @RequestMapping(value = "user/forgotPassword", method = RequestMethod.GET)
-    public UserEntity forgotPassword(@RequestParam("Email") String email) {
+    public UserEntity forgotPassword(@RequestParam("Email") String email) throws UnirestException {
         UserEntity user = userService.getUserByEmail(email);
-        //notificationService.sendNotificationForgot(user);
+        NotificationServiceImpl.forgotPasswordMessage(user);
         return user;
     }
 
@@ -264,6 +233,11 @@ public class UserController {
         userEntity.getLists().add(lists);
         userDao.updateUser(userEntity);
         return lists;
+    }
+
+    @RequestMapping(value = "DeleteUserAccount/{id}", method = RequestMethod.DELETE)
+    public UserEntity deleteUserAccount(@PathVariable("id") Long id) {
+        return userService.deleteUserAccount(id);
     }
 
 }

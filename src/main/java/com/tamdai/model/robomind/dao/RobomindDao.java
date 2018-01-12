@@ -41,4 +41,16 @@ public interface RobomindDao {
 
     Comment createComment(Comment comment);
 
+    Content deleteContent(Long id);
+
+    Robotic createRoboticName(Robotic robotic);
+
+    List<Robotic> RoboticNameList();
+
+    Robotic getRoboticId(Long id);
+
+    Robotic roboticDelete(Robotic robotic);
+
+    List<Robotic> getSearchGroup(String name);
+
 }

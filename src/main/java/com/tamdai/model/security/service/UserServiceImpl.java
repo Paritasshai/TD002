@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 //        user.setStatus(role);
 
         //setStatus
-        String role = new String("active");
+        String role = new String("new");
         user.setStatus(role);
 
         //setBalance
@@ -170,4 +170,11 @@ public class UserServiceImpl implements UserService {
     public Lists addFavor(Lists list, UserEntity userEntity) {
         return userDao.saveList(list, userEntity);
     }
+
+    @Override
+    public UserEntity deleteUserAccount(Long id) {
+        UserEntity userEntity = getUserId(id);
+        return userDao.deleteUserAccount(userEntity);
+    }
+
 }

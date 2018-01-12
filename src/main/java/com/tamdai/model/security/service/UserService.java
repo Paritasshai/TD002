@@ -44,4 +44,6 @@ public interface UserService {
     UserImage saveImageUser(UserEntity userEntity, UserImage userImage);
 
     Lists addFavor(Lists list, UserEntity userEntity);
+
+    UserEntity deleteUserAccount(Long id);
 }

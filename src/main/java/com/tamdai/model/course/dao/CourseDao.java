@@ -71,4 +71,17 @@ public interface CourseDao {
     List<Course> getSearchByName(String textPublic, String querySearch);
 
     CourseItem createCourseTextItem(CourseItem courseItem, Course course);
+
+    List<Course> getsearchAdvance(String textPublic, String pname);
+
+    List<Course> getSearchByFree(String textPublic, String empty);
+
+    List<Course> getCourseByUserId(String textPublic, Long id);
+
+    List<Course> getSearchObject(String pname, String textPublic, String textNull, String rbGroup);
+
+    List<Course> getSearchObjectPay(String pname, String textPublic, String textNull, String rbGroup);
+
+    List<Course> getSearchObjectFreePname(String pname, String textPublic, String textNull);
+
 }

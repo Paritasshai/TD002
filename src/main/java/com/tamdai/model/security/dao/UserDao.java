@@ -29,4 +29,6 @@ public interface UserDao {
     UserImage saveImageUser(UserImage userImage);
 
     Lists saveList(Lists list, UserEntity userEntity);
+
+    UserEntity deleteUserAccount(UserEntity userEntity);
 }

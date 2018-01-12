@@ -8,6 +8,7 @@ import com.tamdai.model.payment.service.BankStatementService;
 import com.tamdai.model.payment.service.OrderPaymentService;
 import com.tamdai.model.payment.service.PaymentTransactionService;
 import com.tamdai.model.security.entity.UserEntity;
+import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @CrossOrigin
 @RestController
@@ -37,6 +39,9 @@ public class BankStatementController {
 
     @Autowired
     OrderPaymentRepository orderPaymentRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @RequestMapping(value = "create/bankStatement", method = RequestMethod.POST)
     public BankStatement bankStatementCreate(@RequestBody BankStatement bankStatement,
@@ -69,36 +74,85 @@ public class BankStatementController {
         OrderPayment orderPayment = paymentService.getOrderById(orderId);
         BankStatement bank = bankStatementService.getBankStatementById(id);
 
-        try {
-            PaymentTransaction paymentTransaction = new PaymentTransaction();
+        PaymentTransaction paymentTransaction = new PaymentTransaction();
 
-            //CreateDate
-            String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-            paymentTransaction.setCreateDate(signUpDate);
+        //CreateDate
+        String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        paymentTransaction.setCreateDate(signUpDate);
 
-            //CreateTime
-            String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-            paymentTransaction.setCreateTime(timeStamp);
+        //CreateTime
+        String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+        paymentTransaction.setCreateTime(timeStamp);
 
-            String transA = new String(transAmount);
+        String transA = new String(transAmount);
+        String a = "300";
+        String b = "500";
+        int five = 50;
+        int one = 100;
+        int transAm = Integer.parseInt(transAmount);
+        int transba = Integer.parseInt(balance);
+
+        if (Objects.equals(transA, a)) {
+            System.out.println("เงื่อนไข 300");
+            System.out.println("transA: " + transA);
             paymentTransaction.setTransAmount(transA);
 
-            String transRe = new String(balance);
+            System.out.println("balance: " + balance);
+
+            int result = (transba + five);
+            System.out.println("result :" + result);
+            paymentTransaction.setTransAmount(String.valueOf(result));
+
+            String transRe = String.valueOf(result);
+            System.out.println("transRe :" + transRe);
+            System.out.println("=========================================");
             paymentTransaction.setTransRemark(transRe);
+            bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
+        } else if (Objects.equals(transA, b)) {
 
-            String statusOrder = new String("confirm");
-            orderPayment.setStatusOrder(statusOrder);
-            orderPaymentRepository.save(orderPayment);
+            System.out.println("เงื่อนไข 500");
+            System.out.println(transA);
+            paymentTransaction.setTransAmount(transA);
 
-            paymentTransactionService.createPaymentTransaction(user, paymentTransaction, transRef);
+            System.out.println("balance: " + balance);
+
+            int result = (transba + one);
+            System.out.println("result :" + result);
+            paymentTransaction.setTransAmount(String.valueOf(result));
+
+            String transRe = String.valueOf(result);
+            System.out.println("transRe :" + transRe);
+            System.out.println("=========================================");
+            paymentTransaction.setTransRemark(transRe);
+            bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
+        } else {
+            System.out.println("เงื่อนไข 100");
+            System.out.println(transA);
+            paymentTransaction.setTransAmount(transA);
+
+            System.out.println("balance: " + balance);
+
+            int result = transba;
+            System.out.println("result :" + result);
+            paymentTransaction.setTransAmount(String.valueOf(result));
+
+            String transRe = String.valueOf(result);
+            System.out.println("transRe :" + transRe);
+            System.out.println("=========================================");
+            paymentTransaction.setTransRemark(transRe);
+            bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
+        }
+
+        String statusOrder = new String("confirm");
+        orderPayment.setStatusOrder(statusOrder);
+        orderPaymentRepository.save(orderPayment);
+
+        paymentTransactionService.createPaymentTransaction(user, paymentTransaction, transRef);
 
 //            userService.addPaymentTransaction(user, paymentTransaction);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        return bankStatementService.bankStatementUpdate(bankStatement, user, balance, bank);
+        return bank;
     }
 
 }

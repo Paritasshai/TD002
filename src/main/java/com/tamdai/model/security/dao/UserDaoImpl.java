@@ -83,5 +83,12 @@ public class UserDaoImpl implements UserDao {
 //        userEntity.getLists().add(list);
         return list;
     }
+
+    @Override
+    public UserEntity deleteUserAccount(UserEntity userEntity) {
+        userRepository.delete(userEntity);
+        //userEntity.setId(null);
+        return userEntity;
+    }
 }
 

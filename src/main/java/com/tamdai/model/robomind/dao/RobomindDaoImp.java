@@ -27,9 +27,27 @@ public class RobomindDaoImp implements RobomindDao {
     @Autowired
     CommentRepository commentRepository;
 
+    @Autowired
+    RoboticRepository roboticRepository;
+
     @Override
     public StudentProfile createProfile(StudentProfile stProfile) {
         return robomindRepository.save(stProfile);
+    }
+
+    @Override
+    public Robotic getRoboticId(Long id) {
+        return roboticRepository.findOne(id);
+    }
+
+    @Override
+    public Robotic createRoboticName(Robotic robotic) {
+        return roboticRepository.save(robotic);
+    }
+
+    @Override
+    public List<Robotic> RoboticNameList() {
+        return roboticRepository.findAll();
     }
 
     @Override
@@ -105,6 +123,12 @@ public class RobomindDaoImp implements RobomindDao {
     }
 
     @Override
+    public Robotic roboticDelete(Robotic robotic) {
+        roboticRepository.delete(robotic);
+        return robotic;
+    }
+
+    @Override
     public StudentProfile getStudentBySearch(String username, String date) {
         return robomindRepository.findByStFirstnameAndStDateContainingAllIgnoreCase(username, date);
     }
@@ -118,4 +142,18 @@ public class RobomindDaoImp implements RobomindDao {
     public Comment createComment(Comment comment) {
         return commentRepository.save(comment);
     }
+
+    @Override
+    public Content deleteContent(Long id) {
+        Content content = getContent(id);
+        //content.setId(null);
+        contentRepository.delete(content);
+        return content;
+    }
+
+    @Override
+    public List<Robotic> getSearchGroup(String name) {
+        return roboticRepository.findByNameGroupContaining(name);
+    }
+
 }

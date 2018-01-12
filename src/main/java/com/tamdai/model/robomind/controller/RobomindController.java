@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +42,16 @@ public class RobomindController {
         return robomindService.createProfile(stProfile);
     }
 
+    @RequestMapping(value = "createRoboticName", method = RequestMethod.POST)
+    public Robotic createRoboticName(@RequestBody Robotic robotic, BindingResult bindingResult) {
+        return robomindService.createRoboticName(robotic);
+    }
+
+    @RequestMapping(value = "RoboticNameList", method = RequestMethod.GET)
+    public List<Robotic> RoboticNameList() {
+        return robomindService.RoboticNameList();
+    }
+
     @RequestMapping(value = "createComment/{id}", method = RequestMethod.POST)
     public Comment createComment(@RequestBody Comment comment,
                                  @PathVariable("id") Long id, BindingResult bindingResult) {
@@ -50,7 +61,7 @@ public class RobomindController {
         String Date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         comment.setCreateDate(Date);
 
-        return robomindService.createComment(comment,studentProfile);
+        return robomindService.createComment(comment, studentProfile);
     }
 
     @RequestMapping(value = "getStudentList", method = RequestMethod.GET)
@@ -61,6 +72,12 @@ public class RobomindController {
     @RequestMapping(value = "getStudent/{id}", method = RequestMethod.GET)
     public StudentProfile getStudentId(@PathVariable("id") Long id) {
         return robomindService.getStudentId(id);
+    }
+
+
+    @RequestMapping(value = "getRoboticId/{id}", method = RequestMethod.GET)
+    public Robotic getRoboticId(@PathVariable("id") Long id) {
+        return robomindService.getRoboticId(id);
     }
 
     @RequestMapping(value = "getStudentStId", method = RequestMethod.GET)
@@ -101,11 +118,21 @@ public class RobomindController {
     @RequestMapping(value = "editContent/{id}", method = RequestMethod.PUT)
     public Content editContent(@PathVariable("id") Long id,
                                @RequestParam("stStudentId") String stStudentId,
-                               @RequestParam("stContent") String stContent) {
+                               @RequestParam("stTeacher") String stTeacher,
+                               @RequestParam("stTime") String stTime,
+                               @RequestParam("stContent") String stContent,
+                               @RequestParam("contentDate") String contentDate,
+                               @RequestParam("rbName") String rbName,
+                               @RequestParam("rbGroup") String rbGroup) {
 
         Content content = robomindService.getContent(id);
         content.setStStudentId(stStudentId);
+        content.setStTime(stTime);
+        content.setStTeacher(stTeacher);
         content.setStContent(stContent);
+        content.setContentDate(contentDate);
+        content.setRbName(rbName);
+        content.setRbGroup(rbGroup);
 
         return robomindService.editContent(content);
     }
@@ -173,6 +200,13 @@ public class RobomindController {
         return robomindService.deleteImageStudent(student, imageId);
     }
 
+    @RequestMapping(value = "delete/roboticDelete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Robotic roboticDelete(@RequestParam("roboticId") Long id) {
+        Robotic robotic = robomindService.getRoboticId(id);
+        return robomindService.roboticDelete(robotic);
+    }
+
     @RequestMapping(value = "addContent", method = RequestMethod.POST)
     public StudentProfile addContent(@RequestBody Content content,
                                      @RequestParam("stIdPath") String stIdPath, BindingResult bindingResult) {
@@ -183,6 +217,14 @@ public class RobomindController {
     @RequestMapping(value = "getContent/{id}", method = RequestMethod.GET)
     public Content getContent(@PathVariable("id") Long id) {
         return robomindService.getContent(id);
+    }
+
+    @RequestMapping(value = "deleteContent", method = RequestMethod.DELETE)
+    @ResponseBody
+    public StudentProfile deleteContent(@RequestParam("id") Long id,
+                                        @RequestParam("stStudentId") String stStudentId) {
+        StudentProfile studentProfile = robomindService.getStudentStid(stStudentId);
+        return robomindService.deleteContent(id, studentProfile);
     }
 
     @RequestMapping(value = "addContentImage/{id}", method = RequestMethod.POST)
@@ -229,7 +271,7 @@ public class RobomindController {
         ContentImg contentImg = robomindService.getImageContent(id);
 
         String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\contentimg\\" + contentImg.getFileName();
-//        C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\contentimg\\
+//        C:\Users\Film\Documents\Tamdai\td002\src\main\resources\contentimg\
 //        /opt/resource/contentimg/
 
         int fileSize = (int) new File(filePath).length();
@@ -262,6 +304,11 @@ public class RobomindController {
     public StudentProfile getStudentBySearch(@RequestParam("username") String username,
                                              @RequestParam("date") String date) {
         return robomindService.getStudentBySearch(username, date);
+    }
+
+    @RequestMapping(value = "getSearchGroup", method = RequestMethod.GET)
+    public List<Robotic> getSearchGroup(@RequestParam("name") String name) {
+        return robomindService.getSearchGroup(name);
     }
 
 }

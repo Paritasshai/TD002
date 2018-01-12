@@ -197,5 +197,34 @@ public class CourseDaoImpl implements CourseDao {
         return courseItemRepository.save(courseItem);
     }
 
+    @Override
+    public List<Course> getsearchAdvance(String textPublic, String pname) {
+        return courseRepository.findByPublicCourseAndNameContainingIgnoreCase(textPublic, pname);
+    }
+
+    @Override
+    public List<Course> getSearchByFree(String textPublic, String empty) {
+        return courseRepository.findByPublicCourseAndPriceContainingIgnoreCase(textPublic, empty);
+    }
+
+    @Override
+    public List<Course> getCourseByUserId(String textPublic, Long id) {
+        return courseRepository.findByPublicCourseAndUserId(textPublic, id);
+    }
+
+    @Override
+    public List<Course> getSearchObject(String pname, String textPublic, String textNull, String rbGroup) {
+        return courseRepository.findByNameContainingIgnoreCaseAndPublicCourseAndPriceContainingIgnoreCaseAndCatagory(pname, textPublic, textNull, rbGroup);
+    }
+
+    @Override
+    public List<Course> getSearchObjectPay(String pname, String textPublic, String textNull, String rbGroup) {
+        return courseRepository.findByNameContainingIgnoreCaseAndPublicCourseAndPriceNotContainingIgnoreCaseAndCatagory(pname, textPublic, textNull, rbGroup);
+    }
+
+    @Override
+    public List<Course> getSearchObjectFreePname(String pname, String textPublic, String textNull) {
+        return courseRepository.findByNameContainingIgnoreCaseAndPublicCourseAndPriceContainingIgnoreCase(pname, textPublic, textNull);
+    }
 
 }

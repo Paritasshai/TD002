@@ -55,6 +55,7 @@ public class CourseItemController {
                                        @RequestParam("videoPath") String videoPath,
                                        @RequestParam("courseText") String courseText,
                                        @RequestParam("videoTime") String videoTime,
+                                       @RequestParam("orderItem") String orderItem,
                                        @RequestParam("canPreview") String canPreview) {
         CourseItem courseItem = courseService.courseItemId(id);
         courseItem.setName(name);
@@ -63,6 +64,7 @@ public class CourseItemController {
         courseItem.setVideoPath(videoPath);
         courseItem.setCourseText(courseText);
         courseItem.setVideoTime(videoTime);
+        courseItem.setOrderItem(orderItem);
         return courseService.updateCourseItem(courseItem);
     }
 
