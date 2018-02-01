@@ -9,6 +9,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Film
+ *
+ */
 @Entity
 public class Course implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -21,8 +25,9 @@ public class Course implements Serializable {
 
     @Column(name = "description", length = 2000)
     private String description;
-
+    
     private String price;
+    private String dateCreateCourse;
     private String publicCourse;
     private String linkCourse;
     private String courseType;
@@ -57,7 +62,15 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public String getDateCreateCourse() {
+		return dateCreateCourse;
+	}
+
+	public void setDateCreateCourse(String dateCreateCourse) {
+		this.dateCreateCourse = dateCreateCourse;
+	}
+
+	public Long getUserId() {
         return userId;
     }
 
@@ -164,7 +177,29 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Course(Long id, Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory, Set<CourseImage> courseImages) {
+    public Course(Long id, Long userId, String name, String description, String price, String dateCreateCourse,
+			String publicCourse, String linkCourse, String courseType, String catagory, int showLock,
+			Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems,
+			Set<ImageCourse> imageCourses) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.dateCreateCourse = dateCreateCourse;
+		this.publicCourse = publicCourse;
+		this.linkCourse = linkCourse;
+		this.courseType = courseType;
+		this.catagory = catagory;
+		this.showLock = showLock;
+		this.courseImages = courseImages;
+		this.users = users;
+		this.courseItems = courseItems;
+		this.imageCourses = imageCourses;
+	}
+
+	public Course(Long id, Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory, Set<CourseImage> courseImages) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -220,67 +255,120 @@ public class Course implements Serializable {
         this.imageCourses = imageCourses;
     }
 
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price='" + price + '\'' +
-                ", publicCourse='" + publicCourse + '\'' +
-                ", linkCourse='" + linkCourse + '\'' +
-                ", courseType='" + courseType + '\'' +
-                ", catagory='" + catagory + '\'' +
-                ", showLock=" + showLock +
-                ", courseImages=" + courseImages +
-                ", users=" + users +
-                ", courseItems=" + courseItems +
-                ", imageCourses=" + imageCourses +
-                '}';
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((catagory == null) ? 0 : catagory.hashCode());
+		result = prime * result + ((courseImages == null) ? 0 : courseImages.hashCode());
+		result = prime * result + ((courseItems == null) ? 0 : courseItems.hashCode());
+		result = prime * result + ((courseType == null) ? 0 : courseType.hashCode());
+		result = prime * result + ((dateCreateCourse == null) ? 0 : dateCreateCourse.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((imageCourses == null) ? 0 : imageCourses.hashCode());
+		result = prime * result + ((linkCourse == null) ? 0 : linkCourse.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((publicCourse == null) ? 0 : publicCourse.hashCode());
+		result = prime * result + showLock;
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		result = prime * result + ((users == null) ? 0 : users.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Course other = (Course) obj;
+		if (catagory == null) {
+			if (other.catagory != null)
+				return false;
+		} else if (!catagory.equals(other.catagory))
+			return false;
+		if (courseImages == null) {
+			if (other.courseImages != null)
+				return false;
+		} else if (!courseImages.equals(other.courseImages))
+			return false;
+		if (courseItems == null) {
+			if (other.courseItems != null)
+				return false;
+		} else if (!courseItems.equals(other.courseItems))
+			return false;
+		if (courseType == null) {
+			if (other.courseType != null)
+				return false;
+		} else if (!courseType.equals(other.courseType))
+			return false;
+		if (dateCreateCourse == null) {
+			if (other.dateCreateCourse != null)
+				return false;
+		} else if (!dateCreateCourse.equals(other.dateCreateCourse))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (imageCourses == null) {
+			if (other.imageCourses != null)
+				return false;
+		} else if (!imageCourses.equals(other.imageCourses))
+			return false;
+		if (linkCourse == null) {
+			if (other.linkCourse != null)
+				return false;
+		} else if (!linkCourse.equals(other.linkCourse))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
+		if (publicCourse == null) {
+			if (other.publicCourse != null)
+				return false;
+		} else if (!publicCourse.equals(other.publicCourse))
+			return false;
+		if (showLock != other.showLock)
+			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
+		if (users == null) {
+			if (other.users != null)
+				return false;
+		} else if (!users.equals(other.users))
+			return false;
+		return true;
+	}
 
-        Course course = (Course) o;
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", userId=" + userId + ", name=" + name + ", description=" + description
+				+ ", price=" + price + ", dateCreateCourse=" + dateCreateCourse + ", publicCourse=" + publicCourse
+				+ ", linkCourse=" + linkCourse + ", courseType=" + courseType + ", catagory=" + catagory + ", showLock="
+				+ showLock + ", courseImages=" + courseImages + ", users=" + users + ", courseItems=" + courseItems
+				+ ", imageCourses=" + imageCourses + "]";
+	}
 
-        if (showLock != course.showLock) return false;
-        if (id != null ? !id.equals(course.id) : course.id != null) return false;
-        if (userId != null ? !userId.equals(course.userId) : course.userId != null) return false;
-        if (name != null ? !name.equals(course.name) : course.name != null) return false;
-        if (description != null ? !description.equals(course.description) : course.description != null) return false;
-        if (price != null ? !price.equals(course.price) : course.price != null) return false;
-        if (publicCourse != null ? !publicCourse.equals(course.publicCourse) : course.publicCourse != null)
-            return false;
-        if (linkCourse != null ? !linkCourse.equals(course.linkCourse) : course.linkCourse != null) return false;
-        if (courseType != null ? !courseType.equals(course.courseType) : course.courseType != null) return false;
-        if (catagory != null ? !catagory.equals(course.catagory) : course.catagory != null) return false;
-        if (courseImages != null ? !courseImages.equals(course.courseImages) : course.courseImages != null)
-            return false;
-        if (users != null ? !users.equals(course.users) : course.users != null) return false;
-        if (courseItems != null ? !courseItems.equals(course.courseItems) : course.courseItems != null) return false;
-        return imageCourses != null ? imageCourses.equals(course.imageCourses) : course.imageCourses == null;
-    }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (publicCourse != null ? publicCourse.hashCode() : 0);
-        result = 31 * result + (linkCourse != null ? linkCourse.hashCode() : 0);
-        result = 31 * result + (courseType != null ? courseType.hashCode() : 0);
-        result = 31 * result + (catagory != null ? catagory.hashCode() : 0);
-        result = 31 * result + showLock;
-        result = 31 * result + (courseImages != null ? courseImages.hashCode() : 0);
-        result = 31 * result + (users != null ? users.hashCode() : 0);
-        result = 31 * result + (courseItems != null ? courseItems.hashCode() : 0);
-        result = 31 * result + (imageCourses != null ? imageCourses.hashCode() : 0);
-        return result;
-    }
 }

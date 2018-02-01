@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +41,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course createCourse(Long userId, Course course) {
+
+        //CreateDate
+        String createDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        course.setDateCreateCourse(createDate);
+
         return courseDao.createCourse(userId, course);
     }
 
@@ -341,5 +348,13 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getSearchObjectFreePname(String pname, String textPublic, String textNull) {
         return courseDao.getSearchObjectFreePname(pname, textPublic, textNull);
     }
+
+	@Override
+	public List<Course> getSearchByDate(String startDate, String endDate, String textPublic) {
+		 System.out.println("=============================================================");
+	        System.out.println("Start Date: " + startDate);
+	        return courseDao.getSearchByDate(startDate, endDate, textPublic);
+	}
+
 
 }

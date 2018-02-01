@@ -96,4 +96,6 @@ public interface CourseService {
 
     List<Course> getSearchObjectFreePname(String pname, String textPublic, String textNull);
 
+	List<Course> getSearchByDate(String startDate, String endDate, String textPublic);
+
 }

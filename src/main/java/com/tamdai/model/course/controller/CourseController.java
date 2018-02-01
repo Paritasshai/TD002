@@ -1,5 +1,6 @@
 package com.tamdai.model.course.controller;
 
+import com.tamdai.model.config.DateTimeUtil;
 import com.tamdai.model.course.entity.Course;
 //import com.tamdai.model.course.entity.ImageCourse;
 import com.tamdai.model.course.entity.ImageCourse;
@@ -189,6 +190,13 @@ public class CourseController {
         return courseService.getSearchObjectPay(Pname, textPublic, textNull, rbGroup);
     }
 
+//    @RequestMapping(value = "getSearchByDate", method = RequestMethod.GET)
+//    public List<Course> getSearchByDate(@RequestParam("Date") String day,
+//                                        @RequestParam("textPublic") String textPublic) {
+//
+//        return courseService.getSearchByDate(day, textPublic);
+//    }
+
     @RequestMapping(value = "getSearchObjectFreePname", method = RequestMethod.GET)
     public List<Course> getSearchObjectFreePname(@RequestParam("Pname") String Pname,
                                                  @RequestParam("textPublic") String textPublic,
@@ -271,7 +279,8 @@ public class CourseController {
                                @RequestParam("linkCourse") String linkCourse,
                                @RequestParam("publicCourse") String publicCourse,
                                @RequestParam("courseType") String courseType,
-                               @RequestParam("catagory") String catagory) {
+                               @RequestParam("catagory") String catagory,
+                               @RequestParam("dateCreateCourse") String dateCreateCourse) {
         Course course = courseService.getCourseId(id);
         course.setName(name);
         course.setDescription(description);
@@ -280,6 +289,7 @@ public class CourseController {
         course.setLinkCourse(linkCourse);
         course.setCourseType(courseType);
         course.setCatagory(catagory);
+        course.setDateCreateCourse(dateCreateCourse);
         return courseService.updateCourse(course);
     }
 
@@ -352,13 +362,27 @@ public class CourseController {
         return courseService.deleteImageCourse(course, imageId);
     }
 
-// Search Day
-//    public List<Course> searchByNumDay(int day) {
-//        Date currDate = DateTimeUtil.getCurrentDate();
-//        Date searchDate = DateTimeUtil.minus(currDate, 1);
-//
-//        String startDate =  DateTimeUtil.date2str(searchDate);
-//        String endDate = DateTimeUtil.date2str(currDate);
-//    }
+    // Search Day
+    @RequestMapping(value = "getSearchByDate", method = RequestMethod.GET)
+    public List<Course> getSearchByDate(@RequestParam("Date") String day,
+                                        @RequestParam("textPublic") String textPublic) {
+        // public List<Course> searchByNumDay ( int day){
+        Date currDate = DateTimeUtil.getCurrentDate();
+        int date = Integer.parseInt(day);
+        Date searchDate = DateTimeUtil.minus(currDate, date);
+
+        System.out.println("Current Date: " + currDate);
+        System.out.println("search Date: " + searchDate);
+        System.out.println("===========================================================");
+
+        String startDate = DateTimeUtil.date2str(searchDate);
+        String endDate = DateTimeUtil.date2str(currDate);
+
+        System.out.println("start Date: " + startDate);
+        System.out.println("end Date: " + endDate);
+        System.out.println("===========================================================");
+
+        return courseService.getSearchByDate(startDate,endDate, textPublic);
+    }
 
 }

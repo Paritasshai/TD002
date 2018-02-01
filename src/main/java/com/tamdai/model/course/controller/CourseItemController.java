@@ -18,11 +18,19 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import static java.nio.file.StandardOpenOption.READ;
 
 /**
  * Created by Film on 21/9/2560.
@@ -154,21 +162,75 @@ public class CourseItemController {
     @ResponseBody
     public void home(@PathVariable("id") Long id, Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         VideoClip videoClip = videoClipRepository.findOne(id);
-
-        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\video\\" + videoClip.getFileName();
-
-        int fileSize = (int) new File(filePath).length();
-        response.setContentLength(fileSize);
-        response.setContentType("video");
-
-        FileInputStream inputStream = new FileInputStream(filePath);
-        ServletOutputStream outputStream = response.getOutputStream();
-        int value = IOUtils.copy(inputStream, outputStream);
-        System.out.println("File Size :: " + fileSize);
-        System.out.println("Copied Bytes :: " + value);
-        IOUtils.closeQuietly(inputStream);
-        IOUtils.closeQuietly(outputStream);
-    }
+    	
+        final int BUFFER_LENGTH = 1024 * 16;
+    	final long EXPIRE_TIME = 1000 * 60 * 60 * 24;
+    	final Pattern RANGE_PATTERN = Pattern.compile("bytes=(?<start>\\d*)-(?<end>\\d*)");
+    	  
+        
+    	Path vdo = Paths.get("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\video\\" + videoClip.getFileName());
+    	
+    	int length = (int) Files.size(vdo);
+	    int start = 0;
+	    int end = length - 1;
+	    
+	    String range = request.getHeader("Range");
+	    Matcher matcher = RANGE_PATTERN.matcher(range);
+	     
+	    if (matcher.matches()) {
+	      String startGroup = matcher.group("start");
+	      start = startGroup.isEmpty() ? start : Integer.valueOf(startGroup);
+	      start = start < 0 ? 0 : start;
+	 
+	      String endGroup = matcher.group("end");
+	      end = endGroup.isEmpty() ? end : Integer.valueOf(endGroup);
+	      end = end > length - 1 ? length - 1 : end;
+	    }
+	 
+	    int contentLength = end - start + 1;
+	    response.reset();
+	    response.setBufferSize(BUFFER_LENGTH);
+	    response.setHeader("Content-Disposition", String.format("inline;filename=\"%s\"", videoClip));
+	    response.setHeader("Accept-Ranges", "bytes");
+	    response.setDateHeader("Last-Modified", Files.getLastModifiedTime(vdo).toMillis());
+	    response.setDateHeader("Expires", System.currentTimeMillis() + EXPIRE_TIME);
+	    response.setContentType(Files.probeContentType(vdo));
+	    response.setHeader("Content-Range", String.format("bytes %s-%s/%s", start, end, length));
+	    response.setHeader("Content-Length", String.format("%s", contentLength));
+	    response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+	 
+	    int bytesRead;
+	    int bytesLeft = contentLength;
+	    ByteBuffer buffer = ByteBuffer.allocate(BUFFER_LENGTH);
+	 
+	    try (SeekableByteChannel input = Files.newByteChannel(vdo, READ);
+	            OutputStream output = response.getOutputStream()) {
+	 
+	      input.position(start);
+	 
+	      while ((bytesRead = input.read(buffer)) != -1 && bytesLeft > 0) {
+	        buffer.clear();
+	        output.write(buffer.array(), 0, bytesLeft < bytesRead ? bytesLeft : bytesRead);
+	        bytesLeft -= bytesRead;
+	      }
+	    }
+	}
+	    
+	    
+//		String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\video\\" + videoClip.getFileName();
+//
+//        int fileSize = (int) new File(filePath).length();
+//        response.setContentLength(fileSize);
+//        response.setContentType("video/mp4");
+//
+//        FileInputStream inputStream = new FileInputStream(filePath);
+//        ServletOutputStream outputStream = response.getOutputStream();
+//        int value = IOUtils.copy(inputStream, outputStream);
+//        System.out.println("File Size :: " + fileSize);
+//        System.out.println("Copied Bytes :: " + value);
+//        IOUtils.closeQuietly(inputStream);
+//        IOUtils.closeQuietly(outputStream);
+   
 
 //    @RequestMapping(value = "delete/Video", method = RequestMethod.DELETE)
 //    @ResponseBody
