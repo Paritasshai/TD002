@@ -33,6 +33,7 @@ public class Course implements Serializable {
     private String courseType;
     private String catagory;
     public int showLock;
+    public int countPurchase;
 
     @OneToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -173,8 +174,21 @@ public class Course implements Serializable {
     public void setImageCourses(Set<ImageCourse> imageCourses) {
         this.imageCourses = imageCourses;
     }
+    
 
-    public Course() {
+    public int getCountPurchase() {
+		return countPurchase;
+	}
+
+	public void setCountPurchase(int countPurchase) {
+		this.countPurchase = countPurchase;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Course() {
     }
 
     public Course(Long id, Long userId, String name, String description, String price, String dateCreateCourse,
@@ -254,12 +268,38 @@ public class Course implements Serializable {
         this.courseItems = courseItems;
         this.imageCourses = imageCourses;
     }
+    
+
+
+	public Course(Long id, Long userId, String name, String description, String price, String dateCreateCourse,
+			String publicCourse, String linkCourse, String courseType, String catagory, int showLock, int countPurchase,
+			Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems,
+			Set<ImageCourse> imageCourses) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.dateCreateCourse = dateCreateCourse;
+		this.publicCourse = publicCourse;
+		this.linkCourse = linkCourse;
+		this.courseType = courseType;
+		this.catagory = catagory;
+		this.showLock = showLock;
+		this.countPurchase = countPurchase;
+		this.courseImages = courseImages;
+		this.users = users;
+		this.courseItems = courseItems;
+		this.imageCourses = imageCourses;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((catagory == null) ? 0 : catagory.hashCode());
+		result = prime * result + countPurchase;
 		result = prime * result + ((courseImages == null) ? 0 : courseImages.hashCode());
 		result = prime * result + ((courseItems == null) ? 0 : courseItems.hashCode());
 		result = prime * result + ((courseType == null) ? 0 : courseType.hashCode());
@@ -290,6 +330,8 @@ public class Course implements Serializable {
 			if (other.catagory != null)
 				return false;
 		} else if (!catagory.equals(other.catagory))
+			return false;
+		if (countPurchase != other.countPurchase)
 			return false;
 		if (courseImages == null) {
 			if (other.courseImages != null)
@@ -366,9 +408,8 @@ public class Course implements Serializable {
 		return "Course [id=" + id + ", userId=" + userId + ", name=" + name + ", description=" + description
 				+ ", price=" + price + ", dateCreateCourse=" + dateCreateCourse + ", publicCourse=" + publicCourse
 				+ ", linkCourse=" + linkCourse + ", courseType=" + courseType + ", catagory=" + catagory + ", showLock="
-				+ showLock + ", courseImages=" + courseImages + ", users=" + users + ", courseItems=" + courseItems
-				+ ", imageCourses=" + imageCourses + "]";
+				+ showLock + ", countPurchase=" + countPurchase + ", courseImages=" + courseImages + ", users=" + users
+				+ ", courseItems=" + courseItems + ", imageCourses=" + imageCourses + "]";
 	}
-
 
 }

@@ -44,6 +44,7 @@ public class PurchaseCartController {
     @RequestMapping(value = "saveCart", method = RequestMethod.POST)
     public PurchaseCart saveCart(@RequestBody PurchaseCart purchaseCart,
                                  @RequestParam("userId") Long userId,
+                                 @RequestParam("countPurchase") Long countPurchase,
                                  @RequestParam("courseId") Long courseId,
                                  @RequestParam("courseName") String courseName,
                                  @RequestParam("transAmount") Long transAmount,
@@ -53,14 +54,30 @@ public class PurchaseCartController {
 
         long a = userBalance;
         long b = transAmount;
-
-
+        System.out.println(countPurchase);
+        
+        
+        
         if (a >= b) {
             long c = a - b;
-            System.out.println(c);
-
+            System.out.println("User Balance: "+ c);
+            
+            int count = countPurchase.intValue();
+            count = count + 1;
+            System.out.println("=============================================");
+            System.out.println("Count : "+ count);
+            System.out.println("course ID : "+ courseId);
+            System.out.println("=============================================");
+            
             try {
-
+           
+//            	Long count = countPurchase;
+//                System.out.println("=============================================");
+//            	System.out.println("Count : " + count++);
+//                System.out.println("=============================================");
+            	
+            	course.setCountPurchase(count);
+        	
                 String balance = new String(String.valueOf(c));
                 userEntity.setBalance(balance);
                 userRepository.save(userEntity);
