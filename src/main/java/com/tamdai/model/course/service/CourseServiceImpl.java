@@ -340,8 +340,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getSearchObjectPay(String pname, String textPublic, String textNull, String rbGroup) {
-        return courseDao.getSearchObjectPay(pname, textPublic, textNull, rbGroup);
+    public List<Course> getSearchObjectPay(String textPublic, String textNull) {
+        return courseDao.getSearchObjectPay(textPublic, textNull);
     }
 
     @Override

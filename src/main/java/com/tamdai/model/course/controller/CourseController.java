@@ -182,12 +182,10 @@ public class CourseController {
 //    }
 
     @RequestMapping(value = "getSearchObjectPay", method = RequestMethod.GET)
-    public List<Course> getSearchObjectPay(@RequestParam("Pname") String Pname,
-                                           @RequestParam("textPublic") String textPublic,
-                                           @RequestParam("textNull") String textNull,
-                                           @RequestParam("rbGroup") String rbGroup) {
+    public List<Course> getSearchObjectPay(@RequestParam("textPublic") String textPublic,
+                                           @RequestParam("textNull") String textNull) {
 
-        return courseService.getSearchObjectPay(Pname, textPublic, textNull, rbGroup);
+        return courseService.getSearchObjectPay(textPublic, textNull);
     }
 
 //    @RequestMapping(value = "getSearchByDate", method = RequestMethod.GET)

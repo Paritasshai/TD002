@@ -159,7 +159,7 @@ public class RobomindController {
                 BufferedOutputStream stream =
                         new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\roboImg\\" + multipartFile.getOriginalFilename())));
 //       /opt/resource/roboImg/
-//       C:\Users\Film\Documents\Tamdai\td002\src\main\resources\roboImg\
+//                C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\roboImg\\
                 stream.write(bytes);
                 stream.close();
             }
@@ -248,7 +248,7 @@ public class RobomindController {
                 BufferedOutputStream stream =
                         new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\contentimg\\" + multipartFile.getOriginalFilename())));
 //              /opt/resource/contentimg/
-//              C:\Users\Film\Documents\Tamdai\td002\src\main\resources\contentimg\
+//              C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\contentimg\\
                 stream.write(bytes);
                 stream.close();
             }

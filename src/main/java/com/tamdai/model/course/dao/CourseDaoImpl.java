@@ -218,8 +218,8 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<Course> getSearchObjectPay(String pname, String textPublic, String textNull, String rbGroup) {
-        return courseRepository.findByNameContainingIgnoreCaseAndPublicCourseAndPriceNotContainingIgnoreCaseAndCatagory(pname, textPublic, textNull, rbGroup);
+    public List<Course> getSearchObjectPay(String textPublic, String textNull) {
+        return courseRepository.findByPublicCourseAndPriceNotContainingIgnoreCase(textPublic, textNull);
     }
 
     @Override

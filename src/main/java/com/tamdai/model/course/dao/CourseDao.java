@@ -80,7 +80,7 @@ public interface CourseDao {
 
     List<Course> getSearchObject(String pname, String textPublic, String textNull, String rbGroup);
 
-    List<Course> getSearchObjectPay(String pname, String textPublic, String textNull, String rbGroup);
+    List<Course> getSearchObjectPay(String textPublic, String textNull);
 
     List<Course> getSearchObjectFreePname(String pname, String textPublic, String textNull);
 
