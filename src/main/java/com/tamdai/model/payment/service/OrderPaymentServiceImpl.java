@@ -29,7 +29,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         payment.setCreateTime(createTime);
 
         //CreateStatus
-        String status = new String("wait");
+        String status = new String("NonPaid");
         payment.setStatusOrder(status);
 
         //PaymentId

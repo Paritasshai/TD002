@@ -4,8 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.tamdai</groupId>
-	<artifactId>tamdai</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>tamdai-service</artifactId>
 	<packaging>war</packaging>
 
 	<name>tamdai-project</name>

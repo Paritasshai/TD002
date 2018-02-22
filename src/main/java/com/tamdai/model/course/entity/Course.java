@@ -16,6 +16,7 @@ import java.util.Set;
 @Entity
 public class Course implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
@@ -33,7 +34,9 @@ public class Course implements Serializable {
     private String courseType;
     private String catagory;
     public int showLock;
-    public int countPurchase;
+    
+    @Column(name = "countPurchase", nullable = true)
+    public Integer countPurchase;
 
     @OneToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -50,10 +53,6 @@ public class Course implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<ImageCourse> imageCourses = new HashSet<>();
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public Long getId() {
         return id;
@@ -175,17 +174,12 @@ public class Course implements Serializable {
         this.imageCourses = imageCourses;
     }
     
-
-    public int getCountPurchase() {
+	public Integer getCountPurchase() {
 		return countPurchase;
 	}
 
-	public void setCountPurchase(int countPurchase) {
+	public void setCountPurchase(Integer countPurchase) {
 		this.countPurchase = countPurchase;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public Course() {
@@ -195,7 +189,6 @@ public class Course implements Serializable {
 			String publicCourse, String linkCourse, String courseType, String catagory, int showLock,
 			Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems,
 			Set<ImageCourse> imageCourses) {
-		super();
 		this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -268,14 +261,11 @@ public class Course implements Serializable {
         this.courseItems = courseItems;
         this.imageCourses = imageCourses;
     }
-    
-
 
 	public Course(Long id, Long userId, String name, String description, String price, String dateCreateCourse,
-			String publicCourse, String linkCourse, String courseType, String catagory, int showLock, int countPurchase,
-			Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems,
+			String publicCourse, String linkCourse, String courseType, String catagory, int showLock,
+			Integer countPurchase, Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems,
 			Set<ImageCourse> imageCourses) {
-		super();
 		this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -299,7 +289,7 @@ public class Course implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((catagory == null) ? 0 : catagory.hashCode());
-		result = prime * result + countPurchase;
+		result = prime * result + ((countPurchase == null) ? 0 : countPurchase.hashCode());
 		result = prime * result + ((courseImages == null) ? 0 : courseImages.hashCode());
 		result = prime * result + ((courseItems == null) ? 0 : courseItems.hashCode());
 		result = prime * result + ((courseType == null) ? 0 : courseType.hashCode());
@@ -331,7 +321,10 @@ public class Course implements Serializable {
 				return false;
 		} else if (!catagory.equals(other.catagory))
 			return false;
-		if (countPurchase != other.countPurchase)
+		if (countPurchase == null) {
+			if (other.countPurchase != null)
+				return false;
+		} else if (!countPurchase.equals(other.countPurchase))
 			return false;
 		if (courseImages == null) {
 			if (other.courseImages != null)

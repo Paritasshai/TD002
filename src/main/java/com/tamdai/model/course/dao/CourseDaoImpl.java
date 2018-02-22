@@ -229,6 +229,7 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<Course> getSearchByDate(String startDate,String endDate, String textPublic) {
-        return courseRepository.findByDateCreateCourseBetween(startDate,endDate,textPublic);
+        return courseRepository.findByDateCreateCourseBetween(startDate,endDate);
     }
+    
 }

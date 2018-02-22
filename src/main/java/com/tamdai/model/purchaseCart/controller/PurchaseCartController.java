@@ -56,8 +56,6 @@ public class PurchaseCartController {
         long b = transAmount;
         System.out.println(countPurchase);
         
-        
-        
         if (a >= b) {
             long c = a - b;
             System.out.println("User Balance: "+ c);

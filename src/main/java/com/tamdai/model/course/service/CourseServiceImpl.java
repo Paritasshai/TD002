@@ -43,9 +43,9 @@ public class CourseServiceImpl implements CourseService {
     public Course createCourse(Long userId, Course course) {
 
         //CreateDate
-        String createDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String createDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         course.setDateCreateCourse(createDate);
-
+        course.setCountPurchase(0);
         return courseDao.createCourse(userId, course);
     }
 
@@ -351,8 +351,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<Course> getSearchByDate(String startDate, String endDate, String textPublic) {
-		 System.out.println("=============================================================");
-	        System.out.println("Start Date: " + startDate);
 	        return courseDao.getSearchByDate(startDate, endDate, textPublic);
 	}
 

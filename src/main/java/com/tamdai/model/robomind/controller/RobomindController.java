@@ -36,7 +36,13 @@ public class RobomindController {
 
     @Autowired
     RoboImageRepository roboImageRepository;
-
+    
+    public static String PathRoboImg = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\roboImg\\";
+// public static String PathRoboImg = "/opt/resource/roboImg/";
+    
+    public static String PathContentimg = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\contentimg\\";
+// public static String PathContentimg = "/opt/resource/contentimg/";
+    
     @RequestMapping(value = "createProfile", method = RequestMethod.POST)
     public StudentProfile createProfile(@RequestBody StudentProfile stProfile, BindingResult bindingResult) {
         return robomindService.createProfile(stProfile);
@@ -157,7 +163,7 @@ public class RobomindController {
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\roboImg\\" + multipartFile.getOriginalFilename())));
+                        new BufferedOutputStream(new FileOutputStream(new File( PathRoboImg + multipartFile.getOriginalFilename())));
 //       /opt/resource/roboImg/
 //                C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\roboImg\\
                 stream.write(bytes);
@@ -176,7 +182,7 @@ public class RobomindController {
 
         RoboImage image = roboImageRepository.findOne(id);
 
-        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\roboImg\\" + image.getFileName();
+        String filePath = PathRoboImg + image.getFileName();
 //        C:\Users\Film\Documents\Tamdai\td002\src\main\resources\roboImg\
 //        /opt/resource/roboImg
 
@@ -246,7 +252,7 @@ public class RobomindController {
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\contentimg\\" + multipartFile.getOriginalFilename())));
+                        new BufferedOutputStream(new FileOutputStream(new File( PathContentimg + multipartFile.getOriginalFilename())));
 //              /opt/resource/contentimg/
 //              C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\contentimg\\
                 stream.write(bytes);
@@ -270,7 +276,7 @@ public class RobomindController {
 
         ContentImg contentImg = robomindService.getImageContent(id);
 
-        String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\contentimg\\" + contentImg.getFileName();
+        String filePath = PathContentimg + contentImg.getFileName();
 //        C:\Users\Film\Documents\Tamdai\td002\src\main\resources\contentimg\
 //        /opt/resource/contentimg/
 

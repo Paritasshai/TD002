@@ -365,6 +365,7 @@ public class CourseController {
     public List<Course> getSearchByDate(@RequestParam("Date") String day,
                                         @RequestParam("textPublic") String textPublic) {
         // public List<Course> searchByNumDay ( int day){
+    	
         Date currDate = DateTimeUtil.getCurrentDate();
         int date = Integer.parseInt(day);
         Date searchDate = DateTimeUtil.minus(currDate, date);

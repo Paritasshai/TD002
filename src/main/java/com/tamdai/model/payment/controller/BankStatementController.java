@@ -25,134 +25,133 @@ import java.util.Objects;
 @RequestMapping("/")
 public class BankStatementController {
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
-    @Autowired
-    BankStatementService bankStatementService;
+	@Autowired
+	BankStatementService bankStatementService;
 
-    @Autowired
-    PaymentTransactionService paymentTransactionService;
+	@Autowired
+	PaymentTransactionService paymentTransactionService;
 
-    @Autowired
-    OrderPaymentService paymentService;
+	@Autowired
+	OrderPaymentService paymentService;
 
-    @Autowired
-    OrderPaymentRepository orderPaymentRepository;
+	@Autowired
+	OrderPaymentRepository orderPaymentRepository;
 
-    @Autowired
-    UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
-    @RequestMapping(value = "create/bankStatement", method = RequestMethod.POST)
-    public BankStatement bankStatementCreate(@RequestBody BankStatement bankStatement,
+	@RequestMapping(value = "create/bankStatement/{id}", method = RequestMethod.POST)
+    public BankStatement bankStatementCreate(@PathVariable("id") Long idOrder,
+    		@RequestBody BankStatement bankStatement,
                                              @RequestParam("userId") Long id, BindingResult bindingResult) {
         UserEntity user = userService.getUserId(id);
+        OrderPayment orderPayments = orderPaymentRepository.findOne(idOrder);
+        
+        orderPayments.setStatusOrder("waitPaid");
         return bankStatementService.bankStatementCreate(bankStatement, user);
     }
 
-    @RequestMapping(value = "get/bankStatement", method = RequestMethod.GET)
-    public List<BankStatement> getBankStatementAll() {
-        return bankStatementService.getBankStatementAll();
-    }
+	@RequestMapping(value = "get/bankStatement", method = RequestMethod.GET)
+	public List<BankStatement> getBankStatementAll() {
+		return bankStatementService.getBankStatementAll();
+	}
 
-    @RequestMapping(value = "get/bankStatement/{id}", method = RequestMethod.GET)
-    public BankStatement getBankStatementById(@PathVariable("id") Long id) {
-        return bankStatementService.getBankStatementById(id);
-    }
+	@RequestMapping(value = "get/bankStatement/{id}", method = RequestMethod.GET)
+	public BankStatement getBankStatementById(@PathVariable("id") Long id) {
+		return bankStatementService.getBankStatementById(id);
+	}
 
-    @RequestMapping(value = "update/bankStatement/{id}", method = RequestMethod.PUT)
-    public BankStatement bankStatementUpdate(@PathVariable("id") Long id,
-                                             HttpServletRequest request,
-                                             @RequestBody BankStatement bankStatement,
-                                             @RequestParam("Email") String email,
-                                             @RequestParam("UserId") Long userId,
-                                             @RequestParam("orderId") Long orderId,
-                                             @RequestParam("transRef") String transRef,
-                                             @RequestParam("transAmount") String transAmount,
-                                             @RequestParam("Balance") String balance, BindingResult bindingResult) {
-        UserEntity user = userService.getUserByEmail(email);
-        OrderPayment orderPayment = paymentService.getOrderById(orderId);
-        BankStatement bank = bankStatementService.getBankStatementById(id);
+	@RequestMapping(value = "update/bankStatement/{id}", method = RequestMethod.PUT)
+	public BankStatement bankStatementUpdate(@PathVariable("id") Long id, HttpServletRequest request,
+			@RequestBody BankStatement bankStatement, @RequestParam("Email") String email,
+			@RequestParam("UserId") Long userId, @RequestParam("orderId") Long orderId,
+			@RequestParam("transRef") String transRef, @RequestParam("transAmount") String transAmount,
+			@RequestParam("Balance") String balance, BindingResult bindingResult) {
+		UserEntity user = userService.getUserByEmail(email);
+		OrderPayment orderPayment = paymentService.getOrderById(orderId);
+		BankStatement bank = bankStatementService.getBankStatementById(id);
 
-        PaymentTransaction paymentTransaction = new PaymentTransaction();
+		PaymentTransaction paymentTransaction = new PaymentTransaction();
 
-        //CreateDate
-        String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        paymentTransaction.setCreateDate(signUpDate);
+		// CreateDate
+		String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+		paymentTransaction.setCreateDate(signUpDate);
 
-        //CreateTime
-        String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-        paymentTransaction.setCreateTime(timeStamp);
+		// CreateTime
+		String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+		paymentTransaction.setCreateTime(timeStamp);
 
-        String transA = new String(transAmount);
-        String a = "300";
-        String b = "500";
-        int five = 50;
-        int one = 100;
-        int transAm = Integer.parseInt(transAmount);
-        int transba = Integer.parseInt(balance);
+		String transA = new String(transAmount);
+		String a = "300";
+		String b = "500";
+		int five = 50;
+		int one = 100;
+		int transAm = Integer.parseInt(transAmount);
+		int transba = Integer.parseInt(balance);
 
-        if (Objects.equals(transA, a)) {
-            System.out.println("เงื่อนไข 300");
-            System.out.println("transA: " + transA);
-            paymentTransaction.setTransAmount(transA);
+		if (Objects.equals(transA, a)) {
+			System.out.println("เงื่อนไข 300");
+			System.out.println("transA: " + transA);
+			paymentTransaction.setTransAmount(transA);
 
-            System.out.println("balance: " + balance);
+			System.out.println("balance: " + balance);
 
-            int result = (transba + five);
-            System.out.println("result :" + result);
-            paymentTransaction.setTransAmount(String.valueOf(result));
+			int result = (transba + five);
+			System.out.println("result :" + result);
+			paymentTransaction.setTransAmount(String.valueOf(result));
 
-            String transRe = String.valueOf(result);
-            System.out.println("transRe :" + transRe);
-            System.out.println("=========================================");
-            paymentTransaction.setTransRemark(transRe);
-            bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
-        } else if (Objects.equals(transA, b)) {
+			String transRe = String.valueOf(result);
+			System.out.println("transRe :" + transRe);
+			System.out.println("=========================================");
+			paymentTransaction.setTransRemark(transRe);
+			bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
+		} else if (Objects.equals(transA, b)) {
 
-            System.out.println("เงื่อนไข 500");
-            System.out.println(transA);
-            paymentTransaction.setTransAmount(transA);
+			System.out.println("เงื่อนไข 500");
+			System.out.println(transA);
+			paymentTransaction.setTransAmount(transA);
 
-            System.out.println("balance: " + balance);
+			System.out.println("balance: " + balance);
 
-            int result = (transba + one);
-            System.out.println("result :" + result);
-            paymentTransaction.setTransAmount(String.valueOf(result));
+			int result = (transba + one);
+			System.out.println("result :" + result);
+			paymentTransaction.setTransAmount(String.valueOf(result));
 
-            String transRe = String.valueOf(result);
-            System.out.println("transRe :" + transRe);
-            System.out.println("=========================================");
-            paymentTransaction.setTransRemark(transRe);
-            bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
-        } else {
-            System.out.println("เงื่อนไข 100");
-            System.out.println(transA);
-            paymentTransaction.setTransAmount(transA);
+			String transRe = String.valueOf(result);
+			System.out.println("transRe :" + transRe);
+			System.out.println("=========================================");
+			paymentTransaction.setTransRemark(transRe);
+			bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
+		} else {
+			System.out.println("เงื่อนไข 100");
+			System.out.println(transA);
+			paymentTransaction.setTransAmount(transA);
 
-            System.out.println("balance: " + balance);
+			System.out.println("balance: " + balance);
 
-            int result = transba;
-            System.out.println("result :" + result);
-            paymentTransaction.setTransAmount(String.valueOf(result));
+			int result = transba;
+			System.out.println("result :" + result);
+			paymentTransaction.setTransAmount(String.valueOf(result));
 
-            String transRe = String.valueOf(result);
-            System.out.println("transRe :" + transRe);
-            System.out.println("=========================================");
-            paymentTransaction.setTransRemark(transRe);
-            bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
-        }
+			String transRe = String.valueOf(result);
+			System.out.println("transRe :" + transRe);
+			System.out.println("=========================================");
+			paymentTransaction.setTransRemark(transRe);
+			bankStatementService.bankStatementUpdate(bankStatement, user, transRe, bank);
+		}
 
-        String statusOrder = new String("confirm");
-        orderPayment.setStatusOrder(statusOrder);
-        orderPaymentRepository.save(orderPayment);
+		String statusOrder = new String("confirm");
+		orderPayment.setStatusOrder(statusOrder);
+		orderPaymentRepository.save(orderPayment);
 
-        paymentTransactionService.createPaymentTransaction(user, paymentTransaction, transRef);
+		paymentTransactionService.createPaymentTransaction(user, paymentTransaction, transRef);
 
-//            userService.addPaymentTransaction(user, paymentTransaction);
+		// userService.addPaymentTransaction(user, paymentTransaction);
 
-
-        return bank;
-    }
+		return bank;
+	}
 
 }

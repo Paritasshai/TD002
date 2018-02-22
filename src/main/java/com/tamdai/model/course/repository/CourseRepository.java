@@ -30,7 +30,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findByNameContainingIgnoreCaseAndPublicCourseAndPriceContainingIgnoreCase(String pname, String textPublic, String textNull);
 
-	List<Course> findByDateCreateCourseBetween(String startDate, String endDate, String textPublic);
+	List<Course> findByDateCreateCourseBetween(String startDate, String endDate);
 
 	List<Course> findByPublicCourseAndPriceNotContainingIgnoreCase(String textPublic, String textNull);
     
