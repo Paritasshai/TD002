@@ -102,98 +102,12 @@ public class CourseController {
         return courseService.getSearchObject(Pname, textPublic, textNull, rbGroup);
     }
 
-//    @RequestMapping(value = "getSearchObjectCon", method = RequestMethod.GET)
-//    public List<Course> getSearchObjectCon(@RequestParam("Pname") String Pname,
-//                                           @RequestParam("textPublic") String textPublic,
-//                                           @RequestParam("day") String day,
-//                                           @RequestParam("textNull") String textNull,
-//                                           @RequestParam("rbGroup") String rbGroup) {
-//        return courseService.getSearchObjectCon(Pname, day, textPublic, textNull, rbGroup);
-//    }
-
-//    @RequestMapping(value = "getSearchObjectCon", method = RequestMethod.GET)
-//    public List<Course> getSearchObjectCon(String firstName, String surName, Integer countryid, Integer companyId) {
-//
-//        CriteriaBuilder cb = em.getCriteriaBuilder();
-//        CriteriaQuery<Contacts> query = cb.createQuery(Contacts.class);
-//        Root<Contacts> cont = query.from(Contacts.class);
-//        query.select(cont);
-//
-//        // Join<Contacts, Country> country = cont.join("country", JoinType.LEFT);
-//        List<Predicate> predicateList = new ArrayList<Predicate>();
-//
-//        if ((firstName != null) && (!(firstName.isEmpty()))) {
-//            ParameterExpression<String> p
-//                    = cb.parameter(String.class, "firstName");
-//            predicateList.add(cb.like(cb.upper(cont.<String>get("firstName")), "%" + firstName.toUpperCase() + "%"));
-//
-//        }
-//
-//        if ((surName != null) && (!(surName.isEmpty()))) {
-//            ParameterExpression<String> p
-//                    = cb.parameter(String.class, "surName");
-//            predicateList.add(cb.like(cb.upper(cont.<String>get("surName")), "%" + surName.toUpperCase() + "%"));
-//
-//        }
-//
-//        if ((countryid != null) && (countryid != 0)) {
-//            Join<Contacts, Country> country = cont.join("country");
-//            ParameterExpression<Integer> ci
-//                    = cb.parameter(Integer.class, "countryid");
-//            predicateList.add(cb.equal(country.get("countryid"), ci));
-//        }
-//
-//        if ((companyId != null) && (companyId != 0)) {
-//            Join<Contacts, Company> company = cont.join("company");
-//            ParameterExpression<Integer> co
-//                    = cb.parameter(Integer.class, "companyId");
-//            predicateList.add(cb.equal(company.get("companyId"), co));
-//        }
-//
-//        if (predicateList.size() == 0) {
-//            query.select(cont);
-//        } else {
-//            if (predicateList.size() == 1) {
-//                query.where(predicateList.get(0));
-//            } else {
-//                query.where(cb.and(predicateList.toArray(new Predicate[0])));
-//            }
-//        }
-//
-//        TypedQuery<Contacts> tq = em.createQuery(query);
-//        if (firstName != null) {
-//            tq.setParameter("firstName", firstName);
-//        }
-//        if (surName != null) {
-//            tq.setParameter("surName", surName);
-//        }
-//
-//        if ((countryid != null) && (countryid != 0)) {
-//            tq.setParameter("countryid", countryid);
-//        }
-//
-//        if ((companyId != null) && (companyId != 0)) {
-//            tq.setParameter("companyId", companyId);
-//        }
-//
-//        ListDataModel<Contacts> contactsResultList = new ListDataModel<Contacts>(tq.getResultList());
-//        return contactsResultList;
-//
-//    }
-
     @RequestMapping(value = "getSearchObjectPay", method = RequestMethod.GET)
     public List<Course> getSearchObjectPay(@RequestParam("textPublic") String textPublic,
                                            @RequestParam("textNull") String textNull) {
 
         return courseService.getSearchObjectPay(textPublic, textNull);
     }
-
-//    @RequestMapping(value = "getSearchByDate", method = RequestMethod.GET)
-//    public List<Course> getSearchByDate(@RequestParam("Date") String day,
-//                                        @RequestParam("textPublic") String textPublic) {
-//
-//        return courseService.getSearchByDate(day, textPublic);
-//    }
 
     @RequestMapping(value = "getSearchObjectFreePname", method = RequestMethod.GET)
     public List<Course> getSearchObjectFreePname(@RequestParam("Pname") String Pname,
@@ -278,6 +192,7 @@ public class CourseController {
                                @RequestParam("publicCourse") String publicCourse,
                                @RequestParam("courseType") String courseType,
                                @RequestParam("catagory") String catagory,
+                               @RequestParam("courseAge") String courseAge,
                                @RequestParam("dateCreateCourse") String dateCreateCourse) {
         Course course = courseService.getCourseId(id);
         course.setName(name);
@@ -288,6 +203,7 @@ public class CourseController {
         course.setCourseType(courseType);
         course.setCatagory(catagory);
         course.setDateCreateCourse(dateCreateCourse);
+        course.setCourseAge(courseAge);
         return courseService.updateCourse(course);
     }
 
@@ -360,11 +276,9 @@ public class CourseController {
         return courseService.deleteImageCourse(course, imageId);
     }
 
-    // Search Day
     @RequestMapping(value = "getSearchByDate", method = RequestMethod.GET)
     public List<Course> getSearchByDate(@RequestParam("Date") String day,
                                         @RequestParam("textPublic") String textPublic) {
-        // public List<Course> searchByNumDay ( int day){
     	
         Date currDate = DateTimeUtil.getCurrentDate();
         int date = Integer.parseInt(day);

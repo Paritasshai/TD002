@@ -252,6 +252,8 @@ public class UserEntity {
 
     public UserEntity() {
     }
+    
+    
 
     public UserEntity(String email, String password, String firstName, String lastName, String lastLoginDate, String signUpDate, String confirmDate, String createDate, String createTime, String createUserID, String updateDate, String updateTime, String updateUserId, String status, String balance, Set<PurchaseCart> purchaseCarts, Set<Course> courses, Set<UserImage> userImages, Set<Lists> lists) {
         this.email = email;
@@ -393,7 +395,7 @@ public class UserEntity {
         this.lists = lists;
     }
 
-    @Override
+	@Override
     public String toString() {
         return "UserEntity{" +
                 "id=" + id +

@@ -21,7 +21,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
     public OrderPayment OrderPaymentCreate(OrderPayment payment, UserEntity user) {
 
         //CreateDate
-        String createDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String createDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         payment.setCreateDate(createDate);
 
         //CreateTime

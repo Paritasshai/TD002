@@ -77,7 +77,7 @@ public class BankStatementController {
 		PaymentTransaction paymentTransaction = new PaymentTransaction();
 
 		// CreateDate
-		String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+		String signUpDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		paymentTransaction.setCreateDate(signUpDate);
 
 		// CreateTime

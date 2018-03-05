@@ -27,7 +27,7 @@ public class BankStatementDaoImpl implements BankStatementDao {
         bankStatement.setStatusBank("รอการยืนยัน");
 
         //CreateDate
-        String createDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String createDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         bankStatement.setCreateDate(createDate);
 
         //CreateTime
@@ -43,14 +43,6 @@ public class BankStatementDaoImpl implements BankStatementDao {
     public List<BankStatement> getBankStatementAll() {
         return bankStatementRepository.findAll();
     }
-
-//    @Override
-//    public BankStatement bankStatementUpdate(BankStatement bankStatement, VideoEntity user, String balance) {
-//        bankStatement.getUsers().add(user);
-//        bankStatementRepository.save(bankStatement);
-//        userRepository.save(user);
-//        return bankStatement;
-//    }
 
     @Override
     public BankStatement getBankStatementById(Long id) {

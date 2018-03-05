@@ -17,4 +17,6 @@ public interface PurchaseCartService {
 
     List<PurchaseCart> getPurchaseCartList();
 
+    PurchaseCart updatePurchaseCart(PurchaseCart purchaseCart);
+    
 }

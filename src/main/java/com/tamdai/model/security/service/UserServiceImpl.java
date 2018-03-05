@@ -42,11 +42,11 @@ public class UserServiceImpl implements UserService {
         user.setBalance(balance);
 
         //setCreateSignUpDate
-        String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String signUpDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         user.setSignUpDate(signUpDate);
 
         //setCreateDate
-        String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         user.setCreateDate(date);
 
         //setCreateTime
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity confirmDate(UserEntity user) {
 
         //setConfirmDate
-        String confirmDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String confirmDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         user.setConfirmDate(confirmDate);
 
         userDao.userRegister(user);
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
             if (PassUserFromDB.equals(password)) {
 
                 //setLastLoginDate
-                String loginDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                String loginDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 user.setLastLoginDate(loginDate);
                 userDao.userRegister(user);
 

@@ -133,7 +133,7 @@ public class CourseItemController {
                     video.setContentType(multipartFile.getContentType());
 
                     //setDate
-                    String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                    String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                     video.setCreateDate(date);
                     video.setPath(destination);
                     courseService.saveVideo(video, courseItem);
@@ -215,42 +215,11 @@ public class CourseItemController {
 	      }
 	    }
 	}
-	    
-	    
-//		String filePath = "C:\\Users\\Film\\Documents\\Tamdai\\td002\\src\\main\\resources\\video\\" + videoClip.getFileName();
-//
-//        int fileSize = (int) new File(filePath).length();
-//        response.setContentLength(fileSize);
-//        response.setContentType("video/mp4");
-//
-//        FileInputStream inputStream = new FileInputStream(filePath);
-//        ServletOutputStream outputStream = response.getOutputStream();
-//        int value = IOUtils.copy(inputStream, outputStream);
-//        System.out.println("File Size :: " + fileSize);
-//        System.out.println("Copied Bytes :: " + value);
-//        IOUtils.closeQuietly(inputStream);
-//        IOUtils.closeQuietly(outputStream);
-   
-
-//    @RequestMapping(value = "delete/Video", method = RequestMethod.DELETE)
-//    @ResponseBody
-//    public CourseItem deleteVideoCourse(@RequestParam("videoId") Long videoId, @RequestParam("courseId") Long courseId) {
-//        CourseItem courseItem = courseService.getCourseId(courseId);
-//        return courseService.deleteVideoCourse(courseItem, videoId);
-//    }
 
     @RequestMapping(value = "get/videoCourseList", method = RequestMethod.GET)
     public List<VideoClip> getVideoCourseList(HttpServletRequest request) throws IOException {
         return courseService.getVideoCourseList();
     }
-
-//    @RequestMapping(value = "edit/videoFileName/{id}", method = RequestMethod.PUT)
-//    public VideoClip editVideoFileName(@PathVariable("id") Long id,
-//                                       @RequestParam("lessonName") String lessonName) {
-//        VideoClip videoClip = courseService.getVideoClipsById(id);
-//        videoClip.setLessonName(lessonName);
-//        return courseService.updateVideoClips(videoClip);
-//    }
 
     @RequestMapping(value = "videoClips/{id}", method = RequestMethod.GET)
     public VideoClip getVideoClipsById(@PathVariable("id") Long id) {

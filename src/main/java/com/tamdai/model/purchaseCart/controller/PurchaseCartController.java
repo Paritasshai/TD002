@@ -83,7 +83,7 @@ public class PurchaseCartController {
                 PaymentTransaction paymentTransaction = new PaymentTransaction();
 
                 //CreateDate
-                String transDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                String transDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 paymentTransaction.setCreateDate(transDate);
 
                 //CreateTime

@@ -25,7 +25,7 @@ public class PaymentTransactionServiceImpl implements PaymentTransactionService 
     public PaymentTransaction createPaymentTransaction(UserEntity user, PaymentTransaction paymentTransaction, String transRef) {
 
         //CreateDate
-        String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String signUpDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         paymentTransaction.setUpdateDate(signUpDate);
 
         //CreateTime
@@ -49,7 +49,7 @@ public class PaymentTransactionServiceImpl implements PaymentTransactionService 
     public PaymentTransaction createPaymentTransactionPurchase(UserEntity userEntity, PaymentTransaction paymentTransaction) {
 
         //CreateDate
-        String signUpDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String signUpDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         paymentTransaction.setUpdateDate(signUpDate);
 
         //CreateTime

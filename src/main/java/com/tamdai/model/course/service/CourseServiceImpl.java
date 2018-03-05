@@ -46,6 +46,7 @@ public class CourseServiceImpl implements CourseService {
         String createDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         course.setDateCreateCourse(createDate);
         course.setCountPurchase(0);
+        course.setCourseAge("12");
         return courseDao.createCourse(userId, course);
     }
 
@@ -106,23 +107,6 @@ public class CourseServiceImpl implements CourseService {
         courseDao.updateCourse(course);
         return course;
     }
-
-//    @Override
-//    public CourseItem deleteVideoCourse(CourseItem courseItem, Long videoId) {
-//        Set<VideoClip> videoClips = courseItem.getVideoClips();
-//        VideoClip removeVideo = null;
-//        for (Iterator<VideoClip> it = videoClips.iterator(); it.hasNext(); ) {
-//            VideoClip i = it.next();
-//            if (i.getId().equals(videoId)) {
-//                removeVideo = i;
-//                break;
-//            }
-//        }
-//
-//        videoClips.remove(removeVideo);
-//        courseDao.updateCourse(courseItem);
-//        return courseItem;
-//    }
 
     @Override
     public List<VideoClip> getVideoCourseList() {
@@ -246,29 +230,6 @@ public class CourseServiceImpl implements CourseService {
             ImageCourse f = it.next();
             if (f.getId().equals(imageId)) {
                 course.getImageCourses().remove(f);
-            }
-        }
-
-        courseDao.updateCourse(course);
-        return course;
-    }
-
-    @Override
-    @Transactional
-    public Course addImageCourse(Course course, CourseImage courseImage) {
-        courseImage = CourseImageUtil.resizeImage(courseImage, 300);
-        course.getCourseImages().add(courseImage);
-        courseDao.updateCourse(course);
-        return course;
-    }
-
-    @Override
-    public Course deleteImage(Course course, Long imageId) {
-        Set<CourseImage> courseImages = course.getCourseImages();
-        for (Iterator<CourseImage> it = courseImages.iterator(); it.hasNext(); ) {
-            CourseImage f = it.next();
-            if (f.getId().equals(imageId)) {
-                course.getCourseImages().remove(f);
             }
         }
 

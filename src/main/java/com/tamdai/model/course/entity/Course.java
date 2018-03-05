@@ -1,7 +1,5 @@
 package com.tamdai.model.course.entity;
 
-import com.tamdai.model.security.entity.UserEntity;
-import com.tamdai.model.security.entity.UserImage;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -13,6 +11,7 @@ import java.util.Set;
  * @author Film
  *
  */
+
 @Entity
 public class Course implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -33,18 +32,19 @@ public class Course implements Serializable {
     private String linkCourse;
     private String courseType;
     private String catagory;
+    private String courseAge;
     public int showLock;
     
     @Column(name = "countPurchase", nullable = true)
     public Integer countPurchase;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Set<CourseImage> courseImages = new HashSet<>();
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+//    private Set<CourseImage> courseImages = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Set<UserEntity> users = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+//    private Set<UserEntity> users = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -142,22 +142,6 @@ public class Course implements Serializable {
         this.showLock = showLock;
     }
 
-    public Set<CourseImage> getCourseImages() {
-        return courseImages;
-    }
-
-    public void setCourseImages(Set<CourseImage> courseImages) {
-        this.courseImages = courseImages;
-    }
-
-    public Set<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<UserEntity> users) {
-        this.users = users;
-    }
-
     public Set<CourseItem> getCourseItems() {
         return courseItems;
     }
@@ -181,14 +165,24 @@ public class Course implements Serializable {
 	public void setCountPurchase(Integer countPurchase) {
 		this.countPurchase = countPurchase;
 	}
+	
+	public String getCourseAge() {
+		return courseAge;
+	}
+
+	public void setCourseAge(String courseAge) {
+		this.courseAge = courseAge;
+	}
 
 	public Course() {
     }
+	
+	
 
-    public Course(Long id, Long userId, String name, String description, String price, String dateCreateCourse,
-			String publicCourse, String linkCourse, String courseType, String catagory, int showLock,
-			Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems,
-			Set<ImageCourse> imageCourses) {
+	public Course(Long id, Long userId, String name, String description, String price, String dateCreateCourse,
+			String publicCourse, String linkCourse, String courseType, String catagory, String courseAge, int showLock,
+			Integer countPurchase, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+		super();
 		this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -199,73 +193,17 @@ public class Course implements Serializable {
 		this.linkCourse = linkCourse;
 		this.courseType = courseType;
 		this.catagory = catagory;
+		this.courseAge = courseAge;
 		this.showLock = showLock;
-		this.courseImages = courseImages;
-		this.users = users;
+		this.countPurchase = countPurchase;
 		this.courseItems = courseItems;
 		this.imageCourses = imageCourses;
 	}
 
-	public Course(Long id, Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory, Set<CourseImage> courseImages) {
-        this.id = id;
-        this.userId = userId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.publicCourse = publicCourse;
-        this.linkCourse = linkCourse;
-        this.courseType = courseType;
-        this.catagory = catagory;
-        this.courseImages = courseImages;
-    }
-
-    public Course(Long id, Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory) {
-        this.id = id;
-        this.userId = userId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.publicCourse = publicCourse;
-        this.linkCourse = linkCourse;
-        this.courseType = courseType;
-        this.catagory = catagory;
-    }
-
-    public Course(Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory, int showLock, Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems) {
-        this.userId = userId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.publicCourse = publicCourse;
-        this.linkCourse = linkCourse;
-        this.courseType = courseType;
-        this.catagory = catagory;
-        this.showLock = showLock;
-        this.courseImages = courseImages;
-        this.users = users;
-        this.courseItems = courseItems;
-    }
-
-    public Course(Long userId, String name, String description, String price, String publicCourse, String linkCourse, String courseType, String catagory, int showLock, Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
-        this.userId = userId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.publicCourse = publicCourse;
-        this.linkCourse = linkCourse;
-        this.courseType = courseType;
-        this.catagory = catagory;
-        this.showLock = showLock;
-        this.courseImages = courseImages;
-        this.users = users;
-        this.courseItems = courseItems;
-        this.imageCourses = imageCourses;
-    }
-
 	public Course(Long id, Long userId, String name, String description, String price, String dateCreateCourse,
 			String publicCourse, String linkCourse, String courseType, String catagory, int showLock,
-			Integer countPurchase, Set<CourseImage> courseImages, Set<UserEntity> users, Set<CourseItem> courseItems,
-			Set<ImageCourse> imageCourses) {
+			Integer countPurchase, Set<CourseItem> courseItems, Set<ImageCourse> imageCourses) {
+		super();
 		this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -278,8 +216,6 @@ public class Course implements Serializable {
 		this.catagory = catagory;
 		this.showLock = showLock;
 		this.countPurchase = countPurchase;
-		this.courseImages = courseImages;
-		this.users = users;
 		this.courseItems = courseItems;
 		this.imageCourses = imageCourses;
 	}
@@ -290,7 +226,7 @@ public class Course implements Serializable {
 		int result = 1;
 		result = prime * result + ((catagory == null) ? 0 : catagory.hashCode());
 		result = prime * result + ((countPurchase == null) ? 0 : countPurchase.hashCode());
-		result = prime * result + ((courseImages == null) ? 0 : courseImages.hashCode());
+		result = prime * result + ((courseAge == null) ? 0 : courseAge.hashCode());
 		result = prime * result + ((courseItems == null) ? 0 : courseItems.hashCode());
 		result = prime * result + ((courseType == null) ? 0 : courseType.hashCode());
 		result = prime * result + ((dateCreateCourse == null) ? 0 : dateCreateCourse.hashCode());
@@ -303,7 +239,6 @@ public class Course implements Serializable {
 		result = prime * result + ((publicCourse == null) ? 0 : publicCourse.hashCode());
 		result = prime * result + showLock;
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
-		result = prime * result + ((users == null) ? 0 : users.hashCode());
 		return result;
 	}
 
@@ -326,10 +261,10 @@ public class Course implements Serializable {
 				return false;
 		} else if (!countPurchase.equals(other.countPurchase))
 			return false;
-		if (courseImages == null) {
-			if (other.courseImages != null)
+		if (courseAge == null) {
+			if (other.courseAge != null)
 				return false;
-		} else if (!courseImages.equals(other.courseImages))
+		} else if (!courseAge.equals(other.courseAge))
 			return false;
 		if (courseItems == null) {
 			if (other.courseItems != null)
@@ -388,11 +323,6 @@ public class Course implements Serializable {
 				return false;
 		} else if (!userId.equals(other.userId))
 			return false;
-		if (users == null) {
-			if (other.users != null)
-				return false;
-		} else if (!users.equals(other.users))
-			return false;
 		return true;
 	}
 
@@ -400,8 +330,8 @@ public class Course implements Serializable {
 	public String toString() {
 		return "Course [id=" + id + ", userId=" + userId + ", name=" + name + ", description=" + description
 				+ ", price=" + price + ", dateCreateCourse=" + dateCreateCourse + ", publicCourse=" + publicCourse
-				+ ", linkCourse=" + linkCourse + ", courseType=" + courseType + ", catagory=" + catagory + ", showLock="
-				+ showLock + ", countPurchase=" + countPurchase + ", courseImages=" + courseImages + ", users=" + users
+				+ ", linkCourse=" + linkCourse + ", courseType=" + courseType + ", catagory=" + catagory
+				+ ", courseAge=" + courseAge + ", showLock=" + showLock + ", countPurchase=" + countPurchase
 				+ ", courseItems=" + courseItems + ", imageCourses=" + imageCourses + "]";
 	}
 

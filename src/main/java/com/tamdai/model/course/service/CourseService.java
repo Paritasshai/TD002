@@ -66,9 +66,9 @@ public interface CourseService {
 
     Course deleteImageCourse(Course course, Long imageId);
 
-    Course addImageCourse(Course course, CourseImage courseImage);
+//    Course addImageCourse(Course course, CourseImage courseImage);
 
-    Course deleteImage(Course course, Long imageId);
+//    Course deleteImage(Course course, Long imageId);
 
     List<Course> getCourseLego(String textPublic, String legoText);
 

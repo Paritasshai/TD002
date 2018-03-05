@@ -34,4 +34,12 @@ public class PurchaseCartServiceImpl implements PurchaseCartService {
         return purchaseCartDao.getPurchaseCartList();
     }
 
+	@Override
+	public PurchaseCart updatePurchaseCart(PurchaseCart purchaseCart) {
+		String status = "Expired";
+		purchaseCart.setCartStatus(status);
+		purchaseCartDao.updatePurchaseCart(purchaseCart);
+		return purchaseCart;
+	}
+
 }
