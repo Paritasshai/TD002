@@ -26,99 +26,101 @@ import java.util.List;
 @RequestMapping("/")
 public class PurchaseCartController {
 
-    @Autowired
-    PurchaseCartService purchaseCartService;
+	@Autowired
+	PurchaseCartService purchaseCartService;
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
-    @Autowired
-    CourseService courseService;
+	@Autowired
+	CourseService courseService;
 
-    @Autowired
-    PaymentTransactionService paymentTransactionService;
+	@Autowired
+	PaymentTransactionService paymentTransactionService;
 
-    @Autowired
-    UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
-    @RequestMapping(value = "saveCart", method = RequestMethod.POST)
-    public PurchaseCart saveCart(@RequestBody PurchaseCart purchaseCart,
-                                 @RequestParam("userId") Long userId,
-                                 @RequestParam("countPurchase") Long countPurchase,
-                                 @RequestParam("courseId") Long courseId,
-                                 @RequestParam("courseName") String courseName,
-                                 @RequestParam("transAmount") Long transAmount,
-                                 @RequestParam("userBalance") Long userBalance, BindingResult bindingResult) {
-        UserEntity userEntity = userService.getUserId(userId);
-        Course course = courseService.getCourseId(courseId);
+	@RequestMapping(value = "saveCart", method = RequestMethod.POST)
+	public PurchaseCart saveCart(@RequestBody PurchaseCart purchaseCart, @RequestParam("userId") Long userId,
+			@RequestParam("countPurchase") Long countPurchase, @RequestParam("courseId") Long courseId,
+			@RequestParam("courseName") String courseName, @RequestParam("transAmount") Long transAmount,
+			@RequestParam("userBalance") Long userBalance, BindingResult bindingResult) {
+		UserEntity userEntity = userService.getUserId(userId);
+		Course course = courseService.getCourseId(courseId);
 
-        long a = userBalance;
-        long b = transAmount;
-        System.out.println(countPurchase);
-        
-        if (a >= b) {
-            long c = a - b;
-            System.out.println("User Balance: "+ c);
-            
-            int count = countPurchase.intValue();
-            count = count + 1;
-            System.out.println("=============================================");
-            System.out.println("Count : "+ count);
-            System.out.println("course ID : "+ courseId);
-            System.out.println("=============================================");
-            
-            try {
-           
-//            	Long count = countPurchase;
-//                System.out.println("=============================================");
-//            	System.out.println("Count : " + count++);
-//                System.out.println("=============================================");
-            	
-            	course.setCountPurchase(count);
-        	
-                String balance = new String(String.valueOf(c));
-                userEntity.setBalance(balance);
-                userRepository.save(userEntity);
+		long a = userBalance;
+		long b = transAmount;
+		System.out.println(countPurchase);
 
-                PaymentTransaction paymentTransaction = new PaymentTransaction();
+		if (a >= b) {
+			long c = a - b;
+			System.out.println("User Balance: " + c);
 
-                //CreateDate
-                String transDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                paymentTransaction.setCreateDate(transDate);
+			int count = countPurchase.intValue();
+			count = count + 1;
+			System.out.println("=============================================");
+			System.out.println("Count : " + count);
+			System.out.println("course ID : " + courseId);
+			System.out.println("=============================================");
 
-                //CreateTime
-                String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-                paymentTransaction.setCreateTime(timeStamp);
+			try {
 
-                String transA = new String(String.valueOf(transAmount));
-                paymentTransaction.setTransAmount(transA);
+				// Long count = countPurchase;
+				// System.out.println("=============================================");
+				// System.out.println("Count : " + count++);
+				// System.out.println("=============================================");
 
-                String balanceRef = new String(String.valueOf(c));
-                paymentTransaction.setTransRemark(balanceRef);
+				course.setCountPurchase(count);
 
-                //paymentTransaction.setTransRef(String.valueOf(courseId));
-                paymentTransaction.setTransRef(courseName);
+				String balance = new String(String.valueOf(c));
+				userEntity.setBalance(balance);
+				userRepository.save(userEntity);
 
-                paymentTransactionService.createPaymentTransactionPurchase(userEntity, paymentTransaction);
-                purchaseCartService.saveCart(userEntity, course, purchaseCart);
+				PaymentTransaction paymentTransaction = new PaymentTransaction();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Failed");
-        }
-        return purchaseCart;
-    }
+				// CreateDate
+				String transDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+				paymentTransaction.setCreateDate(transDate);
 
-    @RequestMapping(value = "getPurchaseCart/{id}", method = RequestMethod.GET)
-    public PurchaseCart getPurchaseCartId(@PathVariable("id") Long id) {
-        return purchaseCartService.getPurchaseCartId(id);
-    }
+				// CreateTime
+				String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+				paymentTransaction.setCreateTime(timeStamp);
 
-    @RequestMapping(value = "getPurchaseCartList", method = RequestMethod.GET)
-    public List<PurchaseCart> getPurchaseCartList() {
-        return purchaseCartService.getPurchaseCartList();
-    }
+				String transA = new String(String.valueOf(transAmount));
+				paymentTransaction.setTransAmount(transA);
+
+				String balanceRef = new String(String.valueOf(c));
+				paymentTransaction.setTransRemark(balanceRef);
+
+				// paymentTransaction.setTransRef(String.valueOf(courseId));
+				paymentTransaction.setTransRef(courseName);
+
+				paymentTransactionService.createPaymentTransactionPurchase(userEntity, paymentTransaction);
+				purchaseCartService.saveCart(userEntity, course, purchaseCart);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Failed");
+		}
+		return purchaseCart;
+	}
+
+	@RequestMapping(value = "getPurchaseCart/{id}", method = RequestMethod.GET)
+	public PurchaseCart getPurchaseCartId(@PathVariable("id") Long id) {
+		return purchaseCartService.getPurchaseCartId(id);
+	}
+
+	@RequestMapping(value = "getPurchaseCartList", method = RequestMethod.GET)
+	public List<PurchaseCart> getPurchaseCartList() {
+		return purchaseCartService.getPurchaseCartList();
+	}
+
+	@RequestMapping(path = "deletePurchaseCartList", method = RequestMethod.GET)
+	public void deletePurchaseCartList() {
+		purchaseCartService.deletePurchaseCartList();
+	}
 
 }

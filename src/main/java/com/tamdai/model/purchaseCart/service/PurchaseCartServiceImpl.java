@@ -42,4 +42,9 @@ public class PurchaseCartServiceImpl implements PurchaseCartService {
 		return purchaseCart;
 	}
 
+	@Override
+	public void deletePurchaseCartList() {
+		purchaseCartDao.deletePurchaseCartList();
+	}
+
 }

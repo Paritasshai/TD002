@@ -37,63 +37,103 @@ public class CheckDateExpiredCtrl {
 	@Autowired
 	UserDao userDao;
 
-	@Scheduled(cron = "0 55 23 ? * *")
-	public void reportCurrentTime() {
+	@Scheduled(cron = "0 48 12 ? * *")
+	public void reportCurrentTime1() {
 
-		System.out.println("============= Checking Course Expired =============");
+		System.out.println("============= Start Process Expired =============");
 		String expirationDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-		try {
-			List<PurchaseCart> purchasCart = purchaseCartRepository.findAll();
+		List<PurchaseCart> purchasCart = purchaseCartRepository.findAll();
 
-			for (Iterator<PurchaseCart> it = purchasCart.iterator(); it.hasNext();) {
-				PurchaseCart f = it.next();
-				if (f.getCartStatus() != "null") {
-					if (f.getDateExpired().equals(expirationDate)) {
-						System.out.println("Cart ID: " + f.getId());
-						System.out.println("Current Date: " + expirationDate);
-						System.out.println("Cart DateExpired: " + f.getDateExpired());
-						// System.out.println("Show Course Course: " +
-						// f.getCourses().iterator().next().toString());
-						// System.out.println("Show Course Course: " +
-						// f.getUsers().iterator().next().toString());
+		for (Iterator<PurchaseCart> it = purchasCart.iterator(); it.hasNext();) {
+			PurchaseCart f = it.next();
 
-						Course course = f.getCourses().iterator().next();
-						course.getId();
-						System.out.println("Show Course ID: " + course.getId());
+			if (f.getDateExpired().equals(expirationDate)) {
 
-						UserEntity user = f.getUsers().iterator().next();
-						user.getId();
-						System.out.println("Show Users ID: " + user.getId());
+				System.out.println("==========================");
+				System.out.println("Cart getId: " + f.getId());
+				System.out.println("Cart getDateExpired: " + f.getDateExpired());
+				System.out.println("Cart expirationDate: " + expirationDate);
+				System.out.println("Cart Status : " + f.getCartStatus());
+				System.out.println("==============================================================================");
 
-						// Delete Course From User
-						PurchaseCart getPurchaseCart = purchaseCartService.getPurchaseCartId(f.getId());
-						Course getCourse = courseService.getCourseId(course.getId());
-						UserEntity getUser = userService.getUserId(user.getId());
+				Course course = f.getCourses().iterator().next();
+				System.out.println("Show Course ID: " + course.getId());
 
-						try {
-							System.out.println("============= Delete Processing =============");
-							Set<Course> courses = getUser.getCourses();
+				UserEntity user = f.getUsers().iterator().next();
+				System.out.println("Show Users ID: " + user.getId());
 
-							for (Iterator<Course> ic = courses.iterator(); it.hasNext();) {
-								Course c = ic.next();
-								if (c.getId().equals(course.getId())) {
-									getUser.getCourses().remove(c);
-								}
-								userDao.updateUser(getUser);
-							}
-						} catch (Exception e) {
-							System.out.println("try catch" + e.getMessage());
+				PurchaseCart getPurchaseCart = purchaseCartService.getPurchaseCartId(f.getId());
+				UserEntity getUser = userService.getUserId(user.getId());
+				Set<Course> courses = getUser.getCourses();
+
+				try {
+					for (Iterator<Course> ic = courses.iterator(); it.hasNext();) {
+						Course c = ic.next();
+						
+						if (c.getId().equals(course.getId())) {
+							getUser.getCourses().remove(c);
+							userService.deleteUserCourse(getUser, c.getId());
+							purchaseCartService.updatePurchaseCart(getPurchaseCart);
+							System.out.println(" Delelete Course : " + c.getId() + " Success ");
 						}
-						purchaseCartService.updatePurchaseCart(getPurchaseCart);
 					}
+				} catch (Exception e) {
+					System.out.println("Try Catch: " + e.getMessage());
 				}
 			}
-
-			System.out.println("============= Complete =============");
-		} catch (Exception e) {
-			System.out.println("Error : " + e.getMessage());
 		}
-	}
 
+		System.out.println("============= Stop Process Expired =============");
+	}
+	
+	@Scheduled(cron = "0 49 12 ? * *")
+	public void reportCurrentTime2() {
+
+		System.out.println("============= Start Process Expired =============");
+		String expirationDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+		List<PurchaseCart> purchasCart = purchaseCartRepository.findAll();
+
+		for (Iterator<PurchaseCart> it = purchasCart.iterator(); it.hasNext();) {
+			PurchaseCart f = it.next();
+
+			if (f.getDateExpired().equals(expirationDate)) {
+
+				System.out.println("==========================");
+				System.out.println("Cart getId: " + f.getId());
+				System.out.println("Cart getDateExpired: " + f.getDateExpired());
+				System.out.println("Cart expirationDate: " + expirationDate);
+				System.out.println("Cart Status : " + f.getCartStatus());
+				System.out.println("==============================================================================");
+
+				Course course = f.getCourses().iterator().next();
+				System.out.println("Show Course ID: " + course.getId());
+
+				UserEntity user = f.getUsers().iterator().next();
+				System.out.println("Show Users ID: " + user.getId());
+
+				PurchaseCart getPurchaseCart = purchaseCartService.getPurchaseCartId(f.getId());
+				UserEntity getUser = userService.getUserId(user.getId());
+				Set<Course> courses = getUser.getCourses();
+
+				try {
+					for (Iterator<Course> ic = courses.iterator(); it.hasNext();) {
+						Course c = ic.next();
+						
+						if (c.getId().equals(course.getId())) {
+							getUser.getCourses().remove(c);
+							userService.deleteUserCourse(getUser, c.getId());
+							purchaseCartService.updatePurchaseCart(getPurchaseCart);
+							System.out.println(" Delelete Course : " + c.getId() + " Success ");
+						}
+					}
+				} catch (Exception e) {
+					System.out.println("Try Catch: " + e.getMessage());
+				}
+			}
+		}
+
+		System.out.println("============= Stop Process Expired =============");
+	}
 }

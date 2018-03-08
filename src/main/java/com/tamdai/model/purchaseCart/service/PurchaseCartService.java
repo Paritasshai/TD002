@@ -19,4 +19,6 @@ public interface PurchaseCartService {
 
     PurchaseCart updatePurchaseCart(PurchaseCart purchaseCart);
     
+	void deletePurchaseCartList();
+    
 }
