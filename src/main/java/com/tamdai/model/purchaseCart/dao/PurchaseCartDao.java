@@ -19,4 +19,6 @@ public interface PurchaseCartDao {
     List<PurchaseCart> getPurchaseCartList();
 
     PurchaseCart updatePurchaseCart(PurchaseCart purchaseCart);
+
+	void deletePurchaseCartList();
 }

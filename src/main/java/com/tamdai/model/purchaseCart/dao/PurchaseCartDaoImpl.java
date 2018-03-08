@@ -34,7 +34,7 @@ public class PurchaseCartDaoImpl implements PurchaseCartDao {
 		String datePurchased = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		LocalDate localDate = LocalDate.parse(datePurchased);
 		long year = Integer.parseInt(course.getCourseAge());
-		LocalDate yearLater = localDate.plusMonths(year);
+		LocalDate yearLater = localDate.plusDays(year);
 		System.out.println("localDate: " + localDate + " and yearLater: " + yearLater);
 
 		String a = localDate.toString();
@@ -45,6 +45,7 @@ public class PurchaseCartDaoImpl implements PurchaseCartDao {
 		purchaseCart.getCourses().add(course);
 		purchaseCartRepository.save(purchaseCart);
 		purchaseCart.getUsers().add(userEntity);
+		purchaseCart.setCartStatus("unexpired");
 
 		userEntity.getCourses().add(course);
 		userRepository.save(userEntity);
@@ -64,6 +65,11 @@ public class PurchaseCartDaoImpl implements PurchaseCartDao {
 	@Override
 	public PurchaseCart updatePurchaseCart(PurchaseCart purchaseCart) {
 		return purchaseCartRepository.save(purchaseCart);
+	}
+
+	@Override
+	public void deletePurchaseCartList() {
+		purchaseCartRepository.deleteAllInBatch();
 	}
 
 }
