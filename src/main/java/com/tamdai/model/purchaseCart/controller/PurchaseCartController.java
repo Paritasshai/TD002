@@ -9,13 +9,18 @@ import com.tamdai.model.purchaseCart.service.PurchaseCartService;
 import com.tamdai.model.security.entity.UserEntity;
 import com.tamdai.model.security.repository.UserRepository;
 import com.tamdai.model.security.service.UserService;
+
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Film on 24/9/2559.
@@ -104,6 +109,7 @@ public class PurchaseCartController {
 			}
 		} else {
 			System.out.println("Failed");
+			return (PurchaseCart) ResponseEntity.status( HttpServletResponse.SC_BAD_REQUEST  );
 		}
 		return purchaseCart;
 	}

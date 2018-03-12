@@ -37,7 +37,7 @@ public class CheckDateExpiredCtrl {
 	@Autowired
 	UserDao userDao;
 
-	@Scheduled(cron = "0 48 12 ? * *")
+	@Scheduled(cron = "0 54 23 ? * *")
 	public void reportCurrentTime1() {
 
 		System.out.println("============= Start Process Expired =============");
@@ -87,7 +87,7 @@ public class CheckDateExpiredCtrl {
 		System.out.println("============= Stop Process Expired =============");
 	}
 	
-	@Scheduled(cron = "0 49 12 ? * *")
+	@Scheduled(cron = "0 55 23 ? * *")
 	public void reportCurrentTime2() {
 
 		System.out.println("============= Start Process Expired =============");
